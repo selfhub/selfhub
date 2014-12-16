@@ -1,0 +1,22 @@
+{
+  "name": "selfhub",
+  "version": "0.0.0",
+  "description": "A centralized platform for quantified-self data and studies",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/selfhub/selfhub.git"
+  },
+  "keywords": [
+    "quantified self"
+  ],
+  "author": "selfhub",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/selfhub/selfhub/issues"
+  },
+  "homepage": "https://github.com/selfhub/selfhub"
+}
