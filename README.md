@@ -7,7 +7,7 @@ SelfHub is a central platform for sharing and analyzing quantified self data.
 ## Team
 
   - __Product Owner__: [Brian Zindler](https://github.com/zindlerb)
-  - __Technical Lead__: [Doug Eichelberger](https://github.com/dduugg)
+  - __Technical Lead__: [Dug Eichelberger](https://github.com/dduugg)
   - __Scrum Master__: [Chris Perez](https://github.com/cmperez)
   - __Development Team Members__: [Owen Diehl](https://github.com/owen-d), [Rachel Sison](https://github.com/rachelsison)
 
@@ -29,22 +29,12 @@ SelfHub is a central platform for sharing and analyzing quantified self data.
 
 ## Requirements
 
-- React 0.12.x
-- Flux 2.0.x
-- Jest 0.2.x
-- D3.js 3.5.x
-- Node 0.11.x
-- Mocha 2.0.x
-- Chai 1.10.x
-- Hadoop 2.6.x
-- Grunt 0.4.x
+* Hadoop 2.6.x: `brew install hadoop`
 
 ## Development
 
 ### Installing Dependencies
-From within the root directory:
-
-Install server and client dependencies, then run the app:
+Install server and client dependencies then run the app. From within the root directory:
 
 ```
 npm install
@@ -54,11 +44,11 @@ npm start
 
 ### Roadmap
 
-View the project roadmap [here](https://github.com/selfhub/selfhub/issues)
+View the project roadmap [here](https://github.com/selfhub/selfhub/blob/develop/roadmap)
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+See [CONTRIBUTING.md](https://github.com/selfhub/selfhub/blob/develop/CONTRIBUTING) for contribution guidelines.
 
 ## License
 
