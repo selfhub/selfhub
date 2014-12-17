@@ -4,6 +4,7 @@
   "description": "A centralized platform for quantified-self data and studies",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "grunt"
   },
   "repository": {
@@ -25,5 +26,10 @@
     "grunt-jscs": "^1.0.0",
     "jshint-stylish": "^1.0.0",
     "load-grunt-tasks": "^1.0.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.10.0",
+    "express": "^4.10.6",
+    "morgan": "^1.5.0"
   }
 }
