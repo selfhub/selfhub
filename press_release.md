@@ -1,4 +1,4 @@
-# Project Name #
+# SelfHub #
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -15,44 +15,29 @@ Oh, and I also like to write press-releases in what I call "Oprah-speak" for mai
 
 Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
  -->
- 
-## Heading ##
-  A centralized platform for quantified-self data and studies
-  > Name the product in a way the reader (i.e. your target customers) will understand.
 
-## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
-  Data for the people by the people.
+Data: for the people, by the people.
   
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
-  A central platform for people to contribute, and analyze data. Users can upload data about themselves to contribute to ongoing studies.
+SelfHub is a central platform for sharing and analyzing quantified-self data. Users can contribute to ongoing studies by uploading anything from step count information passively collected by Fitbit to any kind of data they collect on their own.
   
 ## Problem ##
-  > Describe the problem your product solves.
-  There are hundreds of user apps for gathering data about yourself, but there is no way to make this data public to the larger research community.
+There are plenty of user apps for gathering all kinds of data about ourselves, but there is currently no central platform for making this data openly available to the quantified-self / research community at large.
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
-  SelfHub offer a centralized hub of data schemas with tools for data entry and analysis.
+SelfHub lets people set up their own schemas with tools for collecting and analyzing data, as well as visualizing the results. The quantified-self community now has the power to situate their own personal data within a broader global context.
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
-  Creating open science through collaborative c
-  We are taking science out of the lab and putting it into the hands of the people.
+> We want to take science out of the lab and put it into the hands of the people.
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
   1. Register
   2. Find or create schemas to contribute to
-  3. Start tracking and upload your data
-  
+  3. Start tracking your data
+  4. Upload!
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
-  'I used to just blog about my soylent use now I have deep insight into how my soylent formula compares to others' - CP
+> I've been living on Soylent for several months now and have collected lots of personal health data: weight, heart rate, blood glucose, etc. I was pleased to find hundreds of others on SelfHub who already contributed the similar data metrics to a user-created-schema. The visualized aggregate data have been extremely informative. I have a better picture of how healthy I am compared to other Soylent drinkers.
 
-## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
-  Research isn't for big business anymore it's for you and me.
-
+## Call to Action ##
+Research should be for for you, me and everybody.
