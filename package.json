@@ -4,7 +4,7 @@
   "description": "A centralized platform for quantified-self data and studies",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/selfhub/selfhub/issues"
   },
-  "homepage": "https://github.com/selfhub/selfhub"
+  "homepage": "https://github.com/selfhub/selfhub",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-jscs": "^1.0.0",
+    "jshint-stylish": "^1.0.0",
+    "load-grunt-tasks": "^1.0.0"
+  }
 }
