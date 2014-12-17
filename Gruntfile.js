@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
   var jsFiles = [
-    '*/*.js',
+    'client/**/*.js',
+    'server/**/*.js',
     '*.js'
   ];
 
