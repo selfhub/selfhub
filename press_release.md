@@ -17,28 +17,42 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
+  A centralized platform for quantified-self data and studies
   > Name the product in a way the reader (i.e. your target customers) will understand.
 
 ## Sub-Heading ##
   > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
-
+  Data for the people by the people.
+  
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
-
+  A central platform for people to contribute, and analyze data. Users can upload data about themselves to contribute to ongoing studies.
+  
 ## Problem ##
   > Describe the problem your product solves.
+  There are hundreds of user apps for gathering data about yourself, but there is no way to make this data public to the larger research community.
 
 ## Solution ##
   > Describe how your product elegantly solves the problem.
+  SelfHub offer a centralized hub of data schemas with tools for data entry and analysis.
 
 ## Quote from You ##
   > A quote from a spokesperson in your company.
+  Creating open science through collaborative c
+  We are taking science out of the lab and putting it into the hands of the people.
 
 ## How to Get Started ##
   > Describe how easy it is to get started.
+  1. Register
+  2. Find or create schemas to contribute to
+  3. Start tracking and upload your data
+  
 
 ## Customer Quote ##
   > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  'I used to just blog about my soylent use now I have deep insight into how my soylent formula compares to others' - CP
 
 ## Closing and Call to Action ##
   > Wrap it up and give pointers where the reader should go next.
+  Research isn't for big business anymore it's for you and me.
+
