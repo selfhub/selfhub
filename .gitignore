@@ -35,3 +35,6 @@ Vimium has been updated to 1.48.×
 
 ### Webstorm ###
 .idea/
+
+### Browserify output ###
+build
