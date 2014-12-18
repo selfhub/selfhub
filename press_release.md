@@ -24,4 +24,4 @@ SelfHub lets people set up their own schemas with tools for collecting and analy
 > I've been living on Soylent for several months now and have collected lots of personal health data: weight, heart rate, blood glucose, etc. I was pleased to find hundreds of others on SelfHub who already contributed similar data to a user-created-schema. The visualized aggregation has been extremely informative. I have a much clearer picture of how healthy I am compared to other Soylent drinkers.
 
 ## Call to Action ##
-Research should be for for you, me and everybody.
+Research should be for you, me and everybody.

@@ -27,10 +27,6 @@ SelfHub is a central platform for sharing and analyzing quantified self data.
 2. Find or create schemas to contribute to
 3. Start tracking and upload your data
 
-## Requirements
-
-* Hadoop 2.6.x: `brew install hadoop`
-
 ## Development
 
 ### Installing Dependencies
