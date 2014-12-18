@@ -1,6 +1,5 @@
 module.exports = function(grunt) {
   var jsFiles = [
-    'client/**/*.js',
     'server/**/*.js',
     '*.js'
   ];
@@ -19,7 +18,7 @@ module.exports = function(grunt) {
     browserify: {
       build: {
         src: 'client/app.js',
-        dest: 'output/output.js'  
+        dest: 'output/output.js'
       },
       options: {
         transform: ['reactify']
@@ -29,5 +28,5 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
   grunt.loadNpmTasks('grunt-browserify');
 
-  grunt.registerTask('default', ['jshint', 'jscs','browserify']);
+  grunt.registerTask('default', ['jshint', 'jscs', 'browserify']);
 };
