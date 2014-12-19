@@ -30,6 +30,10 @@ module.exports = function(grunt) {
         src: 'client/js/main.jsx',
         dest: 'build/build.js'
       }
+    },
+    watch: {
+      files: jsxAndjsFiles,
+      tasks: ['jshint', 'jscs', 'browserify']
     }
   });
 
