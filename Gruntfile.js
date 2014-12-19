@@ -1,32 +1,39 @@
 module.exports = function(grunt) {
   var jsFiles = [
+    'client/**/*.js',
     'server/**/*.js',
     '*.js'
   ];
 
+  var jsxFiles = [
+    'client/**/*.jsx'
+  ];
+
+  var jsxAndjsFiles = jsxFiles.concat(jsFiles);
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     jshint: {
-      all: jsFiles,
       options: {
         reporter: require('jshint-stylish')
-      }
+      },
+      all: jsxAndjsFiles
     },
     jscs: {
       src: jsFiles
     },
     browserify: {
+      options: {
+        transform: ['reactify']
+      },
       build: {
         src: 'client/app.js',
         dest: 'build/build.js'
-      },
-      options: {
-        transform: ['reactify']
       }
     }
   });
 
   require('load-grunt-tasks')(grunt);
-  grunt.loadNpmTasks('grunt-browserify');
   grunt.registerTask('default', ['jshint', 'jscs', 'browserify']);
+  grunt.registerTask('build', ['browserify']);
 };
