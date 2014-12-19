@@ -27,7 +27,7 @@ module.exports = function(grunt) {
         transform: ['reactify']
       },
       build: {
-        src: 'client/app.js',
+        src: 'client/js/main.jsx',
         dest: 'build/build.js'
       }
     }
