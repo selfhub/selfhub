@@ -1,5 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
+require('dotenv').load();
 
 var app = express();
 

@@ -17,5 +17,5 @@ module.exports = function(app, express) {
 
   //inject routers into route files
   require('../users/userRoutes')(userRouter);
-  require('../schemas/schemasRoutes')(schemaRouter);
+  require('../schemas/schemaRoutes')(schemaRouter);
 };
