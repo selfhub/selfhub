@@ -28,6 +28,7 @@ node_modules
 # Users Environment Variables
 .lock-wscript
 Vimium has been updated to 1.48.×
+.env
 
 ### OSX ###
 .DS_Store
