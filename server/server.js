@@ -11,6 +11,7 @@ if (!mongoURI) {
 }
 
 mongoose.connect(mongoURI);
+console.log('connected to mongo');
 
 require('./config/middleware.js')(app, express);
 
