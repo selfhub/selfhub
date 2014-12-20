@@ -2,12 +2,11 @@ var React = require("react");
 var LoginForm = React.createClass({ 
   getInitialState: function() {
     return {
-      submitted: false
-      
+      submitted: false      
     };
   },
 
-  handleSubmit: function(event){
+  handleSubmit: function(event) {
       //send getFormData to database; callback will set this.state.submitted to true and if successful and render user 
       //dash or callback will keep this.state.submitted at false and render error message
       event.preventDefault();
@@ -16,8 +15,11 @@ var LoginForm = React.createClass({
 
   getFormData: function() {
     var data = {};
-    data.username = this.refs.username.getDOMNode().value;
-    data.password= this.refs.password.getDOMNode().value;
+    var keys = ["username", "password"];
+    var refs = this.refs;
+    keys.forEach(function(key){
+      data[key]=refs[key].getDOMNode().value;
+    });
     return data;
   },
 
