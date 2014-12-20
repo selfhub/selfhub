@@ -1,2 +1,6 @@
-//we inject a router as the first argument (see: ../config/middleware)
-module.exports = function(router) {};
+var schemaController = require('./schemaController');
+
+module.exports = function(router) {
+  router.post('/create', schemaController.createSchema);
+  router.post('/upload', schemaController.uploadEntry);
+};
