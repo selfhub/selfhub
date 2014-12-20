@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 
-var schemaSchema = new mongoose.Schema({
+var Schema = mongoose.Schema;
+
+var schemaSchema = new Schema({
   metaData: Schema.Types.Mixed,
   data: Schema.Types.Mixed
 });
