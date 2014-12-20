@@ -13,15 +13,6 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    jshint: {
-      options: {
-        reporter: require('jshint-stylish')
-      },
-      all: jsxAndjsFiles
-    },
-    jscs: {
-      src: jsFiles
-    },
     browserify: {
       options: {
         transform: ['reactify']
@@ -30,6 +21,16 @@ module.exports = function(grunt) {
         src: 'client/js/main.jsx',
         dest: 'build/build.js'
       }
+    },
+    jscs: {
+      src: jsFiles
+    },
+    jshint: {
+      options: {
+        jshintrc: true,
+        reporter: require('jshint-stylish')
+      },
+      all: jsxAndjsFiles
     },
     watch: {
       files: jsxAndjsFiles,
