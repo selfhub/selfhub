@@ -37,4 +37,4 @@ Vimium has been updated to 1.48.×
 .idea/
 
 ### Browserify output ###
-build
+client/build.js

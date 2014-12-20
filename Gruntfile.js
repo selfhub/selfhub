@@ -1,12 +1,12 @@
 module.exports = function(grunt) {
   var jsFiles = [
-    'client/**/*.js',
+    'client/js/**/*.js',
     'server/**/*.js',
     '*.js'
   ];
 
   var jsxFiles = [
-    'client/**/*.jsx'
+    'client/js/**/*.jsx'
   ];
 
   var jsxAndjsFiles = jsxFiles.concat(jsFiles);
@@ -19,7 +19,7 @@ module.exports = function(grunt) {
       },
       build: {
         src: 'client/js/main.jsx',
-        dest: 'build/build.js'
+        dest: 'client/build.js'
       }
     },
     jscs: {
