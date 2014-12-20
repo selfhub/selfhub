@@ -27,8 +27,7 @@ module.exports = function(grunt) {
     },
     jshint: {
       options: {
-        jshintrc: true,
-        reporter: require('jshint-stylish')
+        jshintrc: true
       },
       all: jsxAndjsFiles
     },
