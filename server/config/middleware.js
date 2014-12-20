@@ -13,9 +13,6 @@ module.exports = function(app, express) {
   app.use(express.static(__dirname + '/../../client'));
 
   app.use('/user', userRouter);
-  app.use('/test', function(req, res, next){
-    res.send('hit test');
-  })
 
   app.use(helpers.errorLogger);
   app.use(helpers.errorHandler);

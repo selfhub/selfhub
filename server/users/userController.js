@@ -13,7 +13,7 @@ passport.use(new LocalStrategy(
         if (User.validPassword(password, user.password)) {
           return done(null, user);
         } else {
-          return done(null, false, { message: 'Incorrect username.' });
+          return done(null, false);
         }
       })
       .catch(function(err) {

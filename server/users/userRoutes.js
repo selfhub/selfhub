@@ -9,7 +9,7 @@ router.get('/test', function(req, res, next) {
       return next(err);  
     }
     if (!user) {
-      return res.json(401, {error: 'user not found'});
+      return res.json(401, {message: 'User not found'});
     }
     console.log(user);
     return res.json(200, {error: 'user found'});
