@@ -1,23 +1,17 @@
-var React = require('react');
-var _ = require('underscore');
-var reactBS = require('react-bootstrap');
+var React = require("react");
+var _ = require("underscore");
+var reactBootStrap = require("react-bootstrap");
 
 var Table = React.createClass({
  getInitialState: function() {
   return {
     mockFitBitData: [
-      {name: 'Brian', miles: 1, month: 'feb'},
-      {name: 'Thomas', miles: 3.4, month: 'march'},
-      {name: 'Zindler', miles: 45, month: 'july'},
-      {name: 'Murphy', miles: 2, month: 'jan'}
+      {name: "Brian", miles: 1, month: "feb"},
+      {name: "Thomas", miles: 3.4, month: "march"},
+      {name: "Zindler", miles: 45, month: "july"},
+      {name: "Murphy", miles: 2, month: "jan"}
     ]
   };
- },
- componentDidMount: function() {
-
- },
- componentWillUnmount: function() {
-   
  },
  render: function() {
    var createHeader = function(keys) {
@@ -31,8 +25,7 @@ var Table = React.createClass({
    var createRow = function(row) {
      return <tr> {_.map(row, createItem)} </tr>;
    };
-   console.log(reactBS);
-   var Table = reactBS.Table;
+   var Table = reactBootStrap.Table;
    return (
      <Table striped bordered condensed hover>
        {createHeader(Object.keys(this.state.mockFitBitData[0]))}

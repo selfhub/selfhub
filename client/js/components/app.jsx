@@ -1,5 +1,5 @@
-var React = require('react');
-var DataPage = require('./data_page.jsx');
+var React = require("react");
+var DataPage = require("./data_page.jsx");
 
 var App = React.createClass({
   render: function() {
