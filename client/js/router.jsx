@@ -6,17 +6,17 @@ var App = require("./components/app.jsx");
 var Search = require("./components/search.jsx");
 
 var InterfaceComponent = React.createClass({
-  componentWillMount : function() {
+  componentWillMount: function() {
     this.callback = (function() {
       this.forceUpdate();
     }).bind(this);
   
     this.props.router.on("route", this.callback);
   },
-  componentWillUnmount : function() {
+  componentWillUnmount: function() {
     this.props.router.off("route", this.callback);
   },
-  render : function() {
+  render: function() {
     if (this.props.router.current === "") {
       return <App />;
     }
