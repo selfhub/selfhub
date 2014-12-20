@@ -24,5 +24,16 @@ module.exports = {
         return false;
       }
     });
+  },
+  createHash: function(password, cb){
+    bcrypt.genSalt(function(err, salt) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('hit genSalt, no error');
+        //cb takes err and hash arguments.
+        bcrypt.hash(password, salt, cb);
+      }
+    });
   }
 };
