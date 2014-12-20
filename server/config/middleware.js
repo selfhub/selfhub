@@ -12,6 +12,8 @@ module.exports = function(app, express) {
   app.use(bodyParser.json());
   app.use(express.static(__dirname + '/../../client'));
 
+  app.use('/user', userRouter);
+
   app.use(helpers.errorLogger);
   app.use(helpers.errorHandler);
 
