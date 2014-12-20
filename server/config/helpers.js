@@ -8,7 +8,7 @@ module.exports = {
     next(error);
   },
   errorHandler: function(error, request, response, next) {
-    response.send(500, {error: error.message});
+    response.status(500).send({error: error.message});
   },
   handleBadRequest: function(response, message) {
     response.status(400).send(message);
