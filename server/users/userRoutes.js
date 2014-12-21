@@ -6,4 +6,5 @@ module.exports = function(router) {
 router.get('/test', userController.signin);
 router.get('/create', userController.signup);
 router.get('/fetch', userController.getUsers);
+router.get('/remove', userController.dropUsers);
 };

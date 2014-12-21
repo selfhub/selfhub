@@ -4,41 +4,40 @@ var passport = require('passport');
 var jwt = require('jwt-simple');
 var LocalStrategy = require('passport-local').Strategy;
 
-Promise.promisifyAll(User.model);
-
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    User.model.findOneAsync({username: username})
-      .then(function(user) {
-        if (User.validPassword(password, user.password)) {
-          return done(null, user);
-        } else {
-          return done(null, false);
-        }
-      })
-      .catch(function(err) {
-        return done(err);
-      });
-  }
-));
-
+Promise.promisifyAll(User);
 
 module.exports = {
   signin: function(req, res, next) {
-    passport.authenticate('local', {session: false}, function(err, user){
-      if (err) {
+    //the || operators are for testing on the fly right now. Will remove later.
+    var username = req.body.username || 'test2';
+    var password = req.body.password || 'test2';
+    User.model.findOneAsync({username: username})
+      .then(function(user) {
+        if (user) {
+          if (User.validPasswordAsync(password, user.password)) {
+            res.status(200).send({
+              message: 'signed in!',
+              token: jwt.encode(user.username, process.env.JWT_SECRET)
+            });
+            next();
+          } else {
+            res.status(401).send({message: 'invalid password'});
+          }  
+        } else {
+          res.status(401).send({message: 'invalid username'});
+        }
+      })
+      .catch(function(err) {
         console.log(err);
-        return next(err);  
-      }
-      if (!user) {
-        return res.json(401, {message: 'User not found'});
-      }
-      return res.json(200, {error: 'user found'});
-    })(req, res, next);
+        res.status(401).send({error: err});
+      });
   },
   signup: function(req, res, next){
-    var newUser = req.body.username;
-    var password = req.body.password;
+    var newUser = req.body.username || 'test1';
+    var password = req.body.password || 'test1';
+    if (!newUser || !password) {
+      res.status(401).send({error: 'Invalid username/password input'});
+    }
     User.model.findOneAsync({username: newUser})
       .then(function(user) {
         //enable the following log statement for troubleshooting purposes
@@ -47,14 +46,12 @@ module.exports = {
           res.json({message: 'User already exists'});
         } else {
           User.createHash(password, function(err, hash){
-            console.log('hash:', hash);
             User.model.createAsync({
               username: newUser,
               password: hash
             })
             .then(function(user) {
-              console.log('user:', arguments);
-              var token = jwt.encode(user, process.env.JWT_SECRET);
+              var token = jwt.encode(user.username, process.env.JWT_SECRET);
               res.json(201, {token: token});
             })
             .catch(function(err){
@@ -62,23 +59,32 @@ module.exports = {
             });
           });
         }
-        console.log('end of usercreate');
       })
       .catch(function(err) {
         res.json(401, {message: err});
       });
   },
-  checkAuth: function(){},
+  checkAuth: function(req, res, next){
+    //this will be whatever header we put the jwt under.
+    var token = req.headers['x-jwt'];
+    var user = jwt.decode(token, process.env.JWT_SECRET);
+
+
+  },
   getUsers: function(req, res, next){
     User.model.findAsync({})
       .then(function(users){
         console.log(users);
-        res.end();
+        res.end(JSON.stringify(users));
       })
       .catch(function(err){
         console.log(err);
         res.end();
       })
+  },
+  dropUsers: function(req, res, next) {
+    User.model.find({}).remove().exec();
+    res.end();
   }
 };
 
