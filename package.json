@@ -39,8 +39,6 @@
     "load-grunt-tasks": "^1.0.0",
     "mongoose": "^3.8.21",
     "morgan": "^1.5.0",
-    "passport": "^0.2.1",
-    "passport-local": "^1.0.0",
     "react": "^0.12.2",
     "react-tools": "^0.12.2",
     "reactify": "^0.17.1"

@@ -1,8 +1,6 @@
 var User = require('./userModel');
 var Promise = require('bluebird');
-var passport = require('passport');
 var jwt = require('jwt-simple');
-var LocalStrategy = require('passport-local').Strategy;
 
 Promise.promisifyAll(User);
 
@@ -65,6 +63,7 @@ module.exports = {
       });
   },
   checkAuth: function(req, res, next){
+    //WORK IN PROGRESS, still need communication from client side to test sent headers.
     //this will be whatever header we put the jwt under.
     var token = req.headers['x-jwt'];
     var user = jwt.decode(token, process.env.JWT_SECRET);
