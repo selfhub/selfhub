@@ -16,7 +16,7 @@ var userSchema = new mongoose.Schema({
 
 module.exports = {
   model: mongoose.model('user', userSchema),
-  validPassword: function(inputPass, password){
+  validPassword: function(inputPass, password) {
     return bcrypt.compare(inputPass, password, function(err, match) {
       if (match) {
         return true;
@@ -25,7 +25,7 @@ module.exports = {
       }
     });
   },
-  createHash: function(password, cb){
+  createHash: function(password, cb) {
     bcrypt.genSalt(function(err, salt) {
       if (err) {
         console.log(err);

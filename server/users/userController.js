@@ -1,8 +1,6 @@
 var User = require('./userModel');
-var Promise = require('bluebird');
-var passport = require('passport');
+// var Promise = require('bluebird');
 var jwt = require('jwt-simple');
-var LocalStrategy = require('passport-local').Strategy;
 
 Promise.promisifyAll(User);
 
@@ -22,7 +20,7 @@ module.exports = {
             next();
           } else {
             res.status(401).send({message: 'invalid password'});
-          }  
+          }
         } else {
           res.status(401).send({message: 'invalid username'});
         }
@@ -32,7 +30,8 @@ module.exports = {
         res.status(401).send({error: err});
       });
   },
-  signup: function(req, res, next){
+
+  signup: function(req, res, next) {
     var newUser = req.body.username || 'test1';
     var password = req.body.password || 'test1';
     if (!newUser || !password) {
@@ -45,7 +44,7 @@ module.exports = {
         if (user) {
           res.json({message: 'User already exists'});
         } else {
-          User.createHash(password, function(err, hash){
+          User.createHash(password, function(err, hash) {
             User.model.createAsync({
               username: newUser,
               password: hash
@@ -54,7 +53,7 @@ module.exports = {
               var token = jwt.encode(user.username, process.env.JWT_SECRET);
               res.json(201, {token: token});
             })
-            .catch(function(err){
+            .catch(function(err) {
               res.json(401, {error: err});
             });
           });
@@ -64,28 +63,28 @@ module.exports = {
         res.json(401, {message: err});
       });
   },
-  checkAuth: function(req, res, next){
+
+  checkAuth: function(req, res, next) {
+    //WORK IN PROGRESS, still need communication from client side to test sent headers.
     //this will be whatever header we put the jwt under.
     var token = req.headers['x-jwt'];
     var user = jwt.decode(token, process.env.JWT_SECRET);
-
-
   },
-  getUsers: function(req, res, next){
+
+  getUsers: function(req, res, next) {
     User.model.findAsync({})
-      .then(function(users){
+      .then(function(users) {
         console.log(users);
         res.end(JSON.stringify(users));
       })
-      .catch(function(err){
+      .catch(function(err) {
         console.log(err);
         res.end();
-      })
+      });
   },
+
   dropUsers: function(req, res, next) {
     User.model.find({}).remove().exec();
     res.end();
   }
 };
-
-
