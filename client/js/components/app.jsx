@@ -4,9 +4,9 @@ var Search = require("./search.jsx");
 
 // TODO: replace test data with actual data
 var schemas = [
-  { name: "Fitbit", route: "#/"},
-  { name: "Apple Healthkit", route: "#/"},
-  { name: "Nike Fuelband", route: "#/"}
+  {name: "Fitbit", route: "#/"},
+  {name: "Apple Healthkit", route: "#/"},
+  {name: "Nike Fuelband", route: "#/"}
 ];
 
 var App = React.createClass({

@@ -4,14 +4,14 @@ var Search = React.createClass({
   getInitialState: function() {
     return {searchString: ""};
   },
-  handleChange: function(e) {
-    this.setState({searchString: e.target.value});
+  handleChange: function(event) {
+    this.setState({searchString: event.target.value});
   },
   render: function() {
     var schemas = this.props.items;
     var searchString = this.state.searchString.trim().toLowerCase();
     // filter the results
-    if (searchString.length > 0) {
+    if (searchString) {
       schemas = schemas.filter(function(el) {
         return el.name.toLowerCase().match(searchString);
       });
