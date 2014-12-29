@@ -1,42 +1,15 @@
-/** @jsx React.DOM */
-var React = require("react");
 var Backbone = require("backbone");
-
-var App = require("./components/app.jsx");
-var Search = require("./components/search.jsx");
-
-var InterfaceComponent = React.createClass({
-  componentWillMount: function() {
-    this.callback = (function() {
-      this.forceUpdate();
-    }).bind(this);
-  
-    this.props.router.on("route", this.callback);
-  },
-  componentWillUnmount: function() {
-    this.props.router.off("route", this.callback);
-  },
-  render: function() {
-    if (this.props.router.current === "") {
-      return <App />;
-    }
-    if (this.props.router.current === "search") {
-      return <Search />;
-    }
-    return <div />;
-  }
-});
 
 var Router = Backbone.Router.extend({
   routes: {
-    "": "index",
+    "": "search",
     signup: "signup",
     signin: "signin",
-    search: "search"
+    "schema/*": "dataPage"
   },
-  index: function() {
+  search: function() {
     console.log("Routing to home page...");
-    this.current = "";
+    this.current = "search";
   },
   signup: function() {
     console.log("Routing to signup page...");
@@ -46,14 +19,10 @@ var Router = Backbone.Router.extend({
     console.log("Routing to signin page...");
     this.current = "signin";
   },
-  search: function() {
-    console.log("Routing to search page...");
-    this.current = "search";
+  dataPage: function() {
+    console.log("Routing to schema...");
+    this.current = "schemaController";
   }
 });
-
-var router = new Router();
-React.render(<InterfaceComponent router={router} />, document.body);
-Backbone.history.start();
 
 module.exports = Router;

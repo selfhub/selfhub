@@ -17,7 +17,7 @@ var Search = React.createClass({
       });
     }
     return (
-      <div className={"search-block"}>  
+      <div className={"search-block"}>
         <input className={"main-search"} type="text" value={this.state.searchString}
                onChange={this.handleChange} placeholder="search for a schema" />
         <ul className={"search-results"}>

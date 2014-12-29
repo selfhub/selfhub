@@ -24,7 +24,6 @@ ol, ul {
 @import url(http://fonts.googleapis.com/css?family=Quicksand:300,400,700);
 
 body {
-  /*background-image: url(../assets/bg_1.png);*/
   background: #fafafa;
   font-family: 'Quicksand', Helvetica, Arial, sans-serif;
   font-size: 1.6em;
@@ -44,6 +43,8 @@ a {
 
 a:hover {
   border-bottom: 1px solid teal;
+  color: teal;
+  text-decoration: none;
 }
 
 /* Navbar */
@@ -91,4 +92,26 @@ nav {
 .search-results {
   line-height: 1.8em;
   margin-top: 20px;
+}
+
+/* Signup Form */
+.signup-form {
+  text-align: center;
+}
+
+.signup-form p {
+  font-size: 18px;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.signup-form input {
+  background: none;
+  border: none;
+  border-bottom: 1px solid teal;
+  margin-top: 20px;
+}
+
+.signup-form input:focus {
+  outline: none;
 }
