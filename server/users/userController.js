@@ -1,9 +1,10 @@
 var User = require('./userModel');
 var bluebird = require('bluebird');
-var jwt = require('jwt-simple');
+var jwt = require('jsonwebtoken');
 var helpers = require('../config/helpers');
 
 bluebird.promisifyAll(User);
+var twoWeeksInMinutes = 60 * 24 * 14;
 
 module.exports = {
   signin: function(request, response, next) {
@@ -15,7 +16,8 @@ module.exports = {
           if (User.validPasswordAsync(password, user.password)) {
             response.status(200).send({
               message: 'signed in!',
-              token: jwt.encode(user.username, process.env.JWT_SECRET)
+              token: jwt.sign(user.username, process.env.JWT_SECRET,
+                {expiresInMinutes: twoWeeksInMinutes})
             });
             next();
           } else {
@@ -50,8 +52,10 @@ module.exports = {
               password: hash
             })
             .then(function(user) {
-              var token = jwt.encode(user.username, process.env.JWT_SECRET);
-              response.status(201).send({token: token});
+              response.status(201).send({
+                token: jwt.sign(user.username, process.env.JWT_SECRET,
+                  {expiresInMinutes: twoWeeksInMinutes})
+              });
             })
             .catch(function(err) {
               helpers.errorHandler(err, request, response, next);
@@ -68,6 +72,6 @@ module.exports = {
     //TODO: still need communication from client side to test sent headers. ticket #91.
     //this will be whatever header we put the jwt under.
     var token = request.headers['x-jwt'];
-    var user = jwt.decode(token, process.env.JWT_SECRET);
+    var user = jwt.verify(token, process.env.JWT_SECRET);
   }
 };
