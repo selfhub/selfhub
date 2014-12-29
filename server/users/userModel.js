@@ -17,14 +17,14 @@ var userSchema = new mongoose.Schema({
 module.exports = {
   model: mongoose.model('user', userSchema),
   validPassword: function(inputPass, password) {
-    return bcrypt.compare(inputPass, password, function(err, match) {
+    return bcrypt.compare(inputPass, password, function(error, match) {
       return Boolean(match);
     });
   },
   createHash: function(password, cb) {
-    bcrypt.genSalt(function(err, salt) {
-      if (err) {
-        console.log(err);
+    bcrypt.genSalt(function(error, salt) {
+      if (error) {
+        console.log(error);
       } else {
         console.log('hit genSalt, no error');
         //cb takes err and hash arguments.
