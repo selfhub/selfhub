@@ -45,6 +45,9 @@ var getSchemaNameForBucketName = function(bucketName) {
 /**
  * AWS S3 CRUD operations
  * @module server/db/s3
+ * @type {{createSchema: Function, createEntry: Function, getSchemaNames: Function,
+ *   getData: Function, getUserIDsForSchema: Function, deleteSchema: Function,
+ *   deleteEntry: Function}}
  */
 module.exports = {
   /* CREATE operations */
@@ -78,10 +81,10 @@ module.exports = {
   /* READ operations */
 
   /**
-   * Get the list of schemas.
+   * Get the list of schema names.
    * @param {s3Callback} callback the callback that handles the AWS response
    */
-  getSchemas: function(callback) {
+  getSchemaNames: function(callback) {
     s3.listBuckets(function(error, data) {
       if (error) { callback(error); }
       var schemaNames = _.chain(data.Buckets)
@@ -103,7 +106,7 @@ module.exports = {
    * @param {string} userID the userID
    * @param {s3Callback} callback the callback that handles the AWS response
    */
-  getEntry: function(schemaName, userID, callback) {
+  getData: function(schemaName, userID, callback) {
     var bucketName = getBucketNameForSchemaName(schemaName);
     var params = {
       Bucket: bucketName,
@@ -117,7 +120,7 @@ module.exports = {
    * @param {string} schemaName the schema name
    * @param {s3Callback} callback the callback that handles the AWS response
    */
-  getEntriesForSchema: function(schemaName, callback) {
+  getUserIDsForSchema: function(schemaName, callback) {
     var bucketName = getBucketNameForSchemaName(schemaName);
     var params = {Bucket: bucketName};
     s3.listObjects(params, callback);
