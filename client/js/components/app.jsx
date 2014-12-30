@@ -1,6 +1,7 @@
 var React = require("react");
 var Navbar = require("./navbar.jsx");
 var Search = require("./search.jsx");
+var AppStore = require("../store/app_store.js");
 
 // TODO: replace test data with actual data
 var schemas = [
@@ -10,6 +11,13 @@ var schemas = [
 ];
 
 var App = React.createClass({
+  componentDidMount: function() {
+    AppStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    AppStore.removeChangeListener(this._onChange);
+  },
   render: function() {
     return (
       <div>
@@ -19,6 +27,12 @@ var App = React.createClass({
         </div>
       </div>
     );
+  },
+  /**
+   * Event handler for 'change' events coming from the AppStore
+   */
+  _onChange: function() {
+    this.setState(AppStore.getAppState());
   }
 });
 
