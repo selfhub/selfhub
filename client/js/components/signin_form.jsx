@@ -1,5 +1,7 @@
 var React = require("react");
-var LoginForm = React.createClass({ 
+var $ = require("jquery");
+
+var SigninForm = React.createClass({ 
   getInitialState: function() {
     return {
       submitted: false      
@@ -7,11 +9,22 @@ var LoginForm = React.createClass({
   },
 
   handleSubmit: function(event) {
-      //send getFormData to database; callback will set this.state.submitted to true and if successful and render user 
-      //dash or callback will keep this.state.submitted at false and render error message
-      event.preventDefault();
-      console.log("getFormdata", this.getFormData());
+    event.preventDefault();
+    var userData = this.getFormData();
+    $.ajax({
+      url: "/user/signin",
+      type:"POST",
+      dataType: "json",
+      data: userData,
+      success: function(data) {
+        console.log("success: next step, save userData to state in the store");
+        },
+      error: function(error) {
+        console.error(error);
+        }
+    });
   },
+
 
   getFormData: function() {
     var data = {};
@@ -40,9 +53,5 @@ var LoginForm = React.createClass({
     );
   } 
 });
-React.render(
-  <LoginForm />,
-  document.getElementById("content")
-);
 
-module.exports = LoginForm;
+module.exports = SigninForm;
