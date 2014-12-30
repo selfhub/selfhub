@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/selfhub/selfhub",
   "dependencies": {
+    "aws-sdk": "^2.1.4",
     "azure-storage": "^0.4.1",
     "backbone": "^1.1.2",
     "body-parser": "^1.10.0",
@@ -37,6 +38,7 @@
     "jwt-simple": "^0.2.0",
     "keymirror": "^0.1.0",
     "load-grunt-tasks": "^1.0.0",
+    "lodash": "^2.4.1",
     "mongoose": "^3.8.21",
     "morgan": "^1.5.0",
     "react": "^0.12.2",
