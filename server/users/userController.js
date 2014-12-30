@@ -4,7 +4,7 @@ var jwt = require('jsonwebtoken');
 var helpers = require('../config/helpers');
 
 bluebird.promisifyAll(User);
-var twoWeeksInMinutes = 60 * 24 * 14;
+var TWO_WEEKS_IN_MINUTES = 60 * 24 * 14;
 
 module.exports = {
   signin: function(request, response, next) {
@@ -17,7 +17,7 @@ module.exports = {
             response.status(200).send({
               message: 'signed in!',
               token: jwt.sign(user.username, process.env.JWT_SECRET,
-                {expiresInMinutes: twoWeeksInMinutes})
+                {expiresInMinutes: TWO_WEEKS_IN_MINUTES})
             });
             next();
           } else {
@@ -54,7 +54,7 @@ module.exports = {
             .then(function(user) {
               response.status(201).send({
                 token: jwt.sign(user.username, process.env.JWT_SECRET,
-                  {expiresInMinutes: twoWeeksInMinutes})
+                  {expiresInMinutes: TWO_WEEKS_IN_MINUTES})
               });
             })
             .catch(function(error) {
