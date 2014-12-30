@@ -25,9 +25,9 @@ module.exports = {
           helpers.errorHandler('invalid username', request, response, next);
         }
       })
-      .catch(function(err) {
-        helpers.errorLogger(err, request, response, next);
-        helpers.errorHandler(err, request, response, next);
+      .catch(function(error) {
+        helpers.errorLogger(error, request, response, next);
+        helpers.errorHandler(error, request, response, next);
       });
   },
 
@@ -44,7 +44,7 @@ module.exports = {
         if (user) {
           helpers.errorHandler('User already exists', request, response, next);
         } else {
-          User.createHash(password, function(err, hash) {
+          User.createHash(password, function(error, hash) {
             User.model.createAsync({
               username: newUser,
               password: hash
@@ -53,19 +53,19 @@ module.exports = {
               var token = jwt.encode(user.username, process.env.JWT_SECRET);
               response.status(201).send({token: token});
             })
-            .catch(function(err) {
-              helpers.errorHandler(err, request, response, next);
+            .catch(function(error) {
+              helpers.errorHandler(error, request, response, next);
             });
           });
         }
       })
-      .catch(function(err) {
-        helpers.errorHandler(err, request, response, next);
+      .catch(function(error) {
+        helpers.errorHandler(error, request, response, next);
       });
   },
 
   checkAuth: function(request, response, next) {
-    //TODO: still need communication from client side to test sent headers. ticket #91.
+    //TODO: still need communication from client side to test sent headers (#91)
     //this will be whatever header we put the jwt under.
     var token = request.headers['x-jwt'];
     var user = jwt.decode(token, process.env.JWT_SECRET);
