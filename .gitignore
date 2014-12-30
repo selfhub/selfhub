@@ -1,3 +1,9 @@
+### Browserify output ###
+client/build.js
+
+### JSDoc ###
+out
+
 ### Node ###
 # Logs
 logs
@@ -26,15 +32,11 @@ build/Release
 node_modules
 
 # Users Environment Variables
-.lock-wscript
-Vimium has been updated to 1.48.×
 .env
+.lock-wscript
 
 ### OSX ###
 .DS_Store
 
 ### Webstorm ###
-.idea/
-
-### Browserify output ###
-client/build.js
+.idea
