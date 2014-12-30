@@ -17,13 +17,14 @@ var InterfaceComponent = React.createClass({
   },
 
   render: function() {
-    if (this.props.router.current === "signup") {
+    var currentRoute = this.props.router.current;
+    if (currentRoute === "signup") {
       return <SignupForm />;
     }
-    if (this.props.router.current === "search") {
+    if (currentRoute === "search") {
       return <Search items={this.props.state._searchSchemas}/>;
     }
-    if (this.props.router.current === "schema") {
+    if (currentRoute === "schema") {
       return <DataPage/>;
     }
     return <div />;
