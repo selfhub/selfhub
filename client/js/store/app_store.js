@@ -4,6 +4,12 @@ var assign = require('object-assign');
 var CHANGE_EVENT = 'change';
 
 var AppStore = assign({}, EventEmitter.prototype, {
+  // TODO: replace mock data with server call (#90)
+  _searchSchemas: [
+    {name: 'Fitbit', route: '#/'},
+    {name: 'Apple Healthkit', route: '#/'},
+    {name: 'Nike Fuelband', route: '#/'}
+  ],
 
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -29,7 +35,9 @@ var AppStore = assign({}, EventEmitter.prototype, {
   * component to all of the sub components.
   */
   getAppState: function() {
-    return {};
+    return {
+      _searchSchemas: this._searchSchemas
+    };
   }
 });
 
