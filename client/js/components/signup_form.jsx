@@ -1,5 +1,5 @@
 var React = require("react");
-var _ = require("underscore");
+var _ = require("lodash");
 
 var SignupForm = React.createClass({
   getInitialState: function() {
@@ -341,13 +341,13 @@ var SignupForm = React.createClass({
         <br />
           Country*: <select defaultValue="US" ref="country">
                       {_.map(this.state.countries, function(countryTuple){
-                          return <option value={countryTuple[0]}>{countryTuple[1]}</option>;   
+                          return <option value={countryTuple[0]}>{countryTuple[1]}</option>;
                       })}
                     </select>
         <br />
           State: <select ref="state">
                    {_.map(this.state.states, function(stateTuple){
-                      return <option value={stateTuple[0]}>{stateTuple[1]}</option>;   
+                      return <option value={stateTuple[0]}>{stateTuple[1]}</option>;
                    })}
                  </select>
         <br />
@@ -370,7 +370,7 @@ var SignupForm = React.createClass({
      );
   }
 });
-    
+
 React.render(
   <SignupForm />,
   document.getElementById("content")
