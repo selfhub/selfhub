@@ -1,5 +1,5 @@
 var React = require("react");
-var _ = require("underscore");
+var _ = require("lodash");
 var reactBootStrap = require("react-bootstrap");
 
 var UploadButton = React.createClass({
@@ -25,7 +25,7 @@ var DownloadButton = React.createClass({
       <div class="formbutton">
         <form action={this.props.url} method="get">
           <button type="submit">Download</button>
-        </form>  
+        </form>
       </div>
     );
   }
@@ -37,7 +37,7 @@ var TableRows = React.createClass({
         <tbody>
           {
             _.map(this.props.rowData, function(row) {
-                  return (<tr> 
+                  return (<tr>
                             {
                               _.map(row, function(rowItem) {
                                 return <td>{rowItem}</td>;
@@ -47,7 +47,7 @@ var TableRows = React.createClass({
             })
           }
         </tbody>
-      );    
+      );
     }
 });
 
@@ -80,7 +80,7 @@ var Table = React.createClass({
    var Table = reactBootStrap.Table;
    var fitBitData = this.state.mockFitBitData;
    var headerKeys = Object.keys(fitBitData[0]);
-   
+
    return (
      <Table striped bordered condensed hover>
         <TableHeadersRow headerKeys={headerKeys}/>
