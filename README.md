@@ -1,6 +1,8 @@
 SelfHub
 =======
-[![Build Status](https://travis-ci.org/selfhub/selfhub.svg)](https://travis-ci.org/selfhub/selfhub) [![Dependency Status](https://david-dm.org/selfhub/selfhub.svg)](https://david-dm.org/selfhub/selfhub) [![devDependency Status](https://david-dm.org/selfhub/selfhub/dev-status.svg)](https://david-dm.org/selfhub/selfhub#info=devDependencies)
+[![Build Status][build-img]][build-url]
+[![Dependency Status][dependencies-img]][dependencies-url]
+[![Code Climate][climate-img]][climate-url]
 
 SelfHub is a central platform for sharing and analyzing quantified self data.
 
@@ -40,12 +42,21 @@ npm start
 
 ### Roadmap
 
-View the project roadmap [here](https://github.com/selfhub/selfhub/blob/develop/roadmap)
+View the project roadmap [here][roadmap-url]
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/selfhub/selfhub/blob/develop/CONTRIBUTING) for contribution guidelines.
+See [CONTRIBUTING.md][contributing-url] for contribution guidelines.
 
 ## License
 
 MIT License 2014
+
+[build-img]: https://travis-ci.org/selfhub/selfhub.svg
+[build-url]: https://travis-ci.org/selfhub/selfhub
+[climate-img]: https://codeclimate.com/github/selfhub/selfhub/badges/gpa.svg
+[climate-url]: https://codeclimate.com/github/selfhub/selfhub
+[contributing-url]: https://github.com/selfhub/selfhub/blob/develop/CONTRIBUTING.md
+[dependencies-img]: https://david-dm.org/selfhub/selfhub.svg
+[dependencies-url]: https://david-dm.org/selfhub/selfhub
+[roadmap-url]: https://github.com/selfhub/selfhub/wiki/Roadmap
