@@ -25,6 +25,7 @@
     "azure-storage": "^0.4.1",
     "backbone": "^1.1.2",
     "bcrypt": "^0.8.0",
+    "bluebird": "^2.5.2",
     "body-parser": "^1.10.0",
     "busboy": "^0.2.9",
     "dotenv": "^0.4.0",
