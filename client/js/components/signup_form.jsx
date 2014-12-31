@@ -1,5 +1,6 @@
 var React = require("react");
 var _ = require("lodash");
+var $ = require("jquery");
 
 var SignupForm = React.createClass({
   getInitialState: function() {
@@ -314,10 +315,21 @@ var SignupForm = React.createClass({
 
   handleSubmit: function(event) {
     event.preventDefault();
-    //send getFormData to database; callback will set this.state.submitted to true and if successful and render user
-    //dash or callback will keep this.state.submitted at false and render error message
-    console.log("getFormdata", this.getFormData());
+    var userData = this.getFormData();
+    $.ajax({
+      url: "/user/signup",
+      type:"POST",
+      dataType: "json",
+      data: userData,
+      success: function(data) {
+        console.log("success: next step, save userData to state in the store");
+        },
+      error: function(error) {
+        console.error(error);
+        }
+    });
   },
+  
 
   getFormData: function() {
     var data = {};

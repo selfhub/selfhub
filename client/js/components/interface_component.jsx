@@ -1,6 +1,7 @@
 var React = require("react");
 var Search = require("./search.jsx");
 var SignupForm = require("./signup_form.jsx");
+var SigninForm = require("./signin_form.jsx");
 var DataPage = require("./data_page.jsx");
 
 var InterfaceComponent = React.createClass({
@@ -20,6 +21,9 @@ var InterfaceComponent = React.createClass({
     var currentRoute = this.props.router.current;
     if (currentRoute === "signup") {
       return <SignupForm />;
+    }
+    if (currentRoute === "signin") {
+      return <SigninForm />;
     }
     if (currentRoute === "search") {
       return <Search items={this.props.state._searchSchemas}/>;
