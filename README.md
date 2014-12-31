@@ -36,7 +36,6 @@ Install server and client dependencies then run the app. From within the root di
 
 ```
 npm install
-bower install
 npm start
 ```
 
