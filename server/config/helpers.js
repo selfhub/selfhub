@@ -12,12 +12,13 @@ module.exports = {
     next(error);
   },
   errorHandler: errorHandler,
-  getAWSCallbackHandler: function(request, response) {
+  getAWSCallbackHandler: function(request, response, successStatusCode) {
+    successStatusCode = successStatusCode || 200;
     return function(error, data) {
       if (error) {
         errorHandler(error, request, response);
       } else {
-        response.status(201).send(data);
+        response.status(successStatusCode).send(data);
       }
     };
   },

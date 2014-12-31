@@ -5,6 +5,6 @@ module.exports = function(router) {
   router.get("/:schemaName", schemaController.getEntriesMetadataForSchema);
   router.get("/:schemaName/:userID", schemaController.getData);
 
-  router.post("/create", schemaController.createSchema);
-  router.post("/upload", schemaController.uploadEntry);
+  router.post("/:schemaName", schemaController.createSchema);
+  router.post("/:schemaName/:userID", schemaController.createEntry);
 };
