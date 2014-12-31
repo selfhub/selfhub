@@ -70,8 +70,9 @@ module.exports = {
    * @param {s3Callback} callback the callback that handles the AWS response
    */
   createEntry: function(schemaName, userID, data, callback) {
+    var bucketName = getBucketNameForSchemaName(schemaName);
     var params = {
-      Bucket: schemaName,
+      Bucket: bucketName,
       Key: userID,
       Body: data
     };

@@ -1,44 +1,65 @@
-var AzureStorage = require("azure-storage");
 var Busboy = require("busboy");
 var helpers = require("../config/helpers");
 var s3Cache = require("../db/s3Cache");
 
-var blobService = AzureStorage.createBlobService();
+/**
+ * Validate an entry conforms to a schema.
+ * @param {string} schemaName the schema name
+ * @param {Object} entry the entry buffer
+ * @param {Object} callback the callback that handles the validation response
+ */
+var validateEntry = function(schemaName, entry, callback) {
+  // TODO: verify entry conforms to schema (#62)
+  callback(null, true);
+};
 
 module.exports = {
   /* CREATE requests */
 
-  createSchema: function(request, response, next) {
+  /**
+   * Create a new schema.
+   * @param {Object} request the http ClientRequest object
+   * @param {Object} response the http ServerResponse object
+   */
+  createSchema: function(request, response) {
     // TODO: record schema details, not just the name (#61)
-    var busboy = new Busboy({headers: request.headers});
-    busboy.on("file", function() {
-      helpers.handleBadRequest(response, "cannot create schema from file");
-    });
-    busboy.on("field", function(key, value) {
-      if (key === "name") {
-        // next is called back with error, result, response
-        blobService.createContainer(value, next);
-      }
-    });
-    busboy.on("finish", function() {
-      helpers.endFormParse(response);
-    });
-    request.pipe(busboy);
+    var schemaName = request.params.schemaName;
+    s3Cache.createSchema(schemaName, helpers.getAWSCallbackHandler(request, response, 201));
   },
-  uploadEntry: function(request, response, next) {
+
+  /**
+   * Upload a new schema entry.
+   * @param {Object} request the http ClientRequest object
+   * @param {Object} response the http ServerResponse object
+   */
+  createEntry: function(request, response) {
+    var schemaName = request.params.schemaName;
+    var userID = request.params.userID;
     var busboy = new Busboy({headers: request.headers});
     busboy.on("file", function(fieldname, file, filename, encoding, mimetype) {
-      // TODO: verify file conforms to schema (#62)
+      if (!filename) { return; }
+      file.fileRead = [];
       file.on("data", function(data) {
-        // TODO: assign entry to corresponding container (#64)
-        // TODO: use username as blob name (#63)
-        // we might need to use createBlockBlobFromStream for device uploads
-        // next is called back with error, result, response
-        blobService.createBlockBlobFromText("testSchema", "testUser", data,
-          data.length, next);
+        this.fileRead.push(data);
       });
       file.on("end", function() {
-        console.log("end of", fieldname);
+        var buffer = Buffer.concat(this.fileRead);
+        validateEntry(schemaName, buffer, function(error, isValid) {
+          if (error) {
+            console.error("error validating entry:", error);
+          } else if (isValid) {
+            s3Cache.createEntry(schemaName, userID, buffer, function(error) {
+              if (error) {
+                console.error("error uploading entry:", error);
+              } else {
+                console.log("successfully created", filename);
+              }
+            });
+          }
+        });
+      });
+      file.on("error", function(error) {
+        console.error("error while buffering the stream: ", error);
       });
     });
     busboy.on("field", function() {
