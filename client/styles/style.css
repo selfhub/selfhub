@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Quicksand:300,400,700);
+
 /* CSS Reset */
 html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, em, img, strong, b, ol, ul, li, form, label {
   border: 0;
@@ -20,8 +22,6 @@ ol, ul {
 *, *:before, *:after {
   box-sizing: border-box;
 }
-
-@import url(http://fonts.googleapis.com/css?family=Quicksand:300,400,700);
 
 body {
   background: #fafafa;
@@ -100,7 +100,6 @@ nav {
 }
 
 .signup-form p {
-  font-size: 18px;
   display: inline-block;
   margin-right: 10px;
 }

@@ -3,7 +3,6 @@ var Backbone = require("backbone");
 var Navbar = require("./navbar.jsx");
 var AppStore = require("../store/app_store.js");
 var InterfaceComponent = require("./interface_component.jsx");
-var SignupForm = require("./signup_form.jsx");
 
 var Router = require("../router.jsx");
 var router = new Router();
