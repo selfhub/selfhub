@@ -1,4 +1,4 @@
-var s3 = require('./s3');
+var s3 = require("./s3");
 
 /**
  * cache lifetime, in milliseconds

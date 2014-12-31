@@ -1,17 +1,17 @@
-var _ = require('lodash');
-var AWS = require('aws-sdk');
+var _ = require("lodash");
+var AWS = require("aws-sdk");
 var s3 = new AWS.S3();
 
 /**
  * S3 bucket names are global to *all* AWS users. Collision probability is
- * reduced by prepending schema names with the selfhub URL. The 'schema'
+ * reduced by prepending schema names with the selfhub URL. The "schema"
  * keyword is also included in the prefix to distinguish schema buckets from
  * other storage buckets that might be in use.
  * @constant
  * @default
  * @type {string}
  */
-var BUCKET_PREFIX = 'selfhub-io-schema-';
+var BUCKET_PREFIX = "selfhub-io-schema-";
 
 /**
  * Get the bucket name corresponding to a schema name.
@@ -90,7 +90,7 @@ module.exports = {
         callback(error);
       } else {
         var schemaNames = _.chain(data.Buckets)
-          .pluck('Name')
+          .pluck("Name")
           .transform(function(result, bucketName) {
             var schemaName = getSchemaNameForBucketName(bucketName);
             if (schemaName) {

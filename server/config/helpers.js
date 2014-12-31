@@ -4,7 +4,7 @@ var errorHandler = function(error, request, response, next) {
 
 module.exports = {
   endFormParse: function(response) {
-    response.writeHead(303, {Connection: 'close', Location: '/'});
+    response.writeHead(303, {Connection: "close", Location: "/"});
     response.end();
   },
   errorLogger: function(error, request, response, next) {
