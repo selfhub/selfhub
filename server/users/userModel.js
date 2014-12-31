@@ -1,5 +1,5 @@
-var mongoose = require('mongoose');
-var bcrypt = require('bcryptjs');
+var mongoose = require("mongoose");
+var bcrypt = require("bcryptjs");
 
 var userSchema = new mongoose.Schema({
   username: {
@@ -15,7 +15,7 @@ var userSchema = new mongoose.Schema({
 });
 
 module.exports = {
-  model: mongoose.model('user', userSchema),
+  model: mongoose.model("user", userSchema),
   validPassword: function(inputPass, password) {
     return bcrypt.compare(inputPass, password, function(error, match) {
       return Boolean(match);
@@ -26,7 +26,7 @@ module.exports = {
       if (error) {
         console.log(error);
       } else {
-        console.log('hit genSalt, no error');
+        console.log("hit genSalt, no error");
         //cb takes err and hash arguments.
         bcrypt.hash(password, salt, cb);
       }

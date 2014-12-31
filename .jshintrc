@@ -12,7 +12,7 @@
   "noempty": true,
   "nonbsp": true,
   "nonew": true,
-  "quotmark": true,
+  "quotmark": "double",
   "undef": true,
 
   "maxcomplexity": 10,

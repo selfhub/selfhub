@@ -32,5 +32,6 @@
   "requireSpaceBeforeBlockStatements": true,
   "requireSpaceBeforeKeywords": ["else"],
   "requireSpaceBeforeObjectValues": true,
-  "validateParameterSeparator": ", "
+  "validateParameterSeparator": ", ",
+  "validateQuoteMarks": "\""
 }

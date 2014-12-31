@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
 
@@ -7,4 +7,4 @@ var schemaSchema = new Schema({
   data: Schema.Types.Mixed
 });
 
-module.exports = mongoose.model('schema', schemaSchema);
+module.exports = mongoose.model("schema", schemaSchema);
