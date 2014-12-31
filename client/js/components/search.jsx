@@ -1,9 +1,11 @@
 var React = require("react");
+var AppStore = require("../store/app_store");
 
 var Search = React.createClass({
   getInitialState: function() {
     return {searchString: ""};
   },
+  componentDidMount: AppStore.fetchSchemas,
   handleChange: function(event) {
     this.setState({searchString: event.target.value});
   },
@@ -23,7 +25,7 @@ var Search = React.createClass({
         <ul className={"search-results"}>
           {
             schemas.map(function(el) {
-              return <li><a href={el.route}>{el.name}</a></li>;
+              return <li><a href={"#/schema/" + el.route}>{el.name}</a></li>;
             })
           }
         </ul>

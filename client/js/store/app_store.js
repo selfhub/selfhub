@@ -1,14 +1,29 @@
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
+var $ = require('jquery');
 
 var CHANGE_EVENT = 'change';
 
 var AppStore = assign({}, EventEmitter.prototype, {
   // TODO: replace mock data with server call (#90)
+  fetchSchemas: function() {
+    $.ajax({
+      url: '/api/schema/',
+      type: 'GET',
+      success: function(data) {
+        console.log('GET request for schema data successful.', data);
+      },
+      error: function() {
+        console.log('GET request for schema data failed.');
+      }
+
+    });
+  },
+
   _searchSchemas: [
-    {name: 'Fitbit', route: '#/'},
-    {name: 'Apple Healthkit', route: '#/'},
-    {name: 'Nike Fuelband', route: '#/'}
+    {name: 'Fitbit', route: 'fitbit'},
+    {name: 'Apple Healthkit', route: 'apple-healthkit'},
+    {name: 'Nike Fuelband', route: 'nike-fuelband'}
   ],
 
   emitChange: function() {

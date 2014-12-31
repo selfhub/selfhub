@@ -343,21 +343,21 @@ var SignupForm = React.createClass({
 
   render: function() {
     return (
-      <div>
+      <div class="signup-block">
         <form className="signup-form" onSubmit={this.handleSubmit}>
           <div className="form-username">
-            <p className="form-label">Username*: </p>
-            <input className="form-input-field" type="text" ref="username"/>
+            <input placeholder="Username*" className="form-input-field"
+                   type="text" ref="username"/>
           </div>
 
           <div className="form-password">
-            <p className="form-label">Password*: </p>
-            <input className="form-input-field" type="password" ref="password"/>
+            <input placeholder="Password*" className="form-input-field"
+                   type="password" ref="password"/>
           </div>
 
           <div className="form-email">
-            <p className="form-label">Email*: </p>
-            <input className="form-input-field" type="email" ref="email" />
+            <input placeholder="Email*" className="form-input-field"
+                   type="email" ref="email" />
           </div>
 
           <div className="form-country">
