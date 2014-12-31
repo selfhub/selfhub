@@ -1,39 +1,28 @@
 var React = require("react");
 var $ = require("jquery");
+var AppStore = require("../store/app_store.js");
 
 var SigninForm = React.createClass({ 
-  getInitialState: function() {
-    return {
-      submitted: false      
-    };
+  
+  componentWillMount: function(){
+    this.formDataKeys = ["username", "password"];
   },
-
+  
   handleSubmit: function(event) {
     event.preventDefault();
-    var userData = this.getFormData();
+    var userData = AppStore.getFormData(this.formDataKeys);
     $.ajax({
       url: "/user/signin",
       type:"POST",
       dataType: "json",
       data: userData,
       success: function(data) {
-        console.log("success: next step, save userData to state in the store");
+        console.log("Successful Post to /signin");
         },
       error: function(error) {
         console.error(error);
         }
     });
-  },
-
-
-  getFormData: function() {
-    var data = {};
-    var keys = ["username", "password"];
-    var refs = this.refs;
-    keys.forEach(function(key){
-      data[key]=refs[key].getDOMNode().value;
-    });
-    return data;
   },
 
   render: function() {
