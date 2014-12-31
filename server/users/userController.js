@@ -8,6 +8,7 @@ var TWO_WEEKS_IN_MINUTES = 60 * 24 * 14;
 
 module.exports = {
   signin: function(request, response, next) {
+    var error;
     var username = request.body.username;
     var password = request.body.password;
     User.model.findOneAsync({username: username})
@@ -21,30 +22,40 @@ module.exports = {
             });
             next();
           } else {
-            helpers.errorHandler("invalid password", request, response, next);
+            error = {message: "invalid password"};
+            helpers.errorHandler(error, request, response, next);
+            return;
           }
         } else {
-          helpers.errorHandler("invalid username", request, response, next);
+          error = {message: "invalid username"};
+          helpers.errorHandler(error, request, response, next);
+          return;
         }
       })
       .catch(function(error) {
         helpers.errorLogger(error, request, response, next);
         helpers.errorHandler(error, request, response, next);
+        return;
       });
   },
 
   signup: function(request, response, next) {
+    var error;
     var newUser = request.body.username;
     var password = request.body.password;
     if (!newUser || !password) {
-      helpers.errorHandler("Invalid username/password input", request, response, next);
+      error = {message: "Invalid username/password input"};
+      helpers.errorHandler(error, request, response, next);
+      return;
     }
     User.model.findOneAsync({username: newUser})
       .then(function(user) {
         //enable the following log statement for troubleshooting purposes
         //console.debug("findOneAsync args:", arguments);
         if (user) {
-          helpers.errorHandler("User already exists", request, response, next);
+          error = {message: "User already exists"};
+          helpers.errorHandler(error, request, response, next);
+          return;
         } else {
           User.createHash(password, function(error, hash) {
             User.model.createAsync({
@@ -59,12 +70,14 @@ module.exports = {
             })
             .catch(function(error) {
               helpers.errorHandler(error, request, response, next);
+              return;
             });
           });
         }
       })
       .catch(function(error) {
         helpers.errorHandler(error, request, response, next);
+        return;
       });
   },
 
