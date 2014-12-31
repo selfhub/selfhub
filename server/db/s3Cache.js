@@ -52,7 +52,7 @@ var isCachedSchemaNameValid = function(schemaName) {
  * AWS S3 caching CRUD operations
  * @module server/db/s3Cache
  * @type {{createSchema: Function, createEntry: Function, getSchemaNames: Function,
- *   getData: Function, getUserIDsForSchema: Function, deleteSchema: Function,
+ *   getData: Function, getEntriesMetadataForSchema: Function, deleteSchema: Function,
  *   deleteEntry: Function}}
  */
 module.exports = {
@@ -122,10 +122,10 @@ module.exports = {
    * Forward to s3.
    * @param {string} schemaName the schema name
    * @param {string} userID the userID
-   * @param {s3Callback} callback the callback that handles the AWS response
+   * @param {Object} response the http ServerResponse to pipe the entry data
    */
-  getData: function(schemaName, userID, callback) {
-    s3.getData(schemaName, userID, callback);
+  getData: function(schemaName, userID, response) {
+    s3.getData(schemaName, userID, response);
   },
 
   /**
@@ -133,11 +133,11 @@ module.exports = {
    * @param {string} schemaName the schema name
    * @param {s3Callback} callback the callback that handles the AWS response
    */
-  getUserIDsForSchema: function(schemaName, callback) {
+  getEntriesMetadataForSchema: function(schemaName, callback) {
     if (isCachedSchemaNameValid(schemaName)) {
       callback(null, schemasToUserIDsCache[schemaName].userIDs);
     } else {
-      s3.getEntriesForSchema(schemaName, function(error, data) {
+      s3.getEntriesMetadataForSchema(schemaName, function(error, data) {
         if (error) {
           callback(error);
         } else {

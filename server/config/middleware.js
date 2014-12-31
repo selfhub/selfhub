@@ -12,6 +12,7 @@ module.exports = function(app, express) {
   app.use(bodyParser.json());
   app.use(express.static(__dirname + '/../../client'));
 
+  app.use('/api/schema', schemaRouter);
   app.use('/user', userRouter);
 
   app.use(helpers.errorLogger);

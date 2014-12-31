@@ -46,7 +46,7 @@ var getSchemaNameForBucketName = function(bucketName) {
  * AWS S3 CRUD operations
  * @module server/db/s3
  * @type {{createSchema: Function, createEntry: Function, getSchemaNames: Function,
- *   getData: Function, getUserIDsForSchema: Function, deleteSchema: Function,
+ *   getData: Function, getEntriesMetadataForSchema: Function, deleteSchema: Function,
  *   deleteEntry: Function}}
  */
 module.exports = {
@@ -86,44 +86,61 @@ module.exports = {
    */
   getSchemaNames: function(callback) {
     s3.listBuckets(function(error, data) {
-      if (error) { callback(error); }
-      var schemaNames = _.chain(data.Buckets)
-        .pluck('Name')
-        .transform(function(result, bucketName) {
-          var schemaName = getSchemaNameForBucketName(bucketName);
-          if (schemaName) {
-            result.push(schemaName);
-          }
-        })
-        .value();
-      callback(error, schemaNames);
+      if (error) {
+        callback(error);
+      } else {
+        var schemaNames = _.chain(data.Buckets)
+          .pluck('Name')
+          .transform(function(result, bucketName) {
+            var schemaName = getSchemaNameForBucketName(bucketName);
+            if (schemaName) {
+              result.push(schemaName);
+            }
+          })
+          .value();
+        callback(error, schemaNames);
+      }
     });
   },
 
   /**
-   * Get the entry associated with a schema and a userID.
+   * Stream the entry associated with a schema and a userID.
    * @param {string} schemaName the schema name
    * @param {string} userID the userID
-   * @param {s3Callback} callback the callback that handles the AWS response
+   * @param {Object} response the http ServerResponse to pipe the entry data
    */
-  getData: function(schemaName, userID, callback) {
+  getData: function(schemaName, userID, response) {
     var bucketName = getBucketNameForSchemaName(schemaName);
     var params = {
       Bucket: bucketName,
       Key: userID
     };
-    s3.getObject(params, callback);
+    s3.getObject(params).createReadStream().pipe(response);
   },
 
   /**
-   * Get the list of userIDs that have data for a schema.
+   * Get the metadata for the entries within a schema. Call back with an array of objects
+   * containing userID, size, and lastModified properties for each entry in the schema.
    * @param {string} schemaName the schema name
    * @param {s3Callback} callback the callback that handles the AWS response
    */
-  getUserIDsForSchema: function(schemaName, callback) {
+  getEntriesMetadataForSchema: function(schemaName, callback) {
     var bucketName = getBucketNameForSchemaName(schemaName);
     var params = {Bucket: bucketName};
-    s3.listObjects(params, callback);
+    s3.listObjects(params, function(error, data) {
+      if (error) {
+        callback(error);
+      } else {
+        var extract = _.transform(data.Contents, function(result, entry) {
+          result.push({
+            userID: entry.Key,
+            size: entry.Size,
+            lastModified: entry.LastModified
+          });
+        });
+        callback(error, extract);
+      }
+    });
   },
 
   /* UPDATE operations */
