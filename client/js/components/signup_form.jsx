@@ -1,6 +1,7 @@
 var React = require("react");
 var _ = require("lodash");
 var $ = require("jquery");
+var AppStore = require("../store/app_store.js");
 
 var SignupForm = React.createClass({
   getInitialState: function() {
@@ -313,32 +314,27 @@ var SignupForm = React.createClass({
     };
   },
 
+  componentWillMount: function(){
+    this.formDataKeys = ["username", "password", "email", "country", "state", "age", "gender"];
+    AppStore.logHello();
+  },
+
   handleSubmit: function(event) {
     event.preventDefault();
-    var userData = this.getFormData();
+    var userData = AppStore.getFormData(this.formDataKeys, this.refs);
     $.ajax({
       url: "/user/signup",
       type:"POST",
       dataType: "json",
       data: userData,
       success: function(data) {
-        console.log("success: next step, save userData to state in the store");
+        localStorage.setItem("token", data.token);
         },
       error: function(error) {
         console.error(error);
         }
     });
-  },
-  
-
-  getFormData: function() {
-    var data = {};
-    var keys = ["username", "password", "email", "country", "state", "age", "gender"];
-    var refs = this.refs;
-    keys.forEach(function(key){
-      data[key]=refs[key].getDOMNode().value;
-    });
-    return data;
+    console.log("finished handleSubmit");
   },
 
   render: function() {

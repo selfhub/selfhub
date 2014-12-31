@@ -53,6 +53,14 @@ var AppStore = assign({}, EventEmitter.prototype, {
     return {
       _searchSchemas: this._searchSchemas
     };
+  },
+
+  getFormData: function(arrayOfFormKeys, refs) {
+    var data = {};
+    arrayOfFormKeys.forEach(function(key) {
+      data[key] = refs[key].getDOMNode().value;
+    });
+    return data;
   }
 });
 
