@@ -10,6 +10,9 @@ var AppStore = assign({}, EventEmitter.prototype, {
     $.ajax({
       url: "/api/schema/",
       type: "GET",
+      beforeSend: function(request) {
+        request.setRequestHeader("x-jwt", localStorage.getItem("token"));
+      },
       success: function(data) {
         console.log("GET request for schema data successful.", data);
         _searchSchemas = AppStore.removeBucketPrefix(data);
