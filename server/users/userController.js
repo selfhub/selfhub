@@ -82,9 +82,14 @@ module.exports = {
   },
 
   checkAuth: function(request, response, next) {
-    //TODO: still need communication from client side to test sent headers (#91)
-    //this will be whatever header we put the jwt under.
     var token = request.headers["x-jwt"];
-    var user = jwt.verify(token, process.env.JWT_SECRET);
+    jwt.verify(token, process.env.JWT_SECRET, function(error, decoded) {
+      if (error) {
+        helpers.errorHandler(error, request, response, next);
+      } else {
+        request.currentUser = decoded;
+        next();
+      }
+    });
   }
 };
