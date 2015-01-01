@@ -2,6 +2,7 @@ var React = require("react");
 var _ = require("lodash");
 var $ = require("jquery");
 var AppStore = require("../store/app_store.js");
+var router;
 
 var SignupForm = React.createClass({
   getInitialState: function() {
@@ -316,7 +317,7 @@ var SignupForm = React.createClass({
 
   componentWillMount: function(){
     this.formDataKeys = ["username", "password", "email", "country", "state", "age", "gender"];
-    AppStore.logHello();
+    router = this.props.router;
   },
 
   handleSubmit: function(event) {
@@ -325,16 +326,16 @@ var SignupForm = React.createClass({
     $.ajax({
       url: "/user/signup",
       type:"POST",
-      dataType: "json",
       data: userData,
       success: function(data) {
         localStorage.setItem("token", data.token);
+        router.navigate("/", {trigger: true});
+        AppStore.emitChange();
         },
       error: function(error) {
         console.error(error);
         }
     });
-    console.log("finished handleSubmit");
   },
 
   render: function() {
