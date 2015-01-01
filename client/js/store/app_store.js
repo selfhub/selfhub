@@ -3,28 +3,41 @@ var assign = require("object-assign");
 var $ = require("jquery");
 
 var CHANGE_EVENT = "change";
+var _searchSchemas = [];
 
 var AppStore = assign({}, EventEmitter.prototype, {
-  // TODO: replace mock data with server call (#90)
   fetchSchemas: function() {
     $.ajax({
       url: "/api/schema/",
       type: "GET",
       success: function(data) {
         console.log("GET request for schema data successful.", data);
+        _searchSchemas = AppStore.removeBucketPrefix(data);
+        AppStore.emitChange();
       },
       error: function() {
         console.log("GET request for schema data failed.");
       }
-
     });
   },
 
-  _searchSchemas: [
-    {name: "Fitbit", route: "fitbit"},
-    {name: "Apple Healthkit", route: "apple-healthkit"},
-    {name: "Nike Fuelband", route: "nike-fuelband"}
-  ],
+  removeBucketPrefix: function(bucketArray) {
+    var buckets = [];
+    bucketArray.forEach(function(schema) {
+      schema = schema.substr(schema.indexOf("-") + 1);
+      buckets.push({
+        name: AppStore.formatSearchStringResult(schema),
+        route: schema
+      });
+    });
+    return buckets;
+  },
+
+  formatSearchStringResult: function(string) {
+    return string.split("-").map(function(word) {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(" ");
+  },
 
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -51,7 +64,7 @@ var AppStore = assign({}, EventEmitter.prototype, {
   */
   getAppState: function() {
     return {
-      _searchSchemas: this._searchSchemas
+      _searchSchemas: _searchSchemas
     };
   },
 
