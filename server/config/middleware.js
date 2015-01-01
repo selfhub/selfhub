@@ -1,6 +1,7 @@
 var morgan = require("morgan");
 var bodyParser = require("body-parser");
 var helpers = require("./helpers.js");
+var userController = require("../users/userController");
 
 module.exports = function(app, express) {
   var userRouter = express.Router();
@@ -12,7 +13,7 @@ module.exports = function(app, express) {
   app.use(bodyParser.json());
   app.use(express.static(__dirname + "/../../client"));
 
-  app.use("/api/schema", schemaRouter);
+  app.use("/api/schema", userController.checkAuth, schemaRouter);
   app.use("/user", userRouter);
 
   app.use(helpers.errorLogger);
