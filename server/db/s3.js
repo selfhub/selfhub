@@ -11,7 +11,7 @@ var s3 = new AWS.S3();
  * @default
  * @type {string}
  */
-var BUCKET_PREFIX = "selfhub-io-schema-";
+var BUCKET_PREFIX = process.env.AWS_BUCKET_PREFIX;
 
 /**
  * Get the bucket name corresponding to a schema name.
