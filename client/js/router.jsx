@@ -9,7 +9,11 @@ var Router = Backbone.Router.extend({
   },
   search: function() {
     console.log("Routing to home page...");
-    this.current = "search";
+    if (localStorage.getItem("token")) {
+      this.current = "search";
+    } else {
+      this.current = "signin";
+    }
   },
   signup: function() {
     console.log("Routing to signup page...");
