@@ -20,10 +20,10 @@ var InterfaceComponent = React.createClass({
   render: function() {
     var currentRoute = this.props.router.current;
     if (currentRoute === "signup") {
-      return <SignupForm />;
+      return <SignupForm router={this.props.router}/>;
     }
     if (currentRoute === "signin") {
-      return <SigninForm />;
+      return <SigninForm router={this.props.router}/>;
     }
     if (currentRoute === "search") {
       return <Search items={this.props.state._searchSchemas}/>;
