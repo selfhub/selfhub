@@ -1,0 +1,116 @@
+@import url(http://fonts.googleapis.com/css?family=Quicksand:300,400,700);
+
+/* CSS Reset */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, em, img, strong, b, ol, ul, li, form, label {
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+/* Global Styles */
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  background: #fafafa;
+  font-family: 'Quicksand', Helvetica, Arial, sans-serif;
+  font-size: 1.6em;
+  font-weight: 300;
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: 960px;
+}
+
+a {
+  color: teal;
+  padding-bottom: 0.5px;
+  text-decoration: none;
+}
+
+a:hover {
+  border-bottom: 1px solid teal;
+  color: teal;
+  text-decoration: none;
+}
+
+/* Navbar */
+nav {
+  background: white;
+  border-bottom: 1px solid #ccc;
+  height: 50px;
+  margin: 0 auto;
+  padding: 10px 20px 10px 20px;
+  top: 0;
+  width: 100%;
+}
+
+.home {
+  display: inline-block;
+  font-weight: 600;
+}
+
+.menu {
+  display: inline-block;
+  float: right;
+}
+
+/* Search Component */
+.search-block {
+  margin: 40px auto;
+  width: 500px;
+}
+
+.main-search {
+  border: 1px solid #ccc;
+  font-family: 'Quicksand';
+  font-size: 0.85em;
+  padding: 8px 15px 8px 15px;
+  text-align: center;
+  width: 500px;
+}
+
+.main-search:focus {
+  border: 1px solid teal;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.search-results {
+  line-height: 1.8em;
+  margin-top: 20px;
+}
+
+/* Signup Form */
+.signup-form {
+  text-align: center;
+}
+
+.signup-form p {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.signup-form input {
+  background: none;
+  border: none;
+  border-bottom: 1px solid teal;
+  margin-top: 20px;
+}
+
+.signup-form input:focus {
+  outline: none;
+}

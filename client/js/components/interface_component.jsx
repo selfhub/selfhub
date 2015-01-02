@@ -1,0 +1,39 @@
+var React = require("react");
+var Search = require("./search.jsx");
+var SignupForm = require("./signup_form.jsx");
+var SigninForm = require("./signin_form.jsx");
+var DataPage = require("./data_page.jsx");
+
+var InterfaceComponent = React.createClass({
+  componentWillMount: function() {
+    this.callback = (function() {
+      this.forceUpdate();
+    }).bind(this);
+
+    this.props.router.on("route", this.callback);
+  },
+
+  componentWillUnmount: function() {
+    this.props.router.off("route", this.callback);
+  },
+
+  render: function() {
+    var currentRoute = this.props.router.current;
+    if (currentRoute === "signup") {
+      return <SignupForm router={this.props.router}/>;
+    }
+    if (currentRoute === "signin") {
+      return <SigninForm router={this.props.router}/>;
+    }
+    if (currentRoute === "search") {
+      return <Search items={this.props.state._searchSchemas}/>;
+    }
+    if (currentRoute === "schemaController") {
+      return <DataPage displaySchema={this.props.state._displaySchema} 
+                       schemaName={this.props.router.schemaName}/>;
+    }
+    return <div />;
+  }
+});
+
+module.exports = InterfaceComponent;
