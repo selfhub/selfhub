@@ -4,6 +4,7 @@ var $ = require("jquery");
 
 var CHANGE_EVENT = "change";
 var _searchSchemas = [];
+var _displaySchema = false;
 
 var AppStore = assign({}, EventEmitter.prototype, {
   fetchSchemas: function() {
@@ -19,7 +20,47 @@ var AppStore = assign({}, EventEmitter.prototype, {
         AppStore.emitChange();
       },
       error: function() {
-        console.log("GET request for schema data failed.");
+        console.error("GET request for schema data failed.");
+      }
+    });
+  },
+
+  uploadData: function(filename, file, schemaName) {
+    var token = localStorage.getItem("token");
+    var formData = new FormData();
+    formData.append("File", file, filename);
+    $.ajax({
+      type: "POST",
+      beforeSend: function(request) {
+        request.setRequestHeader("x-jwt", token);
+      },
+      url: "/api/schema/" + schemaName + "/" + token,
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(data) {
+        console.log(data);
+      },
+      error: function(error) {
+        console.error(error);
+      }
+    });
+  },
+
+  renderSchema: function(schemaName) {
+    $.ajax({
+      url: "/api/schema/" + schemaName,
+      type: "GET",
+      beforeSend: function(request) {
+        request.setRequestHeader("x-jwt", localStorage.getItem("token"));
+      },
+      success: function(data) {
+        console.log("GET request for schema data successful.", data);
+        _displaySchema = data;
+        AppStore.emitChange();
+      },
+      error: function(error) {
+        console.error(error);
       }
     });
   },
@@ -67,7 +108,8 @@ var AppStore = assign({}, EventEmitter.prototype, {
   */
   getAppState: function() {
     return {
-      _searchSchemas: _searchSchemas
+      _searchSchemas: _searchSchemas,
+      _displaySchema: _displaySchema
     };
   },
 

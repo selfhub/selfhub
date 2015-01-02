@@ -1,14 +1,18 @@
 var React = require("react");
 var _ = require("lodash");
 var reactBootStrap = require("react-bootstrap");
+var AppStore = require("../store/app_store");
 
 var UploadButton = React.createClass({
-  fileHandler: function(event) {
-    console.log(this.files);
-  },
   componentDidMount: function() {
+    var schemaName = this.props.schemaName;
+    function fileHandler() {
+      var file = this.files.item(0);
+      AppStore.uploadData(file.name, file, schemaName);
+    }
+
     var inputElement = document.getElementById("input");
-    inputElement.addEventListener("change", this.fileHandler, false);
+    inputElement.addEventListener("change", fileHandler, false);
   },
   render: function() {
     return (
@@ -22,72 +26,77 @@ var UploadButton = React.createClass({
 var DownloadButton = React.createClass({
   render: function() {
     return (
-      <div class="formbutton">
-        <form action={this.props.url} method="get">
-          <button type="submit">Download</button>
-        </form>
+      <div className="formbutton">
+        <a href={this.props.url} download={this.props.name} type="submit">Download</a>
       </div>
     );
   }
 });
 
 var TableRows = React.createClass({
-    render: function() {
-      return (
-        <tbody>
-          {
-            _.map(this.props.rowData, function(row) {
-                  return (<tr>
-                            {
-                              _.map(row, function(rowItem) {
-                                return <td>{rowItem}</td>;
-                              })
-                            }
-                          </tr>);
-            })
-          }
-        </tbody>
-      );
-    }
+  render: function() {
+    var schemaName = this.props.schemaName;
+    return (
+      <tbody>
+        {
+          _.map(this.props.rowData, function(row) {
+            return (
+              <tr>
+                {
+                  _.map(row, function(rowItem) {
+                    return <td>{rowItem}</td>;
+                  })
+                }
+                <td>
+                  <DownloadButton name={row.userID} 
+                    url={"api/schema/" + schemaName + "/" + row.userID}/>
+                </td>
+              </tr>
+            );
+          })
+        }
+      </tbody>
+    );
+  }
 });
 
 var TableHeadersRow = React.createClass({
-    render: function() {
-      return (
-        <tr>
-          {
-            _.map(this.props.headerKeys, function(header) {
-              return <th>{header}</th>;
-            })
-          }
-        </tr>
-      );
-    }
+  render: function() {
+    return (
+      <tr>
+        {
+          _.map(this.props.headerKeys, function(header) {
+            return <th>{header}</th>;
+          })
+        }
+        <th>Download</th>
+      </tr>
+    );
+  }
 });
 
 var Table = React.createClass({
- getInitialState: function() {
-  return {
-    mockFitBitData: [
-      {name: "Brian", miles: 1, month: "feb"},
-      {name: "Thomas", miles: 3.4, month: "march"},
-      {name: "Zindler", miles: 45, month: "july"},
-      {name: "Murphy", miles: 2, month: "jan"}
-    ]
-  };
- },
- render: function() {
-   var Table = reactBootStrap.Table;
-   var fitBitData = this.state.mockFitBitData;
-   var headerKeys = Object.keys(fitBitData[0]);
-
-   return (
-     <Table striped bordered condensed hover>
-        <TableHeadersRow headerKeys={headerKeys}/>
-        <TableRows rowData={fitBitData}/>
-     </Table>
-   );
- }
+  componentDidMount: function() {
+    AppStore.renderSchema(this.props.schemaName);
+  },
+  render: function() {
+    var Table = reactBootStrap.Table;
+    var rows = this.props.displaySchema;
+    if (rows && _.isObject(rows[0])) {
+      var headerKeys = Object.keys(rows[0]);
+      return (
+        <div>
+          <Table striped bordered condensed hover>
+            <TableHeadersRow headerKeys={headerKeys}/>
+            <TableRows schemaName={this.props.schemaName} rowData={rows}/>
+          </Table>
+          <UploadButton schemaName={this.props.schemaName}/>
+        </div>
+      ); 
+    } else {
+      return <div/>;
+    }   
+  }
 });
 
 module.exports = Table;
