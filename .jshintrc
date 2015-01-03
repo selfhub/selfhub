@@ -25,5 +25,6 @@
   "esnext": true,
 
   "browser": true,
+  "mocha": true,
   "node": true
 }

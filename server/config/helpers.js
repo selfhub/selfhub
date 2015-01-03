@@ -2,7 +2,7 @@
  * Handle errors by responding with 500 and the error message.
  * @param {Object} error the error object
  * @param {Object} request the http ClientRequest object
- * @param {Object} response the htpp ServerResponse object
+ * @param {Object} response the http ServerResponse object
  * @param {Function} next the next function to invoke
  */
 var errorHandler = function(error, request, response, next) {
@@ -21,9 +21,9 @@ module.exports = {
 
   /**
    * Log error.
-   * @param {Objet} error the error object
+   * @param {Object} error the error object
    * @param {Object} request the http ClientRequest object
-   * @param {Object} response the htpp ServerResponse object
+   * @param {Object} response the http ServerResponse object
    * @param {Function} next the next function to invoke
    */
   errorLogger: function(error, request, response, next) {
@@ -36,9 +36,9 @@ module.exports = {
   /**
    * Get a callback function to handle AWS responses.
    * @param {Object} request the http ClientRequest object
-   * @param {Object} response the htpp ServerResponse object
+   * @param {Object} response the http ServerResponse object
    * @param {number} successStatusCode the status code to return on success
-   * @returns {s3Callback} a callback that handles AWS response
+   * @returns {s3Callback} a callback that handles AWS responses
    */
   getAWSCallbackHandler: function(request, response, successStatusCode) {
     successStatusCode = successStatusCode || 200;
@@ -53,7 +53,7 @@ module.exports = {
 
   /**
    * Respond with 400 and a message.
-   * @param {Object} response the htpp ServerResponse object
+   * @param {Object} response the http ServerResponse object
    * @param {string} message the response message
    */
   handleBadRequest: function(response, message) {

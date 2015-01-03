@@ -2,6 +2,7 @@ module.exports = function(grunt) {
   var jsFiles = [
     "client/js/**/*.js",
     "server/**/*.js",
+    "test/**/*.js",
     "*.js"
   ];
 
@@ -31,6 +32,11 @@ module.exports = function(grunt) {
       },
       all: jsxAndjsFiles
     },
+    mochaTest: {
+      test: {
+        src: ["test/**/*.js"]
+      }
+    },
     watch: {
       files: jsxAndjsFiles,
       tasks: ["jshint", "jscs", "browserify"]
@@ -38,6 +44,7 @@ module.exports = function(grunt) {
   });
 
   require("load-grunt-tasks")(grunt);
-  grunt.registerTask("default", ["jshint", "jscs", "browserify"]);
+  grunt.registerTask("default", ["jshint", "jscs", "mochaTest", "browserify"]);
   grunt.registerTask("build", ["browserify"]);
+  grunt.registerTask("test", ["jshint", "jscs", "mochaTest"]);
 };

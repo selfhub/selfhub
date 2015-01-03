@@ -2,6 +2,7 @@ SelfHub
 =======
 [![Build Status][build-img]][build-url]
 [![Dependency Status][dependencies-img]][dependencies-url]
+[![devDependency Status][devDependencies-img][devDependencies-url]
 [![Code Climate][climate-img]][climate-url]
 
 SelfHub is a central platform for sharing and analyzing quantified self data.
@@ -58,4 +59,6 @@ MIT License 2014
 [contributing-url]: https://github.com/selfhub/selfhub/blob/develop/CONTRIBUTING.md
 [dependencies-img]: https://david-dm.org/selfhub/selfhub.svg
 [dependencies-url]: https://david-dm.org/selfhub/selfhub
+[devDependencies-img]: https://david-dm.org/selfhub/selfhub/dev-status.svg
+[devDependencies-url]: https://david-dm.org/selfhub/selfhub#info=devDependencies
 [roadmap-url]: https://github.com/selfhub/selfhub/wiki/Roadmap
