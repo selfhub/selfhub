@@ -2,7 +2,8 @@ SelfHub
 =======
 [![Build Status][build-img]][build-url]
 [![Dependency Status][dependencies-img]][dependencies-url]
-[![devDependency Status][devDependencies-img][devDependencies-url]
+[![devDependency Status][devDependencies-img]][devDependencies-url]
+[![Coverage Status][coveralls-image]][coveralls-url]
 [![Code Climate][climate-img]][climate-url]
 
 SelfHub is a central platform for sharing and analyzing quantified self data.
@@ -54,9 +55,11 @@ MIT License 2014
 
 [build-img]: https://travis-ci.org/selfhub/selfhub.svg
 [build-url]: https://travis-ci.org/selfhub/selfhub
-[climate-img]: https://codeclimate.com/github/selfhub/selfhub/badges/gpa.svg
+[climate-img]: https://img.shields.io/codeclimate/github/selfhub/selfhub.svg?style=flat
 [climate-url]: https://codeclimate.com/github/selfhub/selfhub
 [contributing-url]: https://github.com/selfhub/selfhub/blob/develop/CONTRIBUTING.md
+[coveralls-image]: https://img.shields.io/coveralls/selfhub/selfhub/develop.svg?style=flat
+[coveralls-url]: https://coveralls.io/r/selfhub/selfhub?branch=develop
 [dependencies-img]: https://david-dm.org/selfhub/selfhub.svg
 [dependencies-url]: https://david-dm.org/selfhub/selfhub
 [devDependencies-img]: https://david-dm.org/selfhub/selfhub/dev-status.svg

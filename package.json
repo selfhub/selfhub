@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "grunt test"
+    "test": "grunt test",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -49,6 +50,7 @@
   },
   "devDependencies": {
     "chai": "^1.10.0",
+    "istanbul": "^0.3.5",
     "mocha": "^2.1.0",
     "sinon": "^1.12.2",
     "supertest": "^0.15.0"
