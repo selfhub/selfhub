@@ -2,7 +2,7 @@ SelfHub
 =======
 [![Build Status][build-img]][build-url]
 [![Dependency Status][dependencies-img]][dependencies-url]
-[![devDependency Status][devDependencies-img][devDependencies-url]
+[![devDependency Status][devDependencies-img]][devDependencies-url]
 [![Code Climate][climate-img]][climate-url]
 
 SelfHub is a central platform for sharing and analyzing quantified self data.
