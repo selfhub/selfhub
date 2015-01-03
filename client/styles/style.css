@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Quicksand:300,400,700);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,800,700,600,300);
 
 /* CSS Reset */
 html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, em, img, strong, b, ol, ul, li, form, label {
@@ -24,15 +25,16 @@ ol, ul {
 }
 
 body {
-  background: #fafafa;
-  font-family: 'Quicksand', Helvetica, Arial, sans-serif;
-  font-size: 1.6em;
-  font-weight: 300;
-}
-
-.wrapper {
-  margin: 0 auto;
-  width: 960px;
+  background: #f2f2f2;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-size: 1.2em;
+  font-weight: 400;
+  min-height: 300px;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 a {
@@ -43,6 +45,11 @@ a {
 
 a:hover {
   border-bottom: 1px solid teal;
+  color: teal;
+  text-decoration: none;
+}
+
+a:focus {
   color: teal;
   text-decoration: none;
 }
@@ -58,14 +65,25 @@ nav {
   width: 100%;
 }
 
+.home,
+.menu {
+  font-family: 'Quicksand', Helvetica, sans-serif;
+  font-size: 1.4em;
+}
+
 .home {
   display: inline-block;
   font-weight: 600;
 }
 
 .menu {
+  color: teal;
   display: inline-block;
   float: right;
+}
+
+.menu:hover {
+  cursor: pointer;
 }
 
 /* Search Component */
@@ -94,23 +112,137 @@ nav {
   margin-top: 20px;
 }
 
-/* Signup Form */
+/* Signin Block */
+.table-frame {
+  display: table;
+  height: 85%;
+  position: absolute;
+  width: 100%;
+}
+
+.table-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.signup-block,
+.signin-block {
+  margin: 0 auto;
+  width: 375px;
+}
+
+.signin-block-header,
+.signup-block-header {
+  margin-bottom: 15px;
+}
+
+.signin-block-title,
+.signup-block-title {
+  color: teal;
+  display: inline-block;
+  font-family: Quicksand, 'sans-serif';
+  font-weight: 600;
+  margin-left: 0.25em;
+  font-size: 1.4em;
+}
+
+.signin-block-signup,
+.signup-block-signin {
+  float: right;
+  font-size: 0.75em;
+  margin-top: 0.5em;
+  margin-right: 0.5em;
+}
+
+/* Signin Form */
+.signin-form,
 .signup-form {
-  text-align: center;
+  background: white;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  padding: 25px;
+}
+
+.user-block,
+.password-block,
+.email-block {
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.user-icon,
+.password-icon,
+.email-icon {
+  display: inline-block;
+  height: 1.4em;
+  margin-left: 10px;
+  width: 20px;
+}
+
+.form-username,
+.form-password,
+.form-email {
+  border: none;
+  display: inline-block;
+  padding: 8px 15px 0 15px;
+  width: 90%;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.signin-submit-button,
+.signup-submit-button {
+  background: teal;
+  border: 1px solid teal;
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+  color: #f2f2f2;
+  display: inline-block;
+  height: 39px;
+  margin-bottom: 5px;
+  padding: 8px 15px 8px 15px;
+  position: relative;
+}
+
+.signin-submit-button {
+  float: right;
+}
+
+.signup-submit-button {
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.signin-submit-button:hover,
+.signup-submit-button:hover {
+  background: #008c8c;
+}
+
+#x {
+  width: 200px;
+}
+
+/* Signup Form */
+.signup-form .email-block {
+  margin-bottom: 20px;
 }
 
 .signup-form p {
-  display: inline-block;
-  margin-right: 10px;
+  font-size: 0.75em;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
 
-.signup-form input {
-  background: none;
-  border: none;
-  border-bottom: 1px solid teal;
-  margin-top: 20px;
+.dropdown {
+  margin-bottom: 15px;
 }
 
-.signup-form input:focus {
-  outline: none;
+select {
+  width: 100%;
 }

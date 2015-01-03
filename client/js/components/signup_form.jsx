@@ -331,70 +331,96 @@ var SignupForm = React.createClass({
         localStorage.setItem("token", data.token);
         router.navigate("/", {trigger: true});
         AppStore.emitChange();
-        },
+      },
       error: function(error) {
         console.error(error);
-        }
+      }
     });
   },
 
   render: function() {
     return (
-      <div class="signup-block">
-        <form className="signup-form" onSubmit={this.handleSubmit}>
-          <div className="form-username">
-            <input placeholder="Username*" className="form-input-field"
-                   type="text" ref="username"/>
+      <div className="table-frame">
+        <div className="table-cell">
+
+          <div className="signin-block">
+
+            <div className="signup-block-header">
+              <h2 className="signup-block-title">SelfHub</h2>
+              <a href="#/signin" className="signup-block-signin">&#10095; Signin</a>
+            </div>
+
+            <form className="signup-form" onSubmit={this.handleSubmit}>
+              <div className="signup-form-inputs">
+
+                <div className="user-block">
+                  <span className="user-icon">
+                    <i className="fa fa-user" />
+                  </span>
+                  <input placeholder="Username*" className="input form-username"
+                         type="text" ref="username" />
+                </div>
+
+                <div className="password-block">
+                  <span className="password-icon">
+                    <i className="fa fa-key"></i>
+                  </span>
+                  <input placeholder="Password*" className="input form-password"
+                         type="password" ref="password"/>
+                </div>
+
+                <div className="email-block">
+                  <span className="email-icon">
+                    <i className="fa fa-envelope"></i>
+                  </span>
+                  <input placeholder="Email*" className="input form-email"
+                         type="email" ref="email"/>
+                </div>
+
+                <div className="dropdown signup-form-country">
+                  <p className="signup-form-label">Country*: </p>
+                  <select defaultValue="US" ref="country">
+                          {_.map(this.state.countries, function(countryTuple){
+                            return <option value={countryTuple[0]}>{countryTuple[1]}</option>;
+                          })}
+                  </select>
+                </div>
+
+                <div className="dropdown signup-form-state">
+                  <p className="signup-form-label">State: </p>
+                  <select ref="state">
+                       {_.map(this.state.states, function(stateTuple){
+                         return <option value={stateTuple[0]}>{stateTuple[1]}</option>;
+                       })}
+                  </select>
+                </div>
+
+                <div className="dropdown age">
+                  <p className="signup-form-label">Age: </p>
+                  <select ref="age">
+                  {_.map(_.range(18,101), function(age) {
+                    return <option value={age}>{age}</option>;
+                  })}
+                  </select>
+                </div>
+
+                <div className="dropdown gender">
+                  <p className="signup-form-label">Gender: </p>
+                  <select ref="gender">
+                    <option value="f">female</option>
+                    <option value="m">male</option>
+                    <option value="o">other</option>
+                  </select>
+                </div>
+
+                <input className="signup-submit-button"
+                       type="submit" value="Signup"/>
+              </div>
+            </form>
+
           </div>
 
-          <div className="form-password">
-            <input placeholder="Password*" className="form-input-field"
-                   type="password" ref="password"/>
-          </div>
-
-          <div className="form-email">
-            <input placeholder="Email*" className="form-input-field"
-                   type="email" ref="email" />
-          </div>
-
-          <div className="form-country">
-            <p className="form-label">Country*: </p>
-            <select defaultValue="US" ref="country">
-                      {_.map(this.state.countries, function(countryTuple){
-                        return <option value={countryTuple[0]}>{countryTuple[1]}</option>;
-                      })}
-            </select>
-          </div>
-
-          <div className="form-state">
-            <p className="form-label">State: </p>
-            <select ref="state">
-                   {_.map(this.state.states, function(stateTuple){
-                     return <option value={stateTuple[0]}>{stateTuple[1]}</option>;
-                   })}
-            </select>
-          </div>
-
-          <div className="age">
-            <p className="form-label">Age: </p>
-            <select ref="age">
-              {_.map(_.range(18,101), function(age) {
-                return <option value={age}>{age}</option>;
-              })}
-            </select>
-          </div>
-
-          <div className="gender">
-            <p className="form-label">Gender: </p>
-            <select ref="gender">
-              <option value="f">female</option>
-              <option value="m">male</option>
-              <option value="o">other</option>
-            </select>
-          </div>
-
-          <input className="form-submit-button" type="submit" value="Signup"/>
-        </form>
+        </div>
       </div>
      );
   }
