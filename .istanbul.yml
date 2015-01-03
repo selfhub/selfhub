@@ -1,0 +1,4 @@
+instrumentation:
+    root: .
+    excludes: ['Gruntfile.js']
+    include-all-sources: true

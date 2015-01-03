@@ -13,5 +13,7 @@ matrix:
     - node_js: "0.8"
     - node_js: "0.11"
   fast_finish: true
+script: "npm run-script test-travis"
+after_script: "npm install coveralls && cat ./coverage/lcov.info | coveralls"
 notifications:
   email: false
