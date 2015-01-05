@@ -49,15 +49,15 @@ ol, ul {
 
 body {
   background: #f2f2f2;
+  display: block;
   font-family: 'Open Sans', Helvetica, Arial, sans-serif;
   font-size: 1.2em;
   font-weight: 400;
-  min-height: 300px;
+  height: 100%;
   margin: 0;
+  min-height: 300px;
   padding: 0;
   width: 100%;
-  height: 100%;
-  display: block;
 }
 
 a {
@@ -80,12 +80,12 @@ a:focus {
 /* Navbar */
 nav {
   background: teal;
-  border-bottom: 1px solid #ccc;
   height: 50px;
-  margin: 0 auto;
   padding: 10px 20px 10px 20px;
+  position: fixed;
   top: 0;
   width: 100%;
+  z-index: 10;
 }
 
 .home,
@@ -109,9 +109,9 @@ nav {
 }
 
 .menu {
+  color: white;
   display: inline-block;
   float: right;
-  color: white;
 }
 
 .menu:hover {
@@ -122,9 +122,9 @@ nav {
 .main-search {
   border: 1px solid #e5e5e5;
   font-family: 'Quicksand', sans-serif;
+  margin-top: 60px;
   padding: 8px 15px 8px 15px;
   text-align: center;
-  margin-top: 10px;
 }
 
 .main-search:focus {
@@ -139,10 +139,10 @@ nav {
 
 .search-schema {
   background: white;
-  opacity: 0.75;
   border: 1px solid #e5e5e5;
-  padding: 20px;
   margin-bottom: 10px;
+  opacity: 0.75;
+  padding: 20px;
 }
 
 .search-schema-label {
@@ -166,10 +166,10 @@ nav {
 
 .search-schema-rows,
 .search-schema-columns {
-  display: inline-block;
   border: 1px solid #e5e5e5;
-  padding: 0 15px 0 15px;
   border-radius: 3px;
+  display: inline-block;
+  padding: 0 15px 0 15px;
 }
 
 .search-schema-rows {
@@ -205,17 +205,17 @@ nav {
   color: teal;
   display: inline-block;
   font-family: Quicksand, 'sans-serif';
+  font-size: 1.4em;
   font-weight: 600;
   margin-left: 0.25em;
-  font-size: 1.4em;
 }
 
 .signin-block-signup,
 .signup-block-signin {
   float: right;
   font-size: 0.75em;
-  margin-top: 0.5em;
   margin-right: 0.5em;
+  margin-top: 0.5em;
 }
 
 /* Signin Form */
@@ -254,8 +254,14 @@ nav {
   width: 90%;
 }
 
-.input:focus {
+.input:focus,
+.data-search {
   outline: none;
+}
+
+.data-search {
+  padding: 5px 15px 0 15px;
+  width: 100%;
 }
 
 .signin-submit-button,
@@ -309,4 +315,27 @@ nav {
 
 select {
   width: 100%;
+}
+
+/* Data Page */
+.tools {
+  border-right: 1px solid #e5e5e5;
+  display: inline-block;
+  min-height: 100%;
+  padding: 65px 15px 15px 15px;
+  position: absolute;
+  width: 20%;
+}
+
+.viz-and-table-views {
+  display: inline-block;
+  margin-left: 20%;
+  width: 80%;
+}
+
+.visualization-view {
+  background: #fff;
+  border-bottom: 1px solid #e5e5e5;
+  height: 450px;
+  padding: 65px 15px 15px 15px;
 }
