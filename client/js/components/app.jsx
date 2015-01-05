@@ -25,9 +25,7 @@ var App = React.createClass({
     return (
       <div>
         <Navbar />
-        <div className={"wrapper"}>
-          <InterfaceComponent state={this.state} router={router}/>
-        </div>
+        <InterfaceComponent state={this.state} router={router}/>
       </div>
     );
   },

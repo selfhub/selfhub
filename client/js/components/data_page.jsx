@@ -85,12 +85,20 @@ var Table = React.createClass({
     if (rows && _.isObject(rows[0])) {
       var headerKeys = Object.keys(rows[0]);
       return (
-        <div>
-          <Table striped bordered condensed hover>
-            <TableHeadersRow headerKeys={headerKeys}/>
-            <TableRows schemaName={this.props.schemaName} rowData={rows}/>
-          </Table>
-          <UploadButton schemaName={this.props.schemaName}/>
+        <div className="data-page">
+          <aside className="tools">
+            <input className="data-search" placeholder="Search schemas" type="text"/>
+          </aside>
+          <section className="viz-and-table-views">
+            <div className="visualization-view">Chart goes here</div>
+            <div className="table-view">
+              <Table striped bordered condensed hover>
+                <TableHeadersRow headerKeys={headerKeys}/>
+                <TableRows schemaName={this.props.schemaName} rowData={rows}/>
+              </Table>
+              <UploadButton schemaName={this.props.schemaName}/>
+            </div>
+          </section>
         </div>
       );
     } else {

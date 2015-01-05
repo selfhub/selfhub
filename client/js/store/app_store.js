@@ -68,7 +68,6 @@ var AppStore = assign({}, EventEmitter.prototype, {
   removeBucketPrefix: function(bucketArray) {
     var buckets = [];
     bucketArray.forEach(function(schema) {
-      schema = schema.substr(schema.indexOf("-") + 1);
       buckets.push({
         name: AppStore.formatSearchStringResult(schema),
         route: schema
