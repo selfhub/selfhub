@@ -36,6 +36,23 @@ var getSchemaNameForBucketName = function(bucketName) {
 };
 
 /**
+ * Create a schema entry.
+ * @param {string} schemaName the schema name
+ * @param {string} userID the userID
+ * @param {string} data the entry data
+ * @param {s3Callback} callback the callback that handles the AWS response
+ */
+var createEntry = function(schemaName, userID, data, callback) {
+  var bucketName = getBucketNameForSchemaName(schemaName);
+  var params = {
+    Bucket: bucketName,
+    Key: userID,
+    Body: data
+  };
+  s3.putObject(params, callback);
+};
+
+/**
  * The AWS S3 callback
  * @callback s3Callback
  * @param {Object} error the error response
@@ -67,22 +84,7 @@ module.exports = {
     s3.createBucket({Bucket: bucketName}, callback);
   },
 
-  /**
-   * Create a schema entry.
-   * @param {string} schemaName the schema name
-   * @param {string} userID the userID
-   * @param {string} data the entry data
-   * @param {s3Callback} callback the callback that handles the AWS response
-   */
-  createEntry: function(schemaName, userID, data, callback) {
-    var bucketName = getBucketNameForSchemaName(schemaName);
-    var params = {
-      Bucket: bucketName,
-      Key: userID,
-      Body: data
-    };
-    s3.putObject(params, callback);
-  },
+  createEntry: createEntry,
 
   /* READ operations */
 
@@ -151,7 +153,31 @@ module.exports = {
 
   /* UPDATE operations */
 
-  // TODO: support incremental updates (#92)
+  /**
+   * Append data to an existing schema entry.
+   * @param {string} schemaName the schema name
+   * @param {string} userID the userID
+   * @param {string} newData the data to append
+   * @param {s3Callback} callback the callback that handles the AWS response
+   */
+  appendEntry: function(schemaName, userID, newData, callback) {
+    var bucketName = getBucketNameForSchemaName(schemaName);
+    var params = {
+      Bucket: bucketName,
+      Key: userID
+    };
+    // Since AWS S3 doesn't natively support append operations
+    // (see https://forums.aws.amazon.com/message.jspa?messageID=540395),
+    // need to get the existing object, append to it, and upload the result.
+    s3.getObject(params, function(error, entry) {
+      if (error) {
+        callback(error);
+      } else {
+        var data = Buffer.concat([entry.Body, newData]);
+        createEntry(schemaName, userID, data, callback);
+      }
+    });
+  },
 
   /* DELETE operations */
 

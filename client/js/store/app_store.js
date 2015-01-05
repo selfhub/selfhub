@@ -30,7 +30,7 @@ var AppStore = assign({}, EventEmitter.prototype, {
     var formData = new FormData();
     formData.append("File", file, filename);
     $.ajax({
-      type: "POST",
+      type: "PUT",
       beforeSend: function(request) {
         request.setRequestHeader("x-jwt", token);
       },

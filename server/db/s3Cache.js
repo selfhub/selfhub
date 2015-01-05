@@ -18,10 +18,10 @@ var schemaNamesCache = {
 };
 
 /**
- * a cache which maps schema names to userIDs of entries
+ * a cache which maps schema names to metadata of entries
  * @type {Object}
  */
-var schemasToUserIDsCache = {};
+var schemasToEntryMetadataCache = {};
 
 /**
  * Get whether the schema names cache is valid.
@@ -32,12 +32,12 @@ var isSchemasNamesCacheValid = function() {
 };
 
 /**
- * Get whether the schema's userIDs cache is valid.
+ * Get whether the schema's entry metadata cache is valid.
  * @param {string} schemaName the schema name
- * @returns {!boolean} whether the schema's userIDs cache is valid
+ * @returns {!boolean} whether the schema's entry metadata cache is valid
  */
-var isCachedSchemaNameValid = function(schemaName) {
-  var schemaNameCache = schemasToUserIDsCache[schemaName];
+var isEntryMetadataCacheValid = function(schemaName) {
+  var schemaNameCache = schemasToEntryMetadataCache[schemaName];
   return Boolean(schemaNameCache) && (Date.now() - schemaNameCache.time) < CACHE_LIFETIME_MS;
 };
 
@@ -86,7 +86,7 @@ module.exports = {
       if (error) {
         callback(error);
       } else {
-        var schemaCache = schemasToUserIDsCache[schemaName];
+        var schemaCache = schemasToEntryMetadataCache[schemaName];
         if (schemaCache) {
           schemaCache[userID] = true;
         }
@@ -134,15 +134,15 @@ module.exports = {
    * @param {s3Callback} callback the callback that handles the AWS response
    */
   getEntriesMetadataForSchema: function(schemaName, callback) {
-    if (isCachedSchemaNameValid(schemaName)) {
-      callback(null, schemasToUserIDsCache[schemaName].userIDs);
+    if (isEntryMetadataCacheValid(schemaName)) {
+      callback(null, schemasToEntryMetadataCache[schemaName].entryMetadata);
     } else {
       s3.getEntriesMetadataForSchema(schemaName, function(error, data) {
         if (error) {
           callback(error);
         } else {
-          schemasToUserIDsCache[schemaName] = {
-            userIDs: data,
+          schemasToEntryMetadataCache[schemaName] = {
+            entryMetadata: data,
             time: Date.now()
           };
           callback(error, data);
@@ -153,7 +153,19 @@ module.exports = {
 
   /* UPDATE operations */
 
-  // TODO: these will just be pass-through functions though (#92)
+  /**
+   * Forward to s3. On callback, invalidate schema's entry metadata cache.
+   * @param {string} schemaName the schema name
+   * @param {string} userID the userID
+   * @param {data} data the data to append
+   * @param {s3callback} callback the callback that handles the AWS response
+   */
+  appendEntry: function(schemaName, userID, data, callback) {
+    s3.appendEntry(schemaName, userID, data, function(error, data) {
+      delete schemasToEntryMetadataCache[schemaName];
+      callback(error, data);
+    });
+  },
 
   /* DELETE operations */
 
@@ -168,26 +180,22 @@ module.exports = {
         callback(error);
       } else {
         delete schemaNamesCache.schemas[schemaName];
-        delete schemasToUserIDsCache[schemaName];
+        delete schemasToEntryMetadataCache[schemaName];
         callback(error, data);
       }
     });
   },
 
   /**
-   * Forward to s3. On success, remove userID from schema's cache.
+   * Forward to s3. On callback, invalidate schema's entry metadata cache.
    * @param {string} schemaName the schema name
    * @param {string} userID the userID
    * @param {s3Callback} callback the callback that handles the AWS response
    */
   deleteEntry: function(schemaName, userID, callback) {
     s3.deleteEntry(schemaName, userID, function(error, data) {
-      if (error) {
-        callback(error);
-      } else {
-        delete schemasToUserIDsCache[schemaName][userID];
-        callback(error, data);
-      }
+      delete schemasToEntryMetadataCache[schemaName];
+      callback(error, data);
     });
   }
 };

@@ -52,7 +52,7 @@ var MOCK_ENTRIES_METADATA = {
   CommonPrefixes: []
 };
 
-describe("s3", function() {
+describe("S3 CRUD operations:", function() {
   describe("createSchema", function() {
     it("applies prefix to bucket name", function(done) {
       sinon.stub(s3, "createBucket", MOCK_CALLBACK);
