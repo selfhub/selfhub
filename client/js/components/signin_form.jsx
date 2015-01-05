@@ -4,7 +4,6 @@ var AppStore = require("../store/app_store.js");
 var router;
 
 var SigninForm = React.createClass({
-
   componentWillMount: function(){
     this.formDataKeys = ["username", "password"];
     router = this.props.router;
@@ -23,10 +22,10 @@ var SigninForm = React.createClass({
         localStorage.setItem("token", data.token);
         router.navigate("/", {trigger: true});
         AppStore.emitChange();
-        },
+      },
       error: function(error) {
         console.error(error);
-        }
+      }
     });
   },
 
@@ -39,7 +38,7 @@ var SigninForm = React.createClass({
           <div className="signin-block">
 
             <div className="signin-block-header">
-              <h2 className="signin-block-title">SelfHub</h2>
+              <h2 className="signin-block-title">Signin</h2>
               <a href="#/signup" className="signin-block-signup">&#10095; Signup</a>
             </div>
 
@@ -58,9 +57,9 @@ var SigninForm = React.createClass({
                   <span className="password-icon">
                     <i className="fa fa-key"></i>
                   </span>
-                  <input placeholder="Password*" className="input form-password" id="x"
-                         type="password" ref="password"/>
-                  <input className="signin-submit-button" type="submit" value="Signin"/>
+                  <input placeholder="Password*" className="input form-password"
+                         id="trailing-space" type="password" ref="password"/>
+                  <input className="signin-submit-button" type="submit" value="Submit"/>
                 </div>
 
               </div>

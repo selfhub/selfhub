@@ -346,7 +346,7 @@ var SignupForm = React.createClass({
           <div className="signin-block">
 
             <div className="signup-block-header">
-              <h2 className="signup-block-title">SelfHub</h2>
+              <h2 className="signup-block-title">Signup</h2>
               <a href="#/signin" className="signup-block-signin">&#10095; Signin</a>
             </div>
 
@@ -380,27 +380,27 @@ var SignupForm = React.createClass({
                 <div className="dropdown signup-form-country">
                   <p className="signup-form-label">Country*: </p>
                   <select defaultValue="US" ref="country">
-                          {_.map(this.state.countries, function(countryTuple){
-                            return <option value={countryTuple[0]}>{countryTuple[1]}</option>;
-                          })}
+                    {_.map(this.state.countries, function(countryTuple){
+                      return <option value={countryTuple[0]}>{countryTuple[1]}</option>;
+                    })}
                   </select>
                 </div>
 
                 <div className="dropdown signup-form-state">
                   <p className="signup-form-label">State: </p>
                   <select ref="state">
-                       {_.map(this.state.states, function(stateTuple){
-                         return <option value={stateTuple[0]}>{stateTuple[1]}</option>;
-                       })}
+                    {_.map(this.state.states, function(stateTuple){
+                      return <option value={stateTuple[0]}>{stateTuple[1]}</option>;
+                    })}
                   </select>
                 </div>
 
                 <div className="dropdown age">
                   <p className="signup-form-label">Age: </p>
                   <select ref="age">
-                  {_.map(_.range(18,101), function(age) {
-                    return <option value={age}>{age}</option>;
-                  })}
+                    {_.map(_.range(18,101), function(age) {
+                      return <option value={age}>{age}</option>;
+                    })}
                   </select>
                 </div>
 
@@ -414,7 +414,7 @@ var SignupForm = React.createClass({
                 </div>
 
                 <input className="signup-submit-button"
-                       type="submit" value="Signup"/>
+                       type="submit" value="Submit"/>
               </div>
             </form>
 

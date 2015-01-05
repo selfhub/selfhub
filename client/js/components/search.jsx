@@ -18,6 +18,7 @@ var Search = React.createClass({
         return el.name.toLowerCase().match(searchString);
       });
     }
+    // TODO: replace dummy row/column/contributor data in search results (#150)
     return (
       <div className={"search-block"}>
         <input className={"main-search"} type="text" value={this.state.searchString}
@@ -25,7 +26,21 @@ var Search = React.createClass({
         <ul className={"search-results"}>
           {
             schemas.map(function(el) {
-              return <li><a href={"#/schema/" + el.route}>{el.name}</a></li>;
+              return (
+                <li className="search-schema">
+                  <a className="search-schema-label" href={"#/schema/" + el.route}>
+                    {el.name}
+                  </a>
+                  <div className="contributor-count">Contributors: 100</div>
+                  <div className="search-schema-info-block">
+                    <p className="search-schema-description">This is a dummy description.</p>
+                    <div className="search-schema-stats">
+                      <div className="search-schema-rows">Rows: 1000</div>
+                      <div className="search-schema-columns">Columns: 10</div>
+                    </div>
+                  </div>
+                </li>
+              );
             })
           }
         </ul>

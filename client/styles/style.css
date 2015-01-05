@@ -19,6 +19,29 @@ ol, ul {
   list-style: none;
 }
 
+/* Media Queries */
+@media (min-width: 300px) {
+  .search-block,
+  .main-search {
+    width: 375px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .search-block,
+  .main-search  {
+    width: 500px;
+  }
+}
+
+@media (min-width: 992px) {
+  .search-block,
+  .main-search  {
+    width: 600px;
+  }
+}
+
 /* Global Styles */
 *, *:before, *:after {
   box-sizing: border-box;
@@ -56,7 +79,7 @@ a:focus {
 
 /* Navbar */
 nav {
-  background: white;
+  background: teal;
   border-bottom: 1px solid #ccc;
   height: 50px;
   margin: 0 auto;
@@ -76,10 +99,19 @@ nav {
   font-weight: 600;
 }
 
+.home a {
+  color: white;
+}
+
+.home-icon {
+  color: white;
+  margin-right: 10px;
+}
+
 .menu {
-  color: teal;
   display: inline-block;
   float: right;
+  color: white;
 }
 
 .menu:hover {
@@ -87,29 +119,61 @@ nav {
 }
 
 /* Search Component */
-.search-block {
-  margin: 40px auto;
-  width: 500px;
-}
-
 .main-search {
-  border: 1px solid #ccc;
-  font-family: 'Quicksand';
-  font-size: 0.85em;
+  border: 1px solid #e5e5e5;
+  font-family: 'Quicksand', sans-serif;
   padding: 8px 15px 8px 15px;
   text-align: center;
-  width: 500px;
+  margin-top: 10px;
 }
 
 .main-search:focus {
   border: 1px solid teal;
-  box-sizing: border-box;
   outline: none;
 }
 
 .search-results {
   line-height: 1.8em;
-  margin-top: 20px;
+  margin-top: 10px;
+}
+
+.search-schema {
+  background: white;
+  opacity: 0.75;
+  border: 1px solid #e5e5e5;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.search-schema-label {
+  font-family: 'Quicksand', 'Open Sans', sans-serif;
+  font-weight: 600;
+}
+
+.search-schema-info-block {
+  font-size: 0.75em;
+}
+
+.contributor-count {
+  float: right;
+  font-size: 0.75em;
+}
+
+.search-schema-description,
+.search-schema-stats {
+  display: block;
+}
+
+.search-schema-rows,
+.search-schema-columns {
+  display: inline-block;
+  border: 1px solid #e5e5e5;
+  padding: 0 15px 0 15px;
+  border-radius: 3px;
+}
+
+.search-schema-rows {
+  margin-right: 10px;
 }
 
 /* Signin Block */
@@ -224,8 +288,8 @@ nav {
   background: #008c8c;
 }
 
-#x {
-  width: 200px;
+#trailing-space {
+  width: 195px;
 }
 
 /* Signup Form */
