@@ -11,7 +11,7 @@ var s3 = new AWS.S3();
  * @default
  * @type {string}
  */
-var BUCKET_PREFIX = process.env.AWS_BUCKET_PREFIX;
+var BUCKET_PREFIX = process.env.AWS_BUCKET_PREFIX || "TEST-PREFIX-";
 
 /**
  * Get the bucket name corresponding to a schema name.
@@ -50,6 +50,11 @@ var getSchemaNameForBucketName = function(bucketName) {
  *   deleteEntry: Function}}
  */
 module.exports = {
+  _testObject: {
+    s3: s3,
+    BUCKET_PREFIX: BUCKET_PREFIX
+  },
+
   /* CREATE operations */
 
   /**
