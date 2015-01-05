@@ -48,7 +48,7 @@ var TableRows = React.createClass({
                   })
                 }
                 <td>
-                  <DownloadButton name={row.userID} 
+                  <DownloadButton name={row.userID}
                     url={"api/schema/" + schemaName + "/" + row.userID}/>
                 </td>
               </tr>
@@ -92,10 +92,10 @@ var Table = React.createClass({
           </Table>
           <UploadButton schemaName={this.props.schemaName}/>
         </div>
-      ); 
+      );
     } else {
       return <div/>;
-    }   
+    }
   }
 });
 
