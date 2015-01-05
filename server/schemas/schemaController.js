@@ -34,7 +34,7 @@ module.exports = {
    */
   createEntry: function(request, response) {
     var schemaName = request.params.schemaName;
-    var userID = request.params.userID;
+    var userID = request.currentUser;
     var busboy = new Busboy({headers: request.headers});
     busboy.on("file", function(fieldname, file, filename, encoding, mimetype) {
       if (!filename) { return; }
