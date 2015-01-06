@@ -29,8 +29,8 @@ var InterfaceComponent = React.createClass({
       return <Search items={this.props.state._searchSchemas}/>;
     }
     if (currentRoute === "schemaController") {
-      return <DataPage displaySchema={this.props.state._displaySchema} 
-                       schemaName={this.props.router.schemaName}/>;
+      return <DataPage schemaName={this.props.router.schemaName}
+                       schemaCSVData={this.props.state._schemaCSVData}/>;
     }
     return <div />;
   }

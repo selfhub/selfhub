@@ -2,6 +2,7 @@ var React = require("react");
 var _ = require("lodash");
 var reactBootStrap = require("react-bootstrap");
 var AppStore = require("../store/app_store");
+var Chart = require("./chart.jsx");
 
 var UploadButton = React.createClass({
   componentDidMount: function() {
@@ -35,22 +36,17 @@ var DownloadButton = React.createClass({
 
 var TableRows = React.createClass({
   render: function() {
-    var schemaName = this.props.schemaName;
     return (
-      <tbody>
+      <tbody className="table-rows">
         {
-          _.map(this.props.rowData, function(row) {
+          _.map(this.props.rowData, function(row, index) {
             return (
-              <tr>
+              <tr key={index}>
                 {
-                  _.map(row, function(rowItem) {
-                    return <td>{rowItem}</td>;
+                  _.map(row, function(rowItem, index) {
+                    return <td key={index}>{rowItem}</td>;
                   })
                 }
-                <td>
-                  <DownloadButton name={row.userID}
-                    url={"api/schema/" + schemaName + "/" + row.userID + "/" + localStorage.getItem("token")}/>
-                </td>
               </tr>
             );
           })
@@ -61,15 +57,26 @@ var TableRows = React.createClass({
 });
 
 var TableHeadersRow = React.createClass({
+  componentDidMount: function() {
+    var schemaCSVData = this.props.schemaCSVData;
+    function renderCSVHeader() {
+      AppStore.generateChart(schemaCSVData, this.id);
+    }
+    var tableHeaders = document.getElementsByClassName("csv-header");
+    _.map(tableHeaders, function(header, index) {
+      if (index > 1) {
+        header.addEventListener("click", renderCSVHeader, false);
+      }
+    });
+  },
   render: function() {
     return (
       <tr>
         {
-          _.map(this.props.headerKeys, function(header) {
-            return <th>{header}</th>;
+          _.map(this.props.headerKeys, function(header, index) {
+            return <th id={index} className="csv-header" key={index}>{header}</th>;
           })
         }
-        <th>Download</th>
       </tr>
     );
   }
@@ -81,20 +88,27 @@ var Table = React.createClass({
   },
   render: function() {
     var Table = reactBootStrap.Table;
-    var rows = this.props.displaySchema;
-    if (rows && _.isObject(rows[0])) {
-      var headerKeys = Object.keys(rows[0]);
+    var rows = this.props.schemaCSVData;
+    if (rows && Array.isArray(rows[0])) {
+      var headerKeys = rows[0].map(function(row) {
+        return AppStore.formatCSVHeader(row);
+      });
       return (
         <div className="data-page">
           <aside className="tools">
             <input className="data-search" placeholder="Search schemas" type="text"/>
           </aside>
           <section className="viz-and-table-views">
-            <div className="visualization-view">Chart goes here</div>
+            <div className="visualization-block">
+              <div className="visualization-label">{this.props.schemaName}</div>
+              <Chart schemaName={this.props.schemaName}
+                     csvData={this.props.schemaCSVData}/>
+            </div>
             <div className="table-view">
               <Table striped bordered condensed hover>
-                <TableHeadersRow headerKeys={headerKeys}/>
-                <TableRows schemaName={this.props.schemaName} rowData={rows}/>
+                <TableHeadersRow schemaCSVData={this.props.schemaCSVData}
+                                 headerKeys={headerKeys}/>
+                <TableRows rowData={_.rest(rows)}/>
               </Table>
               <UploadButton schemaName={this.props.schemaName}/>
             </div>
