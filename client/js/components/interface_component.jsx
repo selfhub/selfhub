@@ -4,6 +4,7 @@ var SignupForm = require("./signup_form.jsx");
 var SigninForm = require("./signin_form.jsx");
 var DataPage = require("./data_page.jsx");
 var User = require("./user.jsx");
+var CreateForm = require("./create_form.jsx");
 
 var InterfaceComponent = React.createClass({
   componentWillMount: function() {
@@ -35,6 +36,9 @@ var InterfaceComponent = React.createClass({
     }
     if (currentRoute === "user") {
       return <User />;
+    }
+    if (currentRoute === "create") {
+      return <CreateForm />;
     }
     return <div />;
   }

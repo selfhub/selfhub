@@ -6,7 +6,8 @@ var Router = Backbone.Router.extend({
     signup: "signup",
     signin: "signin",
     "schema/:name": "dataPage",
-    user: "user"
+    user: "user",
+    create: "create"
   },
   search: function() {
     console.log("Routing to home page...");
@@ -32,6 +33,10 @@ var Router = Backbone.Router.extend({
   user: function() {
     console.log("Routing to user account page...");
     this.current = "user";
+  },
+  create: function() {
+    console.log("Routing to user account page...");
+    this.current = "create";
   }
 });
 
