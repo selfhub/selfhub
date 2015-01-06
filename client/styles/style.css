@@ -322,7 +322,7 @@ select {
   border-right: 1px solid #e5e5e5;
   display: inline-block;
   min-height: 100%;
-  padding: 65px 15px 15px 15px;
+  padding: 65px 15px 0 15px;
   position: absolute;
   width: 20%;
 }
@@ -333,9 +333,33 @@ select {
   width: 80%;
 }
 
-.visualization-view {
+.visualization-block {
   background: #fff;
   border-bottom: 1px solid #e5e5e5;
-  height: 450px;
-  padding: 65px 15px 15px 15px;
+  height: 50%;
+  padding: 65px 20px 0 20px;
+}
+
+.visualization-label {
+  color: orange;
+  font-family: 'Quicksand', 'Open Sans', sans-serif;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.table-view {
+  position: absolute;
+  max-height: 50%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.csv-header {
+  cursor: pointer;
+  font-size: 0.75em;
+}
+
+.csv-header:hover {
+  color: orange;
 }
