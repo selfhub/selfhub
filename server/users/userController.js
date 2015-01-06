@@ -2,6 +2,7 @@ var User = require("./userModel");
 var bluebird = require("bluebird");
 var jwt = require("jsonwebtoken");
 var helpers = require("../config/helpers");
+var _ = require("lodash");
 
 bluebird.promisifyAll(User);
 var TWO_WEEKS_IN_MINUTES = 60 * 24 * 14;
@@ -82,7 +83,8 @@ module.exports = {
   },
 
   checkAuth: function(request, response, next) {
-    var token = request.headers["x-jwt"];
+    var token = request.headers["x-jwt"] || _.last(request.path.split("/"));
+
     jwt.verify(token, process.env.JWT_SECRET, function(error, decoded) {
       if (error) {
         helpers.errorHandler(error, request, response, next);

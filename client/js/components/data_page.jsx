@@ -49,7 +49,7 @@ var TableRows = React.createClass({
                 }
                 <td>
                   <DownloadButton name={row.userID}
-                    url={"api/schema/" + schemaName + "/" + row.userID}/>
+                    url={"api/schema/" + schemaName + "/" + row.userID + "/" + localStorage.getItem("token")}/>
                 </td>
               </tr>
             );
