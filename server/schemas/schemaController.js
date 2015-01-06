@@ -44,6 +44,7 @@ var handleUpload = function(request, response, appendData) {
             } else {
               console.log("successfully created", filename);
             }
+            helpers.endFormParse(response);
           });
         }
       });
@@ -55,9 +56,7 @@ var handleUpload = function(request, response, appendData) {
   busboy.on("field", function() {
     helpers.handleBadRequest(response, "field uploads not yet supported");
   });
-  busboy.on("finish", function() {
-    helpers.endFormParse(response);
-  });
+
   request.pipe(busboy);
 };
 
