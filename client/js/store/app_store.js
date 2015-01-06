@@ -48,28 +48,6 @@ var AppStore = assign({}, EventEmitter.prototype, {
     });
   },
 
-  uploadData: function(filename, file, schemaName) {
-    var token = localStorage.getItem("token");
-    var formData = new FormData();
-    formData.append("File", file, filename);
-    $.ajax({
-      type: "PUT",
-      beforeSend: function(request) {
-        request.setRequestHeader("x-jwt", token);
-      },
-      url: "/api/schema/" + schemaName + "/" + token,
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function(data) {
-        console.log(data);
-      },
-      error: function(error) {
-        console.error(error);
-      }
-    });
-  },
-
   getSchema: function(schemaName, callback) {
     $.ajax({
       url: "/api/schema/" + schemaName,
@@ -91,6 +69,29 @@ var AppStore = assign({}, EventEmitter.prototype, {
     this.getSchema(schemaName, function(data) {
       _displaySchema = data;
       AppStore.emitChange();
+    });
+  },
+
+  uploadData: function(filename, file, schemaName) {
+    var that = this;
+    var token = localStorage.getItem("token");
+    var formData = new FormData();
+    formData.append("File", file, filename);
+    $.ajax({
+      type: "PUT",
+      beforeSend: function(request) {
+        request.setRequestHeader("x-jwt", token);
+      },
+      url: "/api/schema/" + schemaName + "/" + token,
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(data) {
+        that.renderSchema(schemaName);
+      },
+      error: function(error) {
+        console.error(error);
+      }
     });
   },
 
