@@ -109,6 +109,7 @@ var Table = React.createClass({
   },
   componentDidMount: function() {
     AppStore.renderSchema(this.props.schemaName);
+    //TODO: Make an array of chart names, and map over it to apply events (185)
     var that = this;
     function toTimeSeries() {
       that.setState({chartType: "timeSeries"});
@@ -116,8 +117,12 @@ var Table = React.createClass({
     function toHistogram() {
       that.setState({chartType: "histogram"});
     }
+    function toScatterplot() {
+      that.setState({chartType: "scatterPlot"});
+    }
     $(document).on("click", "#to-time-series", toTimeSeries);
     $(document).on("click", "#to-histogram", toHistogram);
+    $(document).on("click", "#to-scatter-plot", toScatterplot);
   },
   render: function() {
     var that = this;

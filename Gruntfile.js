@@ -39,7 +39,7 @@ module.exports = function(grunt) {
     },
     watch: {
       files: jsxAndjsFiles,
-      tasks: ["jshint", "jscs", "browserify"]
+      tasks: ["browserify"]
     }
   });
 
