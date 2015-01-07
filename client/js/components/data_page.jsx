@@ -1,6 +1,5 @@
 var React = require("react");
 var _ = require("lodash");
-var reactBootStrap = require("react-bootstrap");
 var AppStore = require("../store/app_store");
 var Chart = require("./chart.jsx");
 
@@ -17,8 +16,9 @@ var UploadButton = React.createClass({
   },
   render: function() {
     return (
-      <div>
-        <input type="file" id="input"></input>
+      <div className="upload-button">
+        <span id="input">Upload .csv</span>
+        <input className="upload" type="file"></input>
       </div>
     );
   }
@@ -27,24 +27,34 @@ var UploadButton = React.createClass({
 var DownloadButton = React.createClass({
   render: function() {
     return (
-      <div className="formbutton">
-        <a href={this.props.url} download={this.props.name} type="submit">Download</a>
+      <div className="download-button">
+        <a href={this.props.url} download={this.props.name}
+           type="submit"><div>Download All</div></a>
       </div>
     );
   }
 });
 
 var TableRows = React.createClass({
+  statics: {
+    getRowClass: function(index) {
+      return index % 2 === 0 ? "even-row" : "odd-row";
+    },
+    getColumnClass: function(index) {
+      return index % 2 === 0 ? "even-column" : "odd-column";
+    }
+  },
   render: function() {
     return (
       <tbody className="table-rows">
         {
           _.map(this.props.rowData, function(row, index) {
             return (
-              <tr key={index}>
+              <tr className={TableRows.getRowClass(index)} key={index}>
                 {
                   _.map(row, function(rowItem, index) {
-                    return <td key={index}>{rowItem}</td>;
+                    return <td className={TableRows.getColumnClass(index)} key={index}>
+                      <div>{rowItem}</div></td>;
                   })
                 }
               </tr>
@@ -69,12 +79,18 @@ var TableHeadersRow = React.createClass({
       }
     });
   },
+  statics: {
+    getHeaderClass: function(index) {
+      return index % 2 === 0 ? "even-header csv-header" : "odd-header csv-header";
+    }
+  },
   render: function() {
     return (
-      <tr>
+      <tr className="table-headers">
         {
           _.map(this.props.headerKeys, function(header, index) {
-            return <th id={index} className="csv-header" key={index}>{header}</th>;
+              return <th id={index} key={index}
+                className={TableHeadersRow.getHeaderClass(index)}>{header}</th>;
           })
         }
       </tr>
@@ -87,7 +103,6 @@ var Table = React.createClass({
     AppStore.renderSchema(this.props.schemaName);
   },
   render: function() {
-    var Table = reactBootStrap.Table;
     var rows = this.props.schemaCSVData;
     if (rows && Array.isArray(rows[0])) {
       var headerKeys = rows[0].map(function(row) {
@@ -101,16 +116,17 @@ var Table = React.createClass({
           <section className="viz-and-table-views">
             <div className="visualization-block">
               <div className="visualization-label">{this.props.schemaName}</div>
+              <UploadButton schemaName={this.props.schemaName}/>
+              <DownloadButton />
               <Chart schemaName={this.props.schemaName}
                      csvData={this.props.schemaCSVData}/>
             </div>
             <div className="table-view">
-              <Table striped bordered condensed hover>
+              <table className="schema-csv-table">
                 <TableHeadersRow schemaCSVData={this.props.schemaCSVData}
                                  headerKeys={headerKeys}/>
                 <TableRows rowData={_.rest(rows)}/>
-              </Table>
-              <UploadButton schemaName={this.props.schemaName}/>
+              </table>
             </div>
           </section>
         </div>
