@@ -342,24 +342,92 @@ select {
 
 .visualization-label {
   color: orange;
+  display: inline-block;
   font-family: 'Quicksand', 'Open Sans', sans-serif;
   font-size: 2em;
   margin-bottom: 20px;
 }
 
 .table-view {
-  position: absolute;
-  max-height: 50%;
-  max-width: 100%;
+  max-height: 42.5%;
+  max-width: 80%;
   overflow-x: auto;
   overflow-y: auto;
+  position: absolute;
+}
+
+/* CSV Table */
+.schema-csv-table {
+  font-size: 0.66em;
+  line-height: 40px;
+}
+
+td {
+  border: none;
+  overflow-x: auto;
+  padding: 5px 20px 5px 20px;
 }
 
 .csv-header {
-  cursor: pointer;
-  font-size: 0.75em;
+  background: teal;
+  color: #f2f2f2;
+  font-family: 'Quicksand', 'Open Sans', sans-serif;
+  font-weight: 400;
+  height: 50px;
+  line-height: 20px;
+  padding: 5px 20px 5px 20px;
 }
 
 .csv-header:hover {
   color: orange;
+  cursor: pointer;
+}
+
+.odd-header {
+  background: #007878;
+}
+
+.even-row .even-column {
+  background: #dae0e0;
+}
+
+.odd-row .even-column {
+  background: #e5e7e7;
+}
+
+.even-row .odd-column {
+  background: #cfd8d9;
+}
+
+.odd-row .odd-column {
+  background: #dae0e0;
+}
+
+.download-button,
+.upload-button {
+  border: 1px solid teal;
+  border-radius: 3px;
+  cursor: pointer;
+  float: right;
+  font-size: 0.66em;
+  padding: 8px 15px 8px 15px;
+}
+
+.upload-button {
+  color: teal;
+  margin: 0 0 0 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.upload {
+  cursor: pointer;
+  filter: alpha(opacity=0);
+  font-size: 0.66em;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
