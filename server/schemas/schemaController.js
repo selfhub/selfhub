@@ -2,8 +2,9 @@ var bufferUtils = require("../utils/buffer");
 var Busboy = require("busboy");
 var helpers = require("../config/helpers");
 var s3Cache = require("../db/s3Cache");
-var ASCII_NEWLINE = 10;
 var schemaMatcher = require("./schemaMatcher");
+
+var ASCII_NEWLINE = 10;
 
 /**
  * Handle uploading entry data
