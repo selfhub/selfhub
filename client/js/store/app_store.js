@@ -1,5 +1,6 @@
 var EventEmitter = require("events").EventEmitter;
 var assign = require("object-assign");
+var _ = require("lodash");
 var $ = require("jquery");
 var c3 = require("c3");
 var Papa = require("babyparse");
@@ -27,41 +28,6 @@ var AppStore = assign({}, EventEmitter.prototype, {
     });
   },
 
-  generateChart: function(table, headerIndex) {
-    headerIndex = headerIndex || 2;
-    if (!Array.isArray(table)) {
-      table = table.data;
-    }
-    var csvHeader = AppStore.formatCSVHeader(table[0][headerIndex]);
-    _schemaCSVData = [csvHeader];
-
-    for (var i = 1; i < table.length - 1; i++) {
-      _schemaCSVData.push(table[i][headerIndex]);
-    }
-
-    c3.generate({
-      bindto: ".visualization-view",
-      data: {
-        columns: [_schemaCSVData]
-      },
-      axis: {
-        y: {
-          label: {
-            text: csvHeader,
-            position: "outer-middle"
-          }
-        },
-        x: {
-          show: true,
-          label: {
-            text: "Time",
-            position: "outer-middle"
-          }
-        }
-      }
-    });
-  },
-
   /*
     Eventually the server will batch together all the csv's into one file using hadoop.
     For now I am just getting one users file.
@@ -75,7 +41,8 @@ var AppStore = assign({}, EventEmitter.prototype, {
           request.setRequestHeader("x-jwt", localStorage.getItem("token"));
         },
         success: function(data) {
-          callback(Papa.parse(data), headerIndex);
+          var parsedCSV = Papa.parse(data);
+          callback(parsedCSV.data, headerIndex);
         },
         error: function() {
           console.error("GET request for schema data failed.");
@@ -103,7 +70,11 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
   renderSchema: function(schemaName) {
     this.getVisualizationData(schemaName, function(table) {
-      _schemaCSVData = table.data;
+      if (_.last(table).length === 1 && _.last(table)[0] === "") {
+        table.pop();
+      }
+
+      _schemaCSVData = table;
       AppStore.emitChange();
     });
   },
