@@ -1,6 +1,7 @@
 var React = require("react");
 var Backbone = require("backbone");
 var Navbar = require("./navbar.jsx");
+var Menu = require("./menu.jsx");
 var AppStore = require("../store/app_store.js");
 var InterfaceComponent = require("./interface_component.jsx");
 
@@ -24,6 +25,7 @@ var App = React.createClass({
   render: function() {
     return (
       <div>
+        <Menu />
         <Navbar />
         <InterfaceComponent state={this.state} router={router}/>
       </div>

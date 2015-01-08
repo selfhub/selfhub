@@ -45,6 +45,10 @@ ol, ul {
 /* Global Styles */
 *, *:before, *:after {
   box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
 body {
@@ -430,4 +434,30 @@ td {
   position: absolute;
   right: 0;
   top: 0;
+}
+
+/* Menu Dash */
+#dropdown {
+  background: teal;
+  border-radius: 4px;
+  display: none;
+  margin-top: 20px;
+  padding: 25px;
+  position: fixed;
+  right: 0;
+  text-align: right;
+  width: 200px;
+  z-index: 10;
+}
+
+#dropdown-list li {
+  color: white;
+  font-size: 0.85em;
+  font-weight: 300;
+  margin-top: 15px;
+}
+
+#dropdown-list li:hover {
+  color: orange;
+  cursor: pointer;
 }
