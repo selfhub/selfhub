@@ -1,6 +1,6 @@
 var morgan = require("morgan");
 var bodyParser = require("body-parser");
-var helpers = require("./helpers.js");
+var helpers = require("./helpers");
 var userController = require("../users/userController");
 
 module.exports = function(app, express) {
