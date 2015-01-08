@@ -360,6 +360,31 @@ select {
   position: absolute;
 }
 
+.select-chart,
+.analysis-tools {
+  color: teal;
+  font-family: 'Quicksand', 'Open Sans', sans-serif;
+  font-weight: 400;
+  margin-top: 20px;
+  padding: 5px 15px;
+}
+
+.select-chart li,
+.analysis-tools li {
+  color: #262626;
+  cursor: pointer;
+  font-size: 0.8em;
+  font-weight: 400;
+  line-height: 1.4em;
+  margin-left: 15px;
+  margin-top: 10px;
+}
+
+.select-chart li:hover,
+.analysis-tools li:hover {
+  color: orange;
+}
+
 /* CSV Table */
 .schema-csv-table {
   font-size: 0.66em;
@@ -451,16 +476,21 @@ td {
 }
 
 #dropdown-list li {
+  margin-top: 15px;
+}
+
+.menu-item {
   color: white;
   font-size: 0.85em;
   font-weight: 300;
   margin-top: 15px;
 }
 
-#dropdown-list li:hover {
+.menu-item:hover {
   color: orange;
   cursor: pointer;
 }
+
 #sampleFormDivider {
   position: absolute;
   margin-top: 75px;
@@ -469,12 +499,13 @@ td {
   left: 50%;
   border-left: dotted 2px black;
 }
+
 #liveRenderSampleForm {
-  position: absolute; 
+  position: absolute;
   left: 55%;
   right: 5%;
   width: 600px;
-  font-size: 15px; 
+  font-size: 15px;
   background-color: white;
   border: solid 1px black;
   border-radius: 8px;
@@ -484,9 +515,11 @@ td {
   padding-left: 10px;
   padding-right:10px;
 }
+
 #qTitle {
   font:bold;
 }
+
 #left-side {
   position: absolute;
   width:45%;
@@ -496,6 +529,7 @@ td {
   font-size: 15px;
   right:50%;
 }
+
 .completeForm {
   margin-bottom: 10px;
   margin-top: 300px;
@@ -503,20 +537,48 @@ td {
   padding-top: 6px;
   margin-left: 35%;
 }
+
 #formTitle {
   font-size: 25px;
   margin-top:15px;
   margin-left: 20%;
   margin-right:20%;
 }
+
 #draggableQuestionInactive {
   border-style: solid 2px black;
 }
+
 #draggableQuestionActive {
   border-style: solid;
   border-color: blue;
 }
+
 input {
   margin-top: 8px;
   margin-bottom: 10px;
+}
+
+/* User Account */
+.my-data-page {
+  font-family: 'Quicksand', 'Open Sans', sans-serif;
+  width: 960px;
+  line-height: 1.6em;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 80px;
+}
+
+.my-data-page p {
+  margin-bottom: 20px;
+}
+
+.user-welcome {
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+
+.contribution-grade,
+.following {
+  display: inline-block;
 }

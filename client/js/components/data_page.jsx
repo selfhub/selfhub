@@ -1,5 +1,6 @@
 var React = require("react");
 var _ = require("lodash");
+var $ = require("jquery");
 var AppStore = require("../store/app_store");
 var Chart = require("./chart.jsx");
 
@@ -69,8 +70,9 @@ var TableRows = React.createClass({
 var TableHeadersRow = React.createClass({
   componentDidMount: function() {
     var schemaCSVData = this.props.schemaCSVData;
+    var that = this;
     function renderCSVHeader() {
-      AppStore.generateChart(schemaCSVData, this.id);
+      that.props.setActiveHeader(this.id);
     }
     var tableHeaders = document.getElementsByClassName("csv-header");
     _.map(tableHeaders, function(header, index) {
@@ -99,10 +101,29 @@ var TableHeadersRow = React.createClass({
 });
 
 var Table = React.createClass({
+  getInitialState: function() {
+    return {
+      activeHeader: 2,
+      chartType: "timeSeries"
+    };
+  },
   componentDidMount: function() {
     AppStore.renderSchema(this.props.schemaName);
+    var that = this;
+    function toTimeSeries() {
+      that.setState({chartType: "timeSeries"});
+    }
+    function toHistogram() {
+      that.setState({chartType: "histogram"});
+    }
+    $(document).on("click", "#to-time-series", toTimeSeries);
+    $(document).on("click", "#to-histogram", toHistogram);
   },
   render: function() {
+    var that = this;
+    var setActiveHeader = function(newHeaderIndex) {
+      that.setState({activeHeader: newHeaderIndex});
+    };
     var rows = this.props.schemaCSVData;
     if (rows && Array.isArray(rows[0])) {
       var headerKeys = rows[0].map(function(row) {
@@ -112,6 +133,19 @@ var Table = React.createClass({
         <div className="data-page">
           <aside className="tools">
             <input className="data-search" placeholder="Search schemas" type="text"/>
+            <section className="analysis-dashboard">
+              <ul className="select-chart">Visualizations
+                <li id="to-time-series">Time Series</li>
+                <li id="to-histogram">Histogram</li>
+                <li id="to-scatter-plot">Scatter Plot</li>
+              </ul>
+              <ul className="analysis-tools">Analysis Tools
+                <li>Mean</li>
+                <li>Median</li>
+                <li>Mode</li>
+                <li>Range</li>
+              </ul>
+            </section>
           </aside>
           <section className="viz-and-table-views">
             <div className="visualization-block">
@@ -119,12 +153,15 @@ var Table = React.createClass({
               <UploadButton schemaName={this.props.schemaName}/>
               <DownloadButton />
               <Chart schemaName={this.props.schemaName}
-                     csvData={this.props.schemaCSVData}/>
+                     csvData={this.props.schemaCSVData}
+                     activeHeader={this.state.activeHeader}
+                     chartType={this.state.chartType}/>
             </div>
             <div className="table-view">
               <table className="schema-csv-table">
                 <TableHeadersRow schemaCSVData={this.props.schemaCSVData}
-                                 headerKeys={headerKeys}/>
+                                 headerKeys={headerKeys}
+                                 setActiveHeader={setActiveHeader}/>
                 <TableRows rowData={_.rest(rows)}/>
               </table>
             </div>
