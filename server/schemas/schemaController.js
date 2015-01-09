@@ -2,19 +2,9 @@ var bufferUtils = require("../utils/buffer");
 var Busboy = require("busboy");
 var helpers = require("../config/helpers");
 var s3Cache = require("../db/s3Cache");
+var schemaMatcher = require("./schemaMatcher");
 
 var ASCII_NEWLINE = 10;
-
-/**
- * Validate an entry conforms to a schema.
- * @param {string} schemaName the schema name
- * @param {Object} header the header row buffer of the entry
- * @param {Object} callback the callback that handles the validation response
- */
-var validateEntry = function(schemaName, header, callback) {
-  // TODO: verify entry conforms to schema (#62)
-  callback(null, true);
-};
 
 /**
  * Handle uploading entry data
@@ -39,9 +29,10 @@ var handleUpload = function(request, response, appendData) {
       var lineBreak = bufferUtils.indexOf(buffer, ASCII_NEWLINE) + 1;
       var header = buffer.slice(0, lineBreak);
       var data = buffer.slice(lineBreak);
-      validateEntry(schemaName, header, function(error, isValid) {
+      schemaMatcher.handle(header, function(error, isValid) {
         if (error) {
           console.error("error validating entry:", error);
+          helpers.errorHandler({message: error}, request, response);
         } else if (isValid) {
           s3Cache[uploadFunction](schemaName, userID, data, function(error) {
             if (error) {

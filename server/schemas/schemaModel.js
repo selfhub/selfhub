@@ -49,5 +49,24 @@ module.exports = {
         helpers.errorHandler(error, request, response, next);
         return;
       });
+  },
+
+//findSchema accepts a query object, a stream, and a storage object.
+//It then attempts to find a matching schema using the query,
+//stores the template on the storage (if found), and emits the proper event on the stream.
+  findSchema: function(query, stream, storage) {
+    var error;
+    Model.findOneAsync(query)
+      .then(function(schema) {
+        if (schema) {
+          storage.template = schema;
+          stream.emit("templated");
+        } else {
+          stream.emit("noTemplate");
+        }
+      })
+      .catch(function(error) {
+        console.error("hit error", error);
+      });
   }
 };
