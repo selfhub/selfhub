@@ -6,18 +6,21 @@ var AppStore = require("../store/app_store");
 
 var CreateForm = React.createClass ({
   componentWillMount: function() {
-    console.log("update func", this.forceUpdate);
     router = this.props.router;
   },
+
   componentDidMount: function() {
     AppStore.addChangeListener(this.forceUpdate);
   },
+
   componentWillUnmount: function() {
     AppStore.removeChangeListener(this.forceUpdate);
   },
+
   trigger: function(){
     this.forceUpdate();
   },
+
   createFormSchema: function(event){
     event.preventDefault();
     var schemaName = AppStore.formTitle.split(" ").join("_");
@@ -31,7 +34,6 @@ var CreateForm = React.createClass ({
       type:"PUT",
       data: DATA,
       success: function(data) {
-        console.log("Sucess!! Data logged: ", data);
         router.navigate("/", {trigger: true});
         AppStore.emitChange();
       },
@@ -40,9 +42,9 @@ var CreateForm = React.createClass ({
       }
     });
   },
+
   createNewQuestion: function(form){
     console.log("in createNewQuestion2");
-    event.preventDefault();
     var index = AppStore.questionsInEdit.length;
     var questionObject = [];
     questionObject.push(index);
@@ -50,45 +52,46 @@ var CreateForm = React.createClass ({
     for(var i=0; i < form.target.length; i++){
       questionObject.push(form.target[i].value);
     }
-    console.log("QuestionObject: ", questionObject);
     AppStore.questionsInEdit.push(questionObject);
-    console.log("questionsInEdit: ", AppStore.questionsInEdit);
     this.trigger();
   },
+
   getSupportingFormFields: function() {
     AppStore.currentQuestionType=[this.refs.questionType.getDOMNode().value];
     this.trigger();
   },
+
   changeFormTitle: function(){
     AppStore.formTitle = this.refs.formTitle.getDOMNode().value;
     this.trigger();
   },
+
   outputUpdate: function(id) {
-    console.log("in outputUpdate function", "#scale"+id);
-            document.querySelector("#output"+id).value = this.refs["scale"+id].getDOMNode().value;
+    document.querySelector("#output"+id).value = this.refs["scale"+id].getDOMNode().value;
   },
+
   drop: function(questionIndex) {
-    event.preventDefault();
-    console.log("questionIndex in DROP", questionIndex);
     var targetIndex = AppStore.questionDropTarget = questionIndex; 
-    var movingIndex = AppStore.questionBeingDragged;    
+    var movingIndex = AppStore.questionBeingDragged; 
+    var swap;   
     this.toggleQuestionActive(questionIndex);    
     AppStore.questionsInEdit[AppStore.questionBeingDragged][0]=questionIndex;         
     AppStore.questionsInEdit[targetIndex][0]=movingIndex;
-    var swap = AppStore.questionsInEdit[movingIndex];
+    swap = AppStore.questionsInEdit[movingIndex];
     AppStore.questionsInEdit[movingIndex]=AppStore.questionsInEdit[targetIndex];
     AppStore.questionsInEdit[targetIndex] = swap;
     this.trigger();
   },
+
   dragStart: function(questionIndex) {
     AppStore.questionBeingDragged = questionIndex;
-    console.log("in dragStart, elem is: ");
   },
+
   preventDefault: function(event) {
     event.preventDefault();
   },
+
   toggleQuestionActive: function(questionIndex){
-    console.log("toggleQuestionActive");
     var question = AppStore.questionsInEdit[questionIndex];
     if(questionIndex !== AppStore.questionBeingDragged){
       if(question[1] === "draggableQuestionActive"){
@@ -99,8 +102,8 @@ var CreateForm = React.createClass ({
     }
     this.trigger();
   },
+
   render: function(){
-    console.log("update fn: ", this.forceUpdate);
     return (
       <div>
       <div id="left-side">
@@ -110,14 +113,12 @@ var CreateForm = React.createClass ({
                     onChange={this.changeFormTitle}ref="formTitle" 
                     type="text"/>
           {AppStore.questionsInEdit.map(function(question){
-            console.log("DRAG START", this.dragStart);
             var questionIndex = question[0];
             var questionActive = question[1];
             var questionTitle = question[2];
             var questionType = question[3];
             switch(questionType) {
               case "text": 
-                  console.log("case text render");
                   return <div id={questionActive} 
                           draggable="true" 
                           onDragStart={this.dragStart.bind(this, questionIndex)} 
@@ -131,9 +132,6 @@ var CreateForm = React.createClass ({
                   
                   
               case "scale": 
-                console.log("case scale render");
-                console.log("scale question array: ", question);
-                
                 return <div id={questionActive} 
                         draggable="true" 
                         onDragStart={this.dragStart.bind(this, questionIndex)} 
@@ -175,7 +173,6 @@ var CreateForm = React.createClass ({
             </div>
             <div id="SupportingFormFields">
              {AppStore.currentQuestionType.map(function(questionType){
-              console.log("noSupport!!!");
               switch(questionType) {
                 case "text": 
                     return <div>
@@ -219,7 +216,6 @@ var CreateForm = React.createClass ({
 
           switch(questionType) {
                 case "text": 
-                    console.log("case text live render");
                     return <div>
                             {questionTitle}<br/>
                             <input type="text" value="" readOnly="true"/>
@@ -228,8 +224,6 @@ var CreateForm = React.createClass ({
                     
                     
                 case "scale": 
-                  console.log("case scale live render");
-                  
                   return <div>
                            {questionTitle}<br/>
                            <output for={"scale"+questionIndex} 
@@ -250,9 +244,7 @@ var CreateForm = React.createClass ({
       </div>
     </div>
   </div>
-      );}
-
-
+  );}
 });
 
 module.exports = CreateForm;
