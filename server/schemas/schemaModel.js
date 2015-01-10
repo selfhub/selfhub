@@ -19,7 +19,7 @@ module.exports = {
     var newSchema = request.body.schema;
     if (!newSchema.name) {
       error = {message: "Invalid schema name!"};
-      helpers.errorHandler(error, request, response, next);
+      next(error, false);
       return;
     }
     Model.findOneAsync({name: newSchema.name})
@@ -28,32 +28,26 @@ module.exports = {
         //console.debug("findOneAsync args:", arguments);
         if (schema) {
           error = {message: "Schema already exists"};
-          helpers.errorHandler(error, request, response, next);
-          return;
+          next(error, false);
         } else {
-          Model.createAsync({
+          return Model.createAsync({
             name: newSchema.name,
             metaData: newSchema.metaData,
             data: newSchema.data
           })
           .then(function(schema) {
-            response.status(201).send({message: "Schema created!"});
-          })
-          .catch(function(error) {
-            helpers.errorHandler(error, request, response, next);
-            return;
+            next(false, schema);
           });
         }
       })
       .catch(function(error) {
-        helpers.errorHandler(error, request, response, next);
-        return;
+        next(error, false);
       });
   },
 
-//findSchema accepts a query object, a stream, and a storage object.
-//It then attempts to find a matching schema using the query,
-//stores the template on the storage (if found), and emits the proper event on the stream.
+  //findSchema accepts a query object, a stream, and a storage object.
+  //It then attempts to find a matching schema using the query,
+  //stores the template on the storage (if found), and emits the proper event on the stream.
   findSchema: function(query, stream, storage) {
     var error;
     Model.findOneAsync(query)

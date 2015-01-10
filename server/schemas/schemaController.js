@@ -3,6 +3,7 @@ var Busboy = require("busboy");
 var helpers = require("../config/helpers");
 var s3Cache = require("../db/s3Cache");
 var schemaMatcher = require("./schemaMatcher");
+var schemaModel = require("./schemaModel");
 
 var ASCII_NEWLINE = 10;
 
@@ -65,9 +66,17 @@ module.exports = {
    * @param {Object} response the http ServerResponse object
    */
   createSchema: function(request, response) {
-    // TODO: record schema details, not just the name (#61)
-    var schemaName = request.params.schemaName;
-    s3Cache.createSchema(schemaName, helpers.getAWSCallbackHandler(request, response, 201));
+    var schema = request.body.schema;
+    var templateSuccessOrFailCallback = function(error, schema) {
+      if (error) {
+        helpers.errorHandler(error, request, response);
+      } else {
+        console.log("created schema:", schema);
+        s3Cache.createSchema(schema.name, helpers.getAWSCallbackHandler(request, response, 201));
+      }
+    };
+
+    schemaModel.createTemplate(request, response, templateSuccessOrFailCallback);
   },
 
   /**
