@@ -21,7 +21,7 @@ var CreateForm = React.createClass ({
     this.forceUpdate();
   },
 
-  createFormSchema: function(event){
+  createFormSchema: function(event) {
     event.preventDefault();
     var schemaName = AppStore.formTitle.split(" ").join("_");
     var URL = "/api/schema" + schemaName;
@@ -43,8 +43,7 @@ var CreateForm = React.createClass ({
     });
   },
 
-  createNewQuestion: function(form){
-    console.log("in createNewQuestion2");
+  createNewQuestion: function(form) {
     var index = AppStore.questionsInEdit.length;
     var questionObject = [];
     questionObject.push(index);
@@ -61,7 +60,7 @@ var CreateForm = React.createClass ({
     this.trigger();
   },
 
-  changeFormTitle: function(){
+  changeFormTitle: function() {
     AppStore.formTitle = this.refs.formTitle.getDOMNode().value;
     this.trigger();
   },
@@ -91,7 +90,7 @@ var CreateForm = React.createClass ({
     event.preventDefault();
   },
 
-  toggleQuestionActive: function(questionIndex){
+  toggleQuestionActive: function(questionIndex) {
     var question = AppStore.questionsInEdit[questionIndex];
     if(questionIndex !== AppStore.questionBeingDragged){
       if(question[1] === "draggableQuestionActive"){
@@ -103,7 +102,7 @@ var CreateForm = React.createClass ({
     this.trigger();
   },
 
-  render: function(){
+  render: function() {
     return (
       <div>
       <div id="left-side">
@@ -112,7 +111,7 @@ var CreateForm = React.createClass ({
         Form Title: <input placeholder="Example Form Title"  
                     onChange={this.changeFormTitle}ref="formTitle" 
                     type="text"/>
-          {AppStore.questionsInEdit.map(function(question){
+          {AppStore.questionsInEdit.map(function(question) {
             var questionIndex = question[0];
             var questionActive = question[1];
             var questionTitle = question[2];
@@ -172,7 +171,7 @@ var CreateForm = React.createClass ({
                             </select>
             </div>
             <div id="SupportingFormFields">
-             {AppStore.currentQuestionType.map(function(questionType){
+             {AppStore.currentQuestionType.map(function(questionType) {
               switch(questionType) {
                 case "text": 
                     return <div>
@@ -208,7 +207,7 @@ var CreateForm = React.createClass ({
     <div id="sampleFormDivider">
       <div id="liveRenderSampleForm">
         <div id="formTitle">{AppStore.formTitle}</div>
-       {AppStore.questionsInEdit.map(function(question){
+       {AppStore.questionsInEdit.map(function(question) {
           var questionIndex = question[0];
           var questionActive = question[1];
           var questionTitle = question[2];
