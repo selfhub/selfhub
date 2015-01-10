@@ -13,11 +13,11 @@ var Chart = React.createClass({
       if (Array.isArray(table) && Array.isArray(table[0])) {
         var csvHeader = AppStore.formatCSVHeader(table[0][headerIndex]);
         var _schemaCSVData = [csvHeader];
-    
+
         for (var i = 1; i < table.length - 1; i++) {
           _schemaCSVData.push(table[i][headerIndex]);
         }
-    
+
         c3.generate({
           bindto: ".visualization-view",
           data: {
@@ -41,14 +41,15 @@ var Chart = React.createClass({
         });
       }
     },
-    renderHistogramChart: function(csvData) {
+    renderHistogramChart: function(csvData, headerIndex) {
+      headerIndex = headerIndex || 2;
       var transformHistogramData = function(csvData, headerIndex, bucketSize) {
         var header = csvData[0][headerIndex];
         var sortedDataPoints = _.sortBy(_.rest(csvData), function(row) { return parseInt(row[headerIndex], 10); });
         var firstPoint = sortedDataPoints[0][headerIndex];
         var lastPoint = _.last(sortedDataPoints)[headerIndex];
 
-        var buckets = _.range(firstPoint, lastPoint, bucketSize);          
+        var buckets = _.range(firstPoint, lastPoint, bucketSize);
         var pointIndex = 0;
         var currentDataPoint;
 
@@ -69,21 +70,24 @@ var Chart = React.createClass({
         c3.generate({
           bindto: ".visualization-view",
           data: {
-              //Row Format ['Data Name', num, num, ...]
-              columns: [transformHistogramData(csvData, 2, 5)],
-              type: "bar"
+            columns: [transformHistogramData(csvData, headerIndex, 5)],
+            type: "bar"
           },
           bar: {
-              width: {
-                  ratio: 1
-              }
+            width: {
+              ratio: 1
+            }
           }
         });
       }
     }
   },
   componentWillReceiveProps: function(newProps) {
-    Chart.renderHistogramChart(newProps.csvData);
+    if (newProps.chartType === "histogram") {
+      Chart.renderHistogramChart(newProps.csvData, newProps.activeHeader);
+    } else if (newProps.chartType === "timeSeries") {
+      Chart.renderTimeSeriesChart(newProps.csvData, newProps.activeHeader);
+    }
   },
   render: function() {
     return (
