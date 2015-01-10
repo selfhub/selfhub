@@ -161,7 +161,23 @@ var AppStore = assign({}, EventEmitter.prototype, {
       data[key] = refs[key].getDOMNode().value;
     });
     return data;
-  }
+  },
+
+  currentFormTitle: null,
+
+  currentQuestionType: ["text"],
+
+  formTitle: null,
+
+  liveRenderQuestions: [],
+
+  questionsInEdit: [],
+
+  currentSupportingFormFields: null,
+
+  questionBeingDragged: null,
+
+  questionDropTarget: null
 });
 
 //We need to find an elegant way to do this.
