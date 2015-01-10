@@ -26,8 +26,12 @@ var CreateForm = React.createClass ({
     var schemaName = AppStore.formTitle.split(" ").join("_");
     var URL = "/api/schema" + schemaName;
     var DATA = {};
+    DATA.name="schemaName";
+    DATA.metaData={randomInfo: "no metaData here"};
+    DATA.data={};
     AppStore.questionsInEdit.map(function(elem){
-      DATA[elem[2]]=elem;
+      var questionTitle = elem[2].split(" ").join("_");
+      DATA.data[questionTitle]=elem;
     });
     $.ajax({
       url: URL,
@@ -173,7 +177,7 @@ var CreateForm = React.createClass ({
                             </select>
             </div>
             <div id="SupportingFormFields">
-             {AppStore.currentQuestionType.map(function(questionType){
+             {AppStore.currentQuestionType.map(function(questionType) {
               switch(questionType) {
                 case "text": 
                     return <div>

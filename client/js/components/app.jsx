@@ -16,6 +16,7 @@ var App = React.createClass({
   },
 
   componentDidMount: function() {
+    console.log("event:", event);
     AppStore.addChangeListener(this._onChange);
   },
 
