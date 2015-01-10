@@ -4,6 +4,7 @@ var Navbar = require("./navbar.jsx");
 var Menu = require("./menu.jsx");
 var AppStore = require("../store/app_store.js");
 var InterfaceComponent = require("./interface_component.jsx");
+var CreateFormComponent = require("./create_form.jsx");
 
 var Router = require("../router.jsx");
 var router = new Router();
@@ -15,6 +16,7 @@ var App = React.createClass({
   },
 
   componentDidMount: function() {
+    console.log("event:", event);
     AppStore.addChangeListener(this._onChange);
   },
 
