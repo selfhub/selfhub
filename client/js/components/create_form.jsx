@@ -43,13 +43,14 @@ var CreateForm = React.createClass ({
     });
   },
 
-  createNewQuestion: function(form) {
+  createNewQuestion: function(event) {
+    event.preventDefault();
     var index = AppStore.questionsInEdit.length;
     var questionObject = [];
     questionObject.push(index);
     questionObject.push("draggableQuestionInactive");
-    for(var i=0; i < form.target.length; i++){
-      questionObject.push(form.target[i].value);
+    for(var i=0; i < event.target.length; i++){
+      questionObject.push(event.target[i].value);
     }
     AppStore.questionsInEdit.push(questionObject);
     this.trigger();
@@ -70,6 +71,7 @@ var CreateForm = React.createClass ({
   },
 
   drop: function(questionIndex) {
+    event.preventDefault();
     var targetIndex = AppStore.questionDropTarget = questionIndex; 
     var movingIndex = AppStore.questionBeingDragged; 
     var swap;   
@@ -129,8 +131,8 @@ var CreateForm = React.createClass ({
                         <input type="text" value="answer goes here" readOnly="true"/>
                     </div>;
                   
-                  
-              case "scale": 
+
+              case "scale":
                 return <div id={questionActive} 
                         draggable="true" 
                         onDragStart={this.dragStart.bind(this, questionIndex)} 
@@ -171,7 +173,7 @@ var CreateForm = React.createClass ({
                             </select>
             </div>
             <div id="SupportingFormFields">
-             {AppStore.currentQuestionType.map(function(questionType) {
+             {AppStore.currentQuestionType.map(function(questionType){
               switch(questionType) {
                 case "text": 
                     return <div>
@@ -215,13 +217,12 @@ var CreateForm = React.createClass ({
 
           switch(questionType) {
                 case "text": 
-                    return <div>
-                            {questionTitle}<br/>
-                            <input type="text" value="" readOnly="true"/>
-                            <br/>
-                          </div>;
-                    
-                    
+                  return <div>
+                          {questionTitle}<br/>
+                          <input type="text" value="" readOnly="true"/>
+                          <br/>
+                        </div>;
+       
                 case "scale": 
                   return <div>
                            {questionTitle}<br/>
