@@ -3,11 +3,20 @@ var Backbone = require("backbone");
 var Router = Backbone.Router.extend({
   routes: {
     "": "search",
-    signup: "signup",
-    signin: "signin",
+    create: "create",
     "schema/:name": "dataPage",
-    user: "user",
-    create: "create"
+    signin: "signin",
+    signup: "signup",
+    user: "user"
+  },
+  create: function() {
+    console.log("Routing to user account page...");
+    this.current = "create";
+  },
+  dataPage: function(schemaName) {
+    console.log("Routing to schema...");
+    this.current = "schemaController";
+    this.schemaName = schemaName;
   },
   search: function() {
     console.log("Routing to home page...");
@@ -17,26 +26,17 @@ var Router = Backbone.Router.extend({
       this.current = "signin";
     }
   },
-  signup: function() {
-    console.log("Routing to signup page...");
-    this.current = "signup";
-  },
   signin: function() {
     console.log("Routing to signin page...");
     this.current = "signin";
   },
-  dataPage: function(schemaName) {
-    console.log("Routing to schema...");
-    this.current = "schemaController";
-    this.schemaName = schemaName;
+  signup: function() {
+    console.log("Routing to signup page...");
+    this.current = "signup";
   },
   user: function() {
     console.log("Routing to user account page...");
     this.current = "user";
-  },
-  create: function() {
-    console.log("Routing to user account page...");
-    this.current = "create";
   }
 });
 
