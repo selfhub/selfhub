@@ -10,6 +10,7 @@ var Chart = React.createClass({
   statics: {
     renderTimeSeriesChart: function(table, headerIndex) {
       headerIndex = headerIndex || 2;
+
       if (Array.isArray(table) && Array.isArray(table[0])) {
         var csvHeader = AppStore.formatCSVHeader(table[0][headerIndex]);
         var _schemaCSVData = [csvHeader];
@@ -80,6 +81,50 @@ var Chart = React.createClass({
           }
         });
       }
+    },
+    renderScatterplotChart: function(csvData, schemaName, xIndex, yIndex) {
+      var headers = _.first(csvData);
+      
+      var transformCSVtoScatterPlot = function(csvData, schemaName, xIndex, yIndex) {
+        var nonHeaderData = _.rest(csvData);
+
+        var xArray = [schemaName + "_x"];
+        var yArray = [schemaName];
+
+        _.each(nonHeaderData, function(row) {
+          xArray.push(row[xIndex]);
+          yArray.push(row[yIndex]);
+        });
+
+        return [xArray, yArray];
+      }
+      
+      var tplot = transformCSVtoScatterPlot(csvData, schemaName, xIndex, yIndex);
+      var xs = {};
+      xs[schemaName] = schemaName + "_x"; 
+
+      var chart = c3.generate({
+        bindto: ".visualization-view",
+        data: {
+            xs: xs,
+            // Data Format: 
+            // y row ['dataname', num, num, ...]
+            // x row ['dataname_x', num, num, ...]
+            columns: transformCSVtoScatterPlot(csvData, schemaName, xIndex, yIndex),
+            type: 'scatter'
+        },
+        axis: {
+            x: {
+                label: headers[xIndex],
+                tick: {
+                  fit: false
+                }
+            },
+            y: {
+                label: headers[yIndex]
+            }
+        }
+      });
     }
   },
   componentWillReceiveProps: function(newProps) {
@@ -87,6 +132,8 @@ var Chart = React.createClass({
       Chart.renderHistogramChart(newProps.csvData, newProps.activeHeader);
     } else if (newProps.chartType === "timeSeries") {
       Chart.renderTimeSeriesChart(newProps.csvData, newProps.activeHeader);
+    } else if (newProps.chartType === "scatterPlot") {
+      Chart.renderScatterplotChart(newProps.csvData, newProps.schemaName, newProps.activeHeader, 3);
     }
   },
   render: function() {
