@@ -3,11 +3,11 @@ var assign = require("object-assign");
 var _ = require("lodash");
 var $ = require("jquery");
 var c3 = require("c3");
-var Papa = require("babyparse");
 
 var CHANGE_EVENT = "change";
 var _searchSchemas = [];
 var _schemaCSVData = [];
+var _tools = {};
 
 var AppStore = assign({}, EventEmitter.prototype, {
   fetchSchemas: function() {
@@ -18,64 +18,12 @@ var AppStore = assign({}, EventEmitter.prototype, {
         request.setRequestHeader("x-jwt", localStorage.getItem("token"));
       },
       success: function(data) {
-        console.log("GET request for schema data successful.", data);
         _searchSchemas = AppStore.removeBucketPrefix(data);
         AppStore.emitChange();
       },
       error: function() {
         console.error("GET request for schema data failed.");
       }
-    });
-  },
-
-  /*
-    Eventually the server will batch together all the csv's into one file using hadoop.
-    For now I am just getting one users file.
-  */
-  getVisualizationData: function(schemaName, callback, headerIndex) {
-    this.getSchema(schemaName, function(schemaData) {
-      $.ajax({
-        url: "/api/schema/" + schemaName + "/" + schemaData[0].userID,
-        type: "GET",
-        beforeSend: function(request) {
-          request.setRequestHeader("x-jwt", localStorage.getItem("token"));
-        },
-        success: function(data) {
-          var parsedCSV = Papa.parse(data);
-          callback(parsedCSV.data, headerIndex);
-        },
-        error: function() {
-          console.error("GET request for schema data failed.");
-        }
-      });
-    });
-  },
-
-  getSchema: function(schemaName, callback) {
-    $.ajax({
-      url: "/api/schema/" + schemaName,
-      type: "GET",
-      beforeSend: function(request) {
-        request.setRequestHeader("x-jwt", localStorage.getItem("token"));
-      },
-      success: function(schemaData) {
-        console.log("GET request for schema data successful.", schemaData);
-        callback(schemaData);
-      },
-      error: function(error) {
-        console.error(error);
-      }
-    });
-  },
-
-  renderSchema: function(schemaName) {
-    this.getVisualizationData(schemaName, function(table) {
-      if (_.last(table).length === 1 && _.last(table)[0] === "") {
-        table.pop();
-      }
-
-      _schemaCSVData = table;
-      AppStore.emitChange();
     });
   },
 
@@ -102,6 +50,16 @@ var AppStore = assign({}, EventEmitter.prototype, {
     });
   },
 
+  updateCSVData: function(table) {
+    var headerlessTable = _.last(table);
+    if (headerlessTable.length === 1 && headerlessTable[0] === "") {
+      table.pop();
+    }
+
+    _schemaCSVData = table;
+    AppStore.emitChange();
+  },
+
   removeBucketPrefix: function(bucketArray) {
     var buckets = [];
     bucketArray.forEach(function(schema) {
@@ -123,6 +81,11 @@ var AppStore = assign({}, EventEmitter.prototype, {
     return string.split("_").map(function(word) {
       return word.charAt(0).toUpperCase() + word.slice(1);
     }).join(" ");
+  },
+
+  addTools: function(newTools) {
+    _tools = _.extend(_tools, newTools);
+    this.emitChange();
   },
 
   emitChange: function() {
@@ -151,7 +114,8 @@ var AppStore = assign({}, EventEmitter.prototype, {
   getAppState: function() {
     return {
       _searchSchemas: _searchSchemas,
-      _schemaCSVData: _schemaCSVData
+      _schemaCSVData: _schemaCSVData,
+      _tools: _tools
     };
   },
 

@@ -3,6 +3,8 @@ var _ = require("lodash");
 var $ = require("jquery");
 var AppStore = require("../store/app_store");
 var Chart = require("./chart.jsx");
+var CSV = require("babyparse");
+var stats = require("simple-statistics");
 
 var UploadButton = React.createClass({
   componentDidMount: function() {
@@ -107,27 +109,95 @@ var Table = React.createClass({
       chartType: "timeSeries"
     };
   },
+
+  statics: {
+    getToolset: function(chartType, headerlessCSV, headerIndex) {
+      
+      var columnArray = headerlessCSV.map(function(row) {
+        return parseInt(row[headerIndex], 10);
+      });
+
+      var toolset = {
+        Mean: Math.floor(stats.mean(columnArray)),
+        Median: Math.floor(stats.median(columnArray)),
+        Mode: Math.floor(stats.mode(columnArray)),
+      };
+
+      return toolset;
+    }
+  },
+
   componentDidMount: function() {
-    AppStore.renderSchema(this.props.schemaName);
-    //TODO: Make an array of chart names, and map over it to apply events (185)
     var that = this;
-    function toTimeSeries() {
-      that.setState({chartType: "timeSeries"});
-    }
-    function toHistogram() {
-      that.setState({chartType: "histogram"});
-    }
-    function toScatterplot() {
-      that.setState({chartType: "scatterPlot"});
-    }
-    $(document).on("click", "#to-time-series", toTimeSeries);
-    $(document).on("click", "#to-histogram", toHistogram);
-    $(document).on("click", "#to-scatter-plot", toScatterplot);
+
+    /*
+      Eventually the server will batch together all the csv's into one file using hadoop.
+      For now I am just getting one users file.
+    */
+    var getSchema = function(schemaName, callback) {
+      $.ajax({
+        url: "/api/schema/" + schemaName,
+        type: "GET",
+        beforeSend: function(request) {
+          request.setRequestHeader("x-jwt", localStorage.getItem("token"));
+        },
+        success: function(schemaData) {
+          callback(schemaData);
+        },
+        error: function(error) {
+          console.error(error);
+        }
+      });
+    };
+    var schemaName = this.props.schemaName;
+
+    getSchema(schemaName, function(schemaData) {
+      $.ajax({
+        url: "/api/schema/" + schemaName + "/" + schemaData[0].userID,
+        type: "GET",
+        beforeSend: function(request) {
+          request.setRequestHeader("x-jwt", localStorage.getItem("token"));
+        },
+        success: function(data) {
+          var parsedCSV = CSV.parse(data);
+          AppStore.updateCSVData(parsedCSV.data);
+
+          AppStore.addTools(Table.getToolset(that.state.chartType, _.rest(parsedCSV.data), that.state.activeHeader));
+        },
+        error: function() {
+          console.error("GET request for schema data failed.");
+        }
+      });
+    });
+  
+    //TODO: Make an array of chart names, and map over it to apply events (185)
+    var chartEvents = [
+      ["#to-time-series", "timeSeries"],
+      ["#to-histogram", "histogram"],
+      ["#to-scatter-plot", "scatterPlot"]
+    ];
+
+    chartEvents.forEach(function(chartEvent){
+      var chartID = chartEvent[0];
+      var chartType = chartEvent[1];
+      
+      $(document).on("click", chartID, function() {
+        that.setState({chartType: chartType});  
+      });
+    });
+
+  },
+  componentWillUnmount: function() {
+    $("#to-time-series").off("click");
+    $("#to-histogram").off("click");
+    $("#to-scatter-plot").off("click");
   },
   render: function() {
     var that = this;
     var setActiveHeader = function(newHeaderIndex) {
+      var headerlessCSV = _.rest(that.props.schemaCSVData);
       that.setState({activeHeader: newHeaderIndex});
+      AppStore.addTools(Table.getToolset(that.state.chartType, headerlessCSV, that.state.activeHeader));
     };
     var rows = this.props.schemaCSVData;
     if (rows && Array.isArray(rows[0])) {
@@ -145,10 +215,11 @@ var Table = React.createClass({
                 <li id="to-scatter-plot">Scatter Plot</li>
               </ul>
               <ul className="analysis-tools">Analysis Tools
-                <li>Mean</li>
-                <li>Median</li>
-                <li>Mode</li>
-                <li>Range</li>
+                {
+                  _.map(this.props.tools, function(val, key) {
+                    return <li>{key}: {val}</li>;
+                  })
+                }
               </ul>
             </section>
           </aside>

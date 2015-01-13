@@ -32,7 +32,8 @@ var InterfaceComponent = React.createClass({
     }
     if (currentRoute === "schemaController") {
       return <DataPage schemaName={this.props.router.schemaName}
-                       schemaCSVData={this.props.state._schemaCSVData}/>;
+                       schemaCSVData={this.props.state._schemaCSVData}
+                       tools={this.props.state._tools}/>;
     }
     if (currentRoute === "user") {
       return <User />;
