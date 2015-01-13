@@ -24,22 +24,21 @@ var CreateForm = React.createClass ({
   createFormSchema: function(event) {
     event.preventDefault();
     var schemaName = AppStore.formTitle.split(" ").join("_");
-    var URL = "/api/schema" + schemaName;
+    var URL = "/api/schema/" + schemaName;
     var DATA = {};
-    DATA.name="schemaName";
-    DATA.metaData={randomInfo: "no metaData here"};
-    DATA.data={};
-    AppStore.questionsInEdit.map(function(elem){
+    DATA.name = "schemaName";
+    DATA.metaData = {randomInfo: "no metaData here"};
+    DATA.data = {};
+    AppStore.questionsInEdit.map(function(elem) {
       var questionTitle = elem[2].split(" ").join("_");
-      DATA.data[questionTitle]=elem;
+      DATA.data[questionTitle] = elem;
     });
     $.ajax({
       url: URL,
       type:"PUT",
       data: DATA,
       success: function(data) {
-        router.navigate("/", {trigger: true});
-        AppStore.emitChange();
+        console.log("Successful PUT request");
       },
       error: function(error) {
         console.error(error);
@@ -53,7 +52,7 @@ var CreateForm = React.createClass ({
     var questionObject = [];
     questionObject.push(index);
     questionObject.push("draggableQuestionInactive");
-    for(var i=0; i < event.target.length; i++){
+    for(var i = 0; i < event.target.length; i++){
       questionObject.push(event.target[i].value);
     }
     AppStore.questionsInEdit.push(questionObject);
@@ -61,7 +60,7 @@ var CreateForm = React.createClass ({
   },
 
   getSupportingFormFields: function() {
-    AppStore.currentQuestionType=[this.refs.questionType.getDOMNode().value];
+    AppStore.currentQuestionType = [this.refs.questionType.getDOMNode().value];
     this.trigger();
   },
 
@@ -71,19 +70,19 @@ var CreateForm = React.createClass ({
   },
 
   outputUpdate: function(id) {
-    document.querySelector("#output"+id).value = this.refs["scale"+id].getDOMNode().value;
+    document.querySelector("#output" + id).value = this.refs["scale" + id].getDOMNode().value;
   },
 
   drop: function(questionIndex) {
     event.preventDefault();
-    var targetIndex = AppStore.questionDropTarget = questionIndex; 
-    var movingIndex = AppStore.questionBeingDragged; 
-    var swap;   
-    this.toggleQuestionActive(questionIndex);    
-    AppStore.questionsInEdit[AppStore.questionBeingDragged][0]=questionIndex;         
-    AppStore.questionsInEdit[targetIndex][0]=movingIndex;
+    var targetIndex = AppStore.questionDropTarget = questionIndex;
+    var movingIndex = AppStore.questionBeingDragged;
+    var swap;
+    this.toggleQuestionActive(questionIndex);
+    AppStore.questionsInEdit[AppStore.questionBeingDragged][0] = questionIndex;
+    AppStore.questionsInEdit[targetIndex][0] = movingIndex;
     swap = AppStore.questionsInEdit[movingIndex];
-    AppStore.questionsInEdit[movingIndex]=AppStore.questionsInEdit[targetIndex];
+    AppStore.questionsInEdit[movingIndex] = AppStore.questionsInEdit[targetIndex];
     AppStore.questionsInEdit[targetIndex] = swap;
     this.trigger();
   },
@@ -98,10 +97,10 @@ var CreateForm = React.createClass ({
 
   toggleQuestionActive: function(questionIndex) {
     var question = AppStore.questionsInEdit[questionIndex];
-    if(questionIndex !== AppStore.questionBeingDragged){
-      if(question[1] === "draggableQuestionActive"){
+    if(questionIndex !== AppStore.questionBeingDragged) {
+      if(question[1] === "draggableQuestionActive") {
         AppStore.questionsInEdit[questionIndex][1] = "draggableQuestionInactive";
-      }else{
+      } else {
         AppStore.questionsInEdit[questionIndex][1] = "draggableQuestionActive";
       }
     }
@@ -114,8 +113,8 @@ var CreateForm = React.createClass ({
       <div id="left-side">
         <div id="editableQuestions">
         <br/>
-        Form Title: <input placeholder="Example Form Title"  
-                    onChange={this.changeFormTitle}ref="formTitle" 
+        Form Title: <input placeholder="Example Form Title"
+                    onChange={this.changeFormTitle}ref="formTitle"
                     type="text"/>
           {AppStore.questionsInEdit.map(function(question) {
             var questionIndex = question[0];
@@ -123,53 +122,52 @@ var CreateForm = React.createClass ({
             var questionTitle = question[2];
             var questionType = question[3];
             switch(questionType) {
-              case "text": 
-                  return <div id={questionActive} 
-                          draggable="true" 
-                          onDragStart={this.dragStart.bind(this, questionIndex)} 
-                          onDragEnter={this.toggleQuestionActive.bind(this, questionIndex)} 
-                          onDragLeave={this.toggleQuestionActive.bind(this, questionIndex)} 
+              case "text":
+                  return <div id={questionActive}
+                          draggable="true"
+                          onDragStart={this.dragStart.bind(this, questionIndex)}
+                          onDragEnter={this.toggleQuestionActive.bind(this, questionIndex)}
+                          onDragLeave={this.toggleQuestionActive.bind(this, questionIndex)}
                           onDragOver={this.preventDefault}
                           onDrop={this.drop.bind(this, questionIndex)}>
                     <div id="qTitle">{questionTitle}</div>
                         <input type="text" value="answer goes here" readOnly="true"/>
                     </div>;
-                  
 
               case "scale":
-                return <div id={questionActive} 
-                        draggable="true" 
-                        onDragStart={this.dragStart.bind(this, questionIndex)} 
-                        onDragEnter={this.toggleQuestionActive.bind(this, questionIndex)} 
-                        onDragLeave={this.toggleQuestionActive.bind(this, questionIndex)} 
+                return <div id = {questionActive}
+                        draggable = "true"
+                        onDragStart = {this.dragStart.bind(this, questionIndex)}
+                        onDragEnter = {this.toggleQuestionActive.bind(this, questionIndex)}
+                        onDragLeave = {this.toggleQuestionActive.bind(this, questionIndex)}
                         onDragOver={this.preventDefault}
                         onDrop={this.drop.bind(this, questionIndex)}>
                     <div id="qTitle">{questionTitle}</div>
-                    Min: <input type="number" 
-                          name="minInput" 
+                    Min: <input type="number"
+                          name="minInput"
                           defaultValue={question[4]}/><br/>
-                    Max: <input type="number" 
-                          name="maxInput" 
+                    Max: <input type="number"
+                          name="maxInput"
                           defaultValue={question[5]}/><br/>
-                    Labels (optional): <input type="text" 
-                                      placeholder="min label" 
-                                      name="minLabel" 
+                    Labels (optional): <input type="text"
+                                      placeholder="min label"
+                                      name="minLabel"
                                       defaultValue={question[6]}/>
-                                      <input type="text" 
-                                      placeholder="max label" 
-                                      name="maxLabel" 
+                                      <input type="text"
+                                      placeholder="max label"
+                                      name="maxLabel"
                                       defaultValue={question[7]}/><br/>
-                  </div>;         
+                  </div>;
             }
           }, this)}
         </div>
         <div id="createNewQuestion">
-          <form onSubmit={this.createNewQuestion}> 
-            Question Title: <input ref="questionTitle" 
+          <form onSubmit={this.createNewQuestion}>
+            Question Title: <input ref="questionTitle"
                             type="text"/>
             <div>
-            Question Type:  <select defaultValue="text" 
-                            onChange={this.getSupportingFormFields} 
+            Question Type:  <select defaultValue="text"
+                            onChange={this.getSupportingFormFields}
                             ref="questionType">
                               <option value="text">Text</option>
                               <option value="scale">Scale</option>
@@ -179,29 +177,29 @@ var CreateForm = React.createClass ({
             <div id="SupportingFormFields">
              {AppStore.currentQuestionType.map(function(questionType) {
               switch(questionType) {
-                case "text": 
+                case "text":
                     return <div>
-                        <input type="text" 
-                        value="answer goes here" 
+                        <input type="text"
+                        value="answer goes here"
                         readOnly="true"/>
                     </div>;
-                    
-                    
-                case "scale": 
+
+
+                case "scale":
                   return <div>
-                            Min: <input type="number" 
+                            Min: <input type="number"
                                   name="minInput"/><br/>
-                            Max: <input type="number" 
+                            Max: <input type="number"
                                   name="maxInput"/><br/>
-                            Labels (optional): <input type="text" 
-                                                placeholder="min label" 
+                            Labels (optional): <input type="text"
+                                                placeholder="min label"
                                                 name="minLabel"/>
-                                                <input type="text" 
-                                                placeholder="max label" 
+                                                <input type="text"
+                                                placeholder="max label"
                                                 name="maxLabel"/><br/>
                           </div>;
-                  
-                  
+
+
               }
             })
           }</div>
@@ -220,17 +218,17 @@ var CreateForm = React.createClass ({
           var questionType = question[3];
 
           switch(questionType) {
-                case "text": 
+                case "text":
                   return <div>
                           {questionTitle}<br/>
                           <input type="text" value="" readOnly="true"/>
                           <br/>
                         </div>;
-       
-                case "scale": 
+
+                case "scale":
                   return <div>
                            {questionTitle}<br/>
-                           <output for={"scale"+questionIndex} 
+                           <output for={"scale"+questionIndex}
                            id={"output"+questionIndex}>5</output><br/>
                             <label for={"scale"+questionIndex}>{question[4]}</label>
                             <input ref={"scale"+questionIndex} type="range"
@@ -240,8 +238,8 @@ var CreateForm = React.createClass ({
                               onChange={this.outputUpdate.bind(this, question[0])}/>
                             <label for={"scale"+questionIndex}>{question[5]}</label>
                             <div>{question[6]}    {question[7]}  </div>
-                              
-                          </div>;         
+
+                          </div>;
           }
         }, this)}
       <button onClick={this.createFormSchema} className="completeForm">Publish Form</button>

@@ -20,13 +20,8 @@ var Menu = React.createClass({
             </a>
           </li>
           <li>
-            <a href="#/">
+            <a href="#/create">
               <span className="menu-item">Create Schema</span>
-            </a>
-          </li>
-          <li>
-            <a href="#/">
-              <span className="menu-item">Followed Schemas</span>
             </a>
           </li>
           <li>
