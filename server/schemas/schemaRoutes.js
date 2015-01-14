@@ -2,7 +2,7 @@ var schemaController = require("./schemaController");
 
 module.exports = function(router) {
   router.get("/", schemaController.getSchemaNames);
-  router.get("/:schemaName", schemaController.getEntriesMetadataForSchema);
+  router.get("/:schemaName", schemaController.getTemplate);
   router.get("/:schemaName/:userID", schemaController.getData);
   /*
   This is route is specifically for the download button.

@@ -91,6 +91,25 @@ module.exports = {
   /* READ requests */
 
   /**
+   * Request a schema template.
+   * @param {Object} request the http ClientRequest object
+   * @param {Object} response the http ServerResponse object
+   */
+  getTemplate: function(request, response) {
+    var schemaName = request.params.schemaName;
+    var sendErrorOrSchema = function(error, schema) {
+      if (error) {
+        helpers.errorHandler(error, request, response);
+      } else if (schema) {
+        response.status(200).send(schema);
+      } else {
+        helpers.handleBadRequest(response, "No matching schema.");
+      }
+    };
+    schemaModel.getSchema(schemaName, sendErrorOrSchema);
+  },
+  
+  /**
    * Request the list of schema names.
    * @param {Object} request the http ClientRequest object
    * @param {Object} response the http ServerResponse object
