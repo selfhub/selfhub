@@ -38,7 +38,7 @@ var InterfaceComponent = React.createClass({
       return <User />;
     }
     if (currentRoute === "create") {
-      return <CreateForm />;
+      return <CreateForm router={this.props.router}/>;
     }
     return <div />;
   }
