@@ -84,7 +84,7 @@ var Chart = React.createClass({
     },
     renderScatterplotChart: function(csvData, schemaName, xIndex, yIndex) {
       var headers = _.first(csvData);
-      
+
       var transformCSVtoScatterPlot = function(csvData, schemaName, xIndex, yIndex) {
         var nonHeaderData = _.rest(csvData);
 
@@ -97,21 +97,21 @@ var Chart = React.createClass({
         });
 
         return [xArray, yArray];
-      }
-      
+      };
+
       var tplot = transformCSVtoScatterPlot(csvData, schemaName, xIndex, yIndex);
       var xs = {};
-      xs[schemaName] = schemaName + "_x"; 
+      xs[schemaName] = schemaName + "_x";
 
       var chart = c3.generate({
         bindto: ".visualization-view",
         data: {
             xs: xs,
-            // Data Format: 
+            // Data Format:
             // y row ['dataname', num, num, ...]
             // x row ['dataname_x', num, num, ...]
             columns: transformCSVtoScatterPlot(csvData, schemaName, xIndex, yIndex),
-            type: 'scatter'
+            type: "scatter"
         },
         axis: {
             x: {

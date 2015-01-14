@@ -109,144 +109,165 @@ var CreateForm = React.createClass ({
 
   render: function() {
     return (
-      <div>
-      <div id="left-side">
-        <div id="editableQuestions">
-        <br/>
-        Form Title: <input placeholder="Example Form Title"
-                    onChange={this.changeFormTitle}ref="formTitle"
-                    type="text"/>
-          {AppStore.questionsInEdit.map(function(question) {
-            var questionIndex = question[0];
-            var questionActive = question[1];
-            var questionTitle = question[2];
-            var questionType = question[3];
-            switch(questionType) {
-              case "text":
-                  return <div id={questionActive}
-                          draggable="true"
-                          onDragStart={this.dragStart.bind(this, questionIndex)}
-                          onDragEnter={this.toggleQuestionActive.bind(this, questionIndex)}
-                          onDragLeave={this.toggleQuestionActive.bind(this, questionIndex)}
-                          onDragOver={this.preventDefault}
-                          onDrop={this.drop.bind(this, questionIndex)}>
-                    <div id="qTitle">{questionTitle}</div>
-                        <input type="text" value="answer goes here" readOnly="true"/>
-                    </div>;
-
-              case "scale":
-                return <div id = {questionActive}
-                        draggable = "true"
-                        onDragStart = {this.dragStart.bind(this, questionIndex)}
-                        onDragEnter = {this.toggleQuestionActive.bind(this, questionIndex)}
-                        onDragLeave = {this.toggleQuestionActive.bind(this, questionIndex)}
-                        onDragOver={this.preventDefault}
-                        onDrop={this.drop.bind(this, questionIndex)}>
-                    <div id="qTitle">{questionTitle}</div>
-                    Min: <input type="number"
-                          name="minInput"
-                          defaultValue={question[4]}/><br/>
-                    Max: <input type="number"
-                          name="maxInput"
-                          defaultValue={question[5]}/><br/>
-                    Labels (optional): <input type="text"
-                                      placeholder="min label"
-                                      name="minLabel"
-                                      defaultValue={question[6]}/>
-                                      <input type="text"
-                                      placeholder="max label"
-                                      name="maxLabel"
-                                      defaultValue={question[7]}/><br/>
-                  </div>;
-            }
-          }, this)}
-        </div>
-        <div id="createNewQuestion">
-          <form onSubmit={this.createNewQuestion}>
-            Question Title: <input ref="questionTitle"
-                            type="text"/>
-            <div>
-            Question Type:  <select defaultValue="text"
-                            onChange={this.getSupportingFormFields}
-                            ref="questionType">
-                              <option value="text">Text</option>
-                              <option value="scale">Scale</option>
-                              <option value="number">Number</option>
-                            </select>
+      <div className="form-creation-page">
+        <div id="left-side">
+          <div id="create-new-question">
+            <section className="section-block">
+              <div className="form-header">
+                <p className="form-label">Schema Name: </p>
+                <input className="form-input" placeholder="give your schema a name"
+                  onChange={this.changeFormTitle} ref="formTitle"
+                  type="text"/>
+              </div>
+              <form onSubmit={this.createNewQuestion}>
+                <div className="form-header">
+                  <p className="form-label">Table Header: </p>
+                  <input className="form-input" ref="questionTitle"
+                    placeholder="add a new table header" type="text"/>
+                </div>
+                <div>
+                  <p className="form-label">Data Type: </p>
+                  <select defaultValue="text"
+                    onChange={this.getSupportingFormFields}
+                    ref="questionType">
+                    <option value="text">Text</option>
+                    <option value="scale">Scale</option>
+                    <option value="number">Number</option>
+                  </select>
+                </div>
+                <div id="supporting-form-fields">
+                {AppStore.currentQuestionType.map(function(questionType) {
+                  switch(questionType) {
+                    case "text":
+                      return (
+                        <div>
+                        </div>
+                      );
+                    case "scale":
+                      return (
+                        <div className="scale-block">
+                          <p className="form-label">Scale Slider</p>
+                          <input type="number" className="slider-input"
+                                 placeholder="minimum value" name="minInput"/>
+                          <input type="number" className="slider-input"
+                                 placeholder="maximum value" name="maxInput"/>
+                          <div className="slider-labels">
+                            <p className="form-label">Labels (optional):</p>
+                            <input type="text" className="slider-input"
+                                   placeholder="min label" name="minLabel"/>
+                            <input type="text" className="slider-input"
+                                   placeholder="max label" name="maxLabel"/><br/>
+                          </div>
+                        </div>
+                      );
+                  }
+                })}
+                </div>
+                <button type="submit" className="form-button">Add Item</button>
+              </form>
+            </section>
+          </div>
+          <section className="section-block">
+            <div id="editable-questions">
+              <p className="form-label">Header Order: </p>
+                  {AppStore.questionsInEdit.map(function(question) {
+                    var questionIndex = question[0];
+                    var questionActive = question[1];
+                    var questionTitle = question[2];
+                    var questionType = question[3];
+                    switch(questionType) {
+                      case "text":
+                        return (
+                          <div className="form-question-block" id={questionActive}
+                            draggable="true"
+                            onDragStart={this.dragStart.bind(this, questionIndex)}
+                            onDragEnter={this.toggleQuestionActive.bind(this, questionIndex)}
+                            onDragLeave={this.toggleQuestionActive.bind(this, questionIndex)}
+                            onDragOver={this.preventDefault}
+                            onDrop={this.drop.bind(this, questionIndex)}>
+                            <div className="question-title">{questionTitle}</div>
+                          </div>
+                        );
+                      case "scale":
+                        return (
+                          <div className="form-question-block" id={questionActive}
+                            draggable="true"
+                            onDragStart={this.dragStart.bind(this, questionIndex)}
+                            onDragEnter={this.toggleQuestionActive.bind(this, questionIndex)}
+                            onDragLeave={this.toggleQuestionActive.bind(this, questionIndex)}
+                            onDragOver={this.preventDefault}
+                            onDrop={this.drop.bind(this, questionIndex)}>
+                            <p className="form-label" id="qTitle">{questionTitle}</p>
+                            <input type="number" className="slider-input"
+                              name="minInput" defaultValue={question[4]}/>
+                            <input type="number" className="slider-input"
+                              name="maxInput" defaultValue={question[5]}/>
+                            <div className="slider-labels">
+                              <p className="form-label">Labels (optional):</p>
+                              <input type="text" className="slider-input"
+                                name="minLabel" defaultValue={question[6]}/>
+                              <input type="text" className="slider-input"
+                                name="maxLabel" defaultValue={question[7]}/>
+                            </div>
+                          </div>
+                        );
+                    }
+                  }, this)}
             </div>
-            <div id="SupportingFormFields">
-             {AppStore.currentQuestionType.map(function(questionType) {
-              switch(questionType) {
-                case "text":
-                    return <div>
-                        <input type="text"
-                        value="answer goes here"
-                        readOnly="true"/>
-                    </div>;
-
-
-                case "scale":
-                  return <div>
-                            Min: <input type="number"
-                                  name="minInput"/><br/>
-                            Max: <input type="number"
-                                  name="maxInput"/><br/>
-                            Labels (optional): <input type="text"
-                                                placeholder="min label"
-                                                name="minLabel"/>
-                                                <input type="text"
-                                                placeholder="max label"
-                                                name="maxLabel"/><br/>
-                          </div>;
-
-
-              }
-            })
-          }</div>
-            <button type="submit" className="addField">Add Item</button>
-          </form>
-
+          </section>
         </div>
-    </div>
-    <div id="sampleFormDivider">
-      <div id="liveRenderSampleForm">
-        <div id="formTitle">{AppStore.formTitle}</div>
-       {AppStore.questionsInEdit.map(function(question) {
-          var questionIndex = question[0];
-          var questionActive = question[1];
-          var questionTitle = question[2];
-          var questionType = question[3];
-
-          switch(questionType) {
-                case "text":
-                  return <div>
-                          {questionTitle}<br/>
-                          <input type="text" value="" readOnly="true"/>
-                          <br/>
-                        </div>;
-
-                case "scale":
-                  return <div>
-                           {questionTitle}<br/>
-                           <output for={"scale"+questionIndex}
-                           id={"output"+questionIndex}>5</output><br/>
-                            <label for={"scale"+questionIndex}>{question[4]}</label>
-                            <input ref={"scale"+questionIndex} type="range"
-                              min={question[4]}
-                              max={question[5]}
-                              id={"scale"+questionIndex}
-                              onChange={this.outputUpdate.bind(this, question[0])}/>
-                            <label for={"scale"+questionIndex}>{question[5]}</label>
-                            <div>{question[6]}    {question[7]}  </div>
-
-                          </div>;
-          }
-        }, this)}
-      <button onClick={this.createFormSchema} className="completeForm">Publish Form</button>
+        <div id="sample-form-divider">
+          <div id="live-render-sample-form">
+            <div id="form-title">{AppStore.formTitle}</div>
+            <div>
+              {AppStore.questionsInEdit.map(function(question) {
+                var questionIndex = question[0];
+                var questionActive = question[1];
+                var questionTitle = question[2];
+                var questionType = question[3];
+                switch(questionType) {
+                  case "text":
+                    return (
+                      <div className="live-render-form-question">
+                        <p className="form-label">{questionTitle}</p>
+                        <input className="form-input" type="text"
+                               placeholder="input preview" value="" readOnly="true"/>
+                      </div>
+                    );
+                  case "scale":
+                }
+                return (
+                  <div className="slider-preview">
+                    <p className="form-label">{questionTitle}</p>
+                    <output className="slider-output" for={"scale" + questionIndex}
+                      id={"output"+questionIndex}>5</output><br/>
+                    <div>
+                      <span className="min-label" for={"scale" + questionIndex}>
+                        {question[4]}
+                      </span>
+                      <span className="max-label" for={"scale" + questionIndex}>
+                        {question[5]}
+                      </span>
+                    </div>
+                    <input ref={"scale" + questionIndex} type="range"
+                      min={question[4]}
+                      max={question[5]}
+                      id={"scale"+questionIndex}
+                      onChange={this.outputUpdate.bind(this, question[0])}/>
+                    <div>
+                      <span className="min-label">{question[6]}</span>
+                      <span className="max-label">{question[7]}</span>
+                    </div>
+                  </div>
+                );
+              }, this)}
+            </div>
+            <button onClick={this.createFormSchema} className="form-button">Publish Schema</button>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  );}
+    );
+  }
 });
 
 module.exports = CreateForm;

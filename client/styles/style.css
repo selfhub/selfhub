@@ -171,7 +171,7 @@ nav {
 .search-schema-rows,
 .search-schema-columns {
   border: 1px solid #e5e5e5;
-  border-radius: 3px;
+  border-radius: 4px;
   display: inline-block;
   padding: 0 15px 0 15px;
 }
@@ -227,7 +227,7 @@ nav {
 .signup-form {
   background: white;
   border: 1px solid lightgrey;
-  border-radius: 3px;
+  border-radius: 4px;
   padding: 25px;
 }
 
@@ -235,7 +235,7 @@ nav {
 .password-block,
 .email-block {
   border: 1px solid lightgrey;
-  border-radius: 3px;
+  border-radius: 4px;
   margin-bottom: 10px;
   width: 100%;
 }
@@ -435,7 +435,7 @@ td {
 .download-button,
 .upload-button {
   border: 1px solid teal;
-  border-radius: 3px;
+  border-radius: 4px;
   cursor: pointer;
   float: right;
   font-size: 0.66em;
@@ -491,72 +491,176 @@ td {
   cursor: pointer;
 }
 
-#sampleFormDivider {
-  position: absolute;
-  margin-top: 75px;
-  margin-bottom: 20px;
-  height:100%;
-  left: 50%;
-  border-left: dotted 2px black;
-}
-
-#liveRenderSampleForm {
-  position: absolute;
-  left: 55%;
-  right: 5%;
-  width: 600px;
-  font-size: 15px;
-  background-color: white;
-  border: solid 1px black;
-  border-radius: 8px;
-  margin-top: 5px;
-  margin-left: 20px;
-  margin-right: 20px;
-  padding-left: 10px;
-  padding-right:10px;
-}
-
-#qTitle {
-  font:bold;
+/* Form Creation Page */
+.form-creation-page {
+  min-height: 100%;
+  padding-top: 50px;
+  width: 100%;
 }
 
 #left-side {
-  position: absolute;
-  width:45%;
-  height:90%;
-  left: 10px;
-  margin-top: 40px;
+  display: inline-block;
+  float: left;
   font-size: 15px;
-  right:50%;
+  padding: 20px 10px 20px 20px;
+  width:50%;
 }
 
-.completeForm {
+#sample-form-divider {
+  display: inline-block;
+  height: 100%;
+  padding: 20px 20px 20px 10px;
+  width: 50%;
+}
+
+.form-label {
+  font-family: Quicksand, sans-serif;
+  font-size: 1.4em;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+#live-render-sample-form {
+  background-color: white;
+  border: solid 1px #e5e5e5;
+  border-radius: 4px;
+  font-size: 15px;
+  padding: 20px;
+}
+
+#editable-questions {
   margin-bottom: 10px;
-  margin-top: 300px;
-  padding-bottom: 6px;
-  padding-top: 6px;
-  margin-left: 35%;
 }
 
-#formTitle {
-  font-size: 25px;
-  margin-top:15px;
-  margin-left: 20%;
-  margin-right:20%;
+.form-button {
+  background: teal;
+  border: 1px solid teal;
+  border-radius: 4px;
+  color: white;
+  margin-top: 10px;
+  padding: 8px 15px 8px 15px;
 }
 
+#form-title {
+  color: teal;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 2.4em;
+  font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  min-height: 1.5em;
+  text-align: center;
+}
+
+.form-question-block {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+.live-render-form-question {
+  margin-bottom: 20px;
+}
+
+.question-title {
+  margin-bottom: 5px;
+}
+
+.section-block {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.form-header {
+  margin-bottom: 20px;
+}
+
+.form-input {
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  font-family: 'Open Sans', sans-serif;
+  height: 40px;
+  padding: 8px 15px 8px 15px;
+  width: 100%;
+}
+
+.form-input:focus {
+  border: 1px solid orange;
+  outline: none;
+}
+
+.live-render-form-input {
+  height: 40px;
+  width: 100%;
+}
+
+/* Draggable */
 #draggableQuestionInactive {
-  border-style: solid 2px black;
+  background: #f7f7f7;
+  color: #111;
 }
 
 #draggableQuestionActive {
-  border-style: solid;
-  border-color: blue;
+  background: #f2f2f2;
+  border: 1px solid orange;
+  color: #111;
 }
 
-input {
-  margin-top: 8px;
-  margin-bottom: 10px;
+/* Scale Slider */
+.scale-block {
+  margin-bottom: 20px;
+  margin-top: 25px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.scale-block p,
+.form-question-block p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1em;
+}
+
+.slider-input {
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  margin-right: 2%;
+  padding: 8px 15px 8px 15px;
+  width: 46%;
+}
+
+.slider-input:focus {
+  border: 1px solid orange;
+  outline: none;
+}
+
+.slider-labels {
+  margin-top: 10px;
+}
+.slider-preview {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.slider-output {
+  font-family: Quicksand, sans-serif;
+  font-size: 2em;
+  margin-bottom: -20px;
+  margin-top: -25px;
+  text-align: center;
+}
+
+.min-label,
+.max-label {
+  display: inline-block;
+}
+
+.max-label {
+  float: right;
 }
 
 /* User Account */
