@@ -4,9 +4,18 @@ var $ = require("jquery");
 var Menu = React.createClass({
   componentDidMount: function() {
     var DROP_DOWN_SPEED = 300;
+    var isToggled = false;
     $(document).ready(function() {
       $(".menu").click(function () {
         $("#dropdown").slideToggle(DROP_DOWN_SPEED);
+        isToggled = !isToggled;
+      });
+
+      $(document).on('keydown', function(event) {
+        if (event.keyCode === 27 && isToggled) {
+          $("#dropdown").slideToggle(DROP_DOWN_SPEED);
+          isToggled = !isToggled;
+        }
       });
     });
   },
