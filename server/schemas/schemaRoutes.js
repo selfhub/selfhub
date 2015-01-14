@@ -4,6 +4,7 @@ module.exports = function(router) {
   router.get("/", schemaController.getSchemaNames);
   router.get("/:schemaName", schemaController.getEntriesMetadataForSchema);
   router.get("/:schemaName/:userID", schemaController.getData);
+  router.get("/template/:schemaName", schemaController.fetchTemplate);
   /*
   This is route is specifically for the download button.
   Download requests don't let you set custom headers

@@ -79,6 +79,20 @@ module.exports = {
     schemaModel.createTemplate(request, response, templateSuccessOrFailCallback);
   },
 
+  fetchTemplate: function(request, response) {
+    var schemaName = request.params.schemaName;
+    var sendErrorOrSchema = function(error, schema) {
+      if (error) {
+        helpers.errorHandler(error, request, response);
+      } else if (schema) {
+        response.status(200).send(schema);
+      } else {
+        helpers.handleBadRequest(response, "No matching schema.");
+      }
+    };
+    schemaModel.fetchSchema(schemaName, sendErrorOrSchema);
+  },
+
   /**
    * Upload a new schema entry.
    * @param {Object} request the http ClientRequest object
