@@ -126,6 +126,17 @@ var AppStore = assign({}, EventEmitter.prototype, {
     });
     return data;
   },
+  
+  clearFormData: function() {
+    this.currentFormTitle = null;
+    this.currentQuestionType = ["text"];
+    this.formTitle = null;
+    this.liveRenderQuestions = [];
+    this.questionsInEdit = [];
+    this.currentSupportingFormFields = null;
+    this.questionBeingDragged = null;
+    this.questionDropTarget = null;
+  },
 
   currentFormTitle: null,
 

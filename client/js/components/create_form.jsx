@@ -25,20 +25,36 @@ var CreateForm = React.createClass ({
     event.preventDefault();
     var schemaName = AppStore.formTitle.split(" ").join("_");
     var URL = "/api/schema/" + schemaName;
-    var DATA = {};
-    DATA.name = "schemaName";
-    DATA.metaData = {randomInfo: "no metaData here"};
-    DATA.data = {};
+    var DATA = {"schema": {}, "csv":null};
+    var CSV = [];
+    var csvContent = "data:text/csv;charset=utf-8,";
+    DATA.schema.name = schemaName;
+    DATA.schema.metaData = {randomInfo: "no metaData here"};
+    DATA.schema.data = {};
     AppStore.questionsInEdit.map(function(elem) {
       var questionTitle = elem[2].split(" ").join("_");
-      DATA.data[questionTitle] = elem;
+      CSV.push(questionTitle);
+      DATA.schema.data[questionTitle] = elem;
     });
+    CSV = [CSV];
+    CSV.forEach(function(infoArray, index){
+      var dataString = infoArray.join(",");
+      csvContent += index < infoArray.length ? dataString+ "\n" : dataString;
+    }); 
+    var encodedUri = encodeURI(csvContent);
+    DATA.csv = encodedUri;
+    console.log("Data object: ", JSON.stringify(DATA));
     $.ajax({
       url: URL,
       type:"PUT",
       data: DATA,
+      beforeSend: function(request) {
+        request.setRequestHeader("x-jwt", localStorage.getItem("token"));
+      },
       success: function(data) {
         console.log("Successful PUT request");
+        AppStore.clearFormData();
+        router.navigate("/", {trigger: true});
       },
       error: function(error) {
         console.error(error);

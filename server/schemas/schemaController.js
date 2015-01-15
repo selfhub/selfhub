@@ -39,7 +39,7 @@ var handleUpload = function(request, response, appendData) {
             if (error) {
               console.error("error uploading entry:", error);
             } else {
-              console.log("successfully created", filename);
+              console.log("successfully created schema headers.");
             }
             helpers.endFormParse(response);
           });
@@ -67,12 +67,29 @@ module.exports = {
    */
   createSchema: function(request, response) {
     var schema = request.body.schema;
+    var userID = request.currentUser;
+    var schemaName = request.params.schemaName;
+    var file = request.body.csv;
+    // console.log("data buffer:", data);
     var templateSuccessOrFailCallback = function(error, schema) {
       if (error) {
         helpers.errorHandler(error, request, response);
       } else {
         console.log("created schema:", schema);
-        s3Cache.createSchema(schema.name, helpers.getAWSCallbackHandler(request, response, 201));
+        s3Cache.createSchema(schema.name, function(error, data) {
+          if (error) {
+            helpers.errorHandler(error, request, response);
+          } else {
+            s3Cache.createEntry(schemaName, userID, file, function(error) {
+              if (error) {
+                console.error("error uploading entry:", error);
+              } else {
+                console.log("successfully created headers in file system");
+              }
+              helpers.endFormParse(response);
+            });
+          }
+        });
       }
     };
 
@@ -89,6 +106,25 @@ module.exports = {
   },
 
   /* READ requests */
+
+  /**
+   * Request a schema template.
+   * @param {Object} request the http ClientRequest object
+   * @param {Object} response the http ServerResponse object
+   */
+  getTemplate: function(request, response) {
+    var schemaName = request.params.schemaName;
+    var sendErrorOrSchema = function(error, schema) {
+      if (error) {
+        helpers.errorHandler(error, request, response);
+      } else if (schema) {
+        response.status(200).send(schema);
+      } else {
+        helpers.handleBadRequest(response, "No matching schema.");
+      }
+    };
+    schemaModel.getSchema(schemaName, sendErrorOrSchema);
+  },
 
   /**
    * Request the list of schema names.

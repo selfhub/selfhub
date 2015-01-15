@@ -62,5 +62,9 @@ module.exports = {
       .catch(function(error) {
         console.error("hit error", error);
       });
+  },
+
+  getSchema: function(schemaName, callback) {
+    Model.findOne({name: schemaName}, callback);
   }
 };
