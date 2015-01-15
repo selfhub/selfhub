@@ -69,7 +69,8 @@ module.exports = {
     var schema = request.body.schema;
     var userID = request.currentUser;
     var schemaName = request.params.schemaName;
-    var data = request.body.csv;
+    var file = request.body.csv;
+    // console.log("data buffer:", data);
     var templateSuccessOrFailCallback = function(error, schema) {
       if (error) {
         helpers.errorHandler(error, request, response);
@@ -79,11 +80,11 @@ module.exports = {
           if (error) {
             helpers.errorHandler(error, request, response);
           } else {
-            s3Cache.createEntry(schemaName, userID, data, function(error) {
+            s3Cache.createEntry(schemaName, userID, file, function(error) {
               if (error) {
                 console.error("error uploading entry:", error);
               } else {
-                console.log("successfully created", filename);
+                console.log("successfully created headers in file system");
               }
               helpers.endFormParse(response);
             });
