@@ -2,10 +2,11 @@ var React = require("react");
 var AppStore = require("../store/app_store");
 var c3 = require("c3");
 var _ = require("lodash");
+var stats = require("simple-statistics");
 
 var Chart = React.createClass({
   componentDidMount: function() {
-    AppStore.renderSchema(this.props.schemaName);
+    Chart.renderVisualization(this.props.chartType, this.props.csvData, this.props.activeHeader, this.props.schemaName);
   },
   statics: {
     renderTimeSeriesChart: function(table, headerIndex) {
@@ -92,16 +93,40 @@ var Chart = React.createClass({
         var yArray = [schemaName];
 
         _.each(nonHeaderData, function(row) {
-          xArray.push(row[xIndex]);
-          yArray.push(row[yIndex]);
+          xArray.push(parseInt(row[xIndex], 10));
+          yArray.push(parseInt(row[yIndex], 10));
         });
 
         return [xArray, yArray];
       };
 
       var tplot = transformCSVtoScatterPlot(csvData, schemaName, xIndex, yIndex);
+      //Remove the header of the scatter plot
+      tplot[0].shift();
+      tplot[1].shift();
+      
+      var graphPoints = _.zip(tplot[0], tplot[1]);
       var xs = {};
-      xs[schemaName] = schemaName + "_x";
+
+      var regressionDataLabel = "regression";
+      xs[schemaName] = schemaName + "_x"; 
+      xs[regressionDataLabel] = regressionDataLabel + "_x";
+
+      var scatterPlotArray = transformCSVtoScatterPlot(csvData, schemaName, xIndex, yIndex);
+
+      var min = Math.min.apply(null, tplot[0]);
+      var max = Math.max.apply(null, tplot[0]);
+      /* jshint ignore:start */
+      var regressionEquation = stats.linear_regression().data(graphPoints).line();
+      
+      var minRegressionY = regressionEquation(min);
+      var maxRegressionY = regressionEquation(max);
+      
+      scatterPlotArray.push([regressionDataLabel, minRegressionY, maxRegressionY], 
+                            [regressionDataLabel + "_x", min, max]);
+      /* jshint ignore:end */
+      var types = {};
+      types[regressionDataLabel] = "line";
 
       var chart = c3.generate({
         bindto: ".visualization-view",
@@ -110,8 +135,9 @@ var Chart = React.createClass({
             // Data Format:
             // y row ['dataname', num, num, ...]
             // x row ['dataname_x', num, num, ...]
-            columns: transformCSVtoScatterPlot(csvData, schemaName, xIndex, yIndex),
-            type: "scatter"
+            columns: scatterPlotArray,
+            type: "scatter",
+            types: types
         },
         axis: {
             x: {
@@ -125,16 +151,19 @@ var Chart = React.createClass({
             }
         }
       });
+    },
+    renderVisualization: function(chartType, csvData, activeHeader, schemaName) {
+      if (chartType === "histogram") {
+        Chart.renderHistogramChart(csvData, activeHeader);
+      } else if (chartType === "timeSeries") {
+        Chart.renderTimeSeriesChart(csvData, activeHeader);
+      } else if (chartType === "scatterPlot") {
+        Chart.renderScatterplotChart(csvData, schemaName, activeHeader, 3);
+      }  
     }
   },
   componentWillReceiveProps: function(newProps) {
-    if (newProps.chartType === "histogram") {
-      Chart.renderHistogramChart(newProps.csvData, newProps.activeHeader);
-    } else if (newProps.chartType === "timeSeries") {
-      Chart.renderTimeSeriesChart(newProps.csvData, newProps.activeHeader);
-    } else if (newProps.chartType === "scatterPlot") {
-      Chart.renderScatterplotChart(newProps.csvData, newProps.schemaName, newProps.activeHeader, 3);
-    }
+    Chart.renderVisualization(newProps.chartType, newProps.csvData, newProps.activeHeader, newProps.schemaName);
   },
   render: function() {
     return (
