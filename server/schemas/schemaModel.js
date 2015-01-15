@@ -16,6 +16,7 @@ module.exports = {
 
   createTemplate: function(request, response, next) {
     var error;
+    console.log("REQUEST BODY: ", request.body);
     var newSchema = request.body.schema;
     if (!newSchema.name) {
       error = {message: "Invalid schema name!"};
