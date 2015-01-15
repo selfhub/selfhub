@@ -38,7 +38,7 @@ var CreateForm = React.createClass ({
     });
     CSV = [CSV];
     CSV.forEach(function(infoArray, index){
-      dataString = infoArray.join(",");
+      var dataString = infoArray.join(",");
       csvContent += index < infoArray.length ? dataString+ "\n" : dataString;
     }); 
     var encodedUri = encodeURI(csvContent);

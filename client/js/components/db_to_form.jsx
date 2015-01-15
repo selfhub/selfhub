@@ -12,7 +12,7 @@ var DBtoForm = React.createClass ({
   },
 
   componentWillMount: function() {
-    getDataToBuildForm();
+    this.getDataToBuildForm();
   },
 
   getDataToBuildForm: function() {
@@ -39,7 +39,7 @@ var DBtoForm = React.createClass ({
   render: function() {
     return (
       <div>
-      {getDataToBuildForm}
+      {this.getDataToBuildForm}
       </div>
       );
   }
