@@ -188,9 +188,9 @@ var Table = React.createClass({
 
   },
   componentWillUnmount: function() {
-    $("#to-time-series").off("click");
-    $("#to-histogram").off("click");
-    $("#to-scatter-plot").off("click");
+    $(document).off("click", "#to-time-series");
+    $(document).off("click", "#to-histogram");
+    $(document).off("click", "#to-scatter-plot");
   },
   render: function() {
     var that = this;
