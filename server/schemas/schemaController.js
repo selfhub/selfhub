@@ -67,12 +67,29 @@ module.exports = {
    */
   createSchema: function(request, response) {
     var schema = request.body.schema;
+    var userID = request.currentUser;
+    var schemaName = request.params.schemaName;
+    var file = request.body.csv;
     var templateSuccessOrFailCallback = function(error, schema) {
       if (error) {
         helpers.errorHandler(error, request, response);
       } else {
         console.log("created schema:", schema);
-        s3Cache.createSchema(schema.name, helpers.getAWSCallbackHandler(request, response, 201));
+        s3Cache.createSchema(schema.name, function(error, data) {
+          if (error) {
+            helpers.errorHandler(error, request, response);
+          } else {
+            s3Cache.createEntry(schemaName, userID, file, function(error) {
+              if (error) {
+                console.error("error uploading entry:", error);
+                helpers.errorHandler(error, request, response);
+              } else {
+                console.log("successfully created headers in file system");
+                helpers.endFormParse(response);
+              }
+            });
+          }
+        });
       }
     };
 
@@ -108,7 +125,7 @@ module.exports = {
     };
     schemaModel.getSchema(schemaName, sendErrorOrSchema);
   },
-  
+
   /**
    * Request the list of schema names.
    * @param {Object} request the http ClientRequest object
