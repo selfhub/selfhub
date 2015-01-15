@@ -39,7 +39,7 @@ var handleUpload = function(request, response, appendData) {
             if (error) {
               console.error("error uploading entry:", error);
             } else {
-              console.log("successfully created", filename);
+              console.log("successfully created schema headers.");
             }
             helpers.endFormParse(response);
           });
@@ -67,12 +67,28 @@ module.exports = {
    */
   createSchema: function(request, response) {
     var schema = request.body.schema;
+    var userID = request.currentUser;
+    var schemaName = request.params.schemaName;
+    var data = request.body.csv;
     var templateSuccessOrFailCallback = function(error, schema) {
       if (error) {
         helpers.errorHandler(error, request, response);
       } else {
         console.log("created schema:", schema);
-        s3Cache.createSchema(schema.name, helpers.getAWSCallbackHandler(request, response, 201));
+        s3Cache.createSchema(schema.name, function(error, data) {
+          if (error) {
+            helpers.errorHandler(error, request, response);
+          } else {
+            s3Cache.createEntry(schemaName, userID, data, function(error) {
+              if (error) {
+                console.error("error uploading entry:", error);
+              } else {
+                console.log("successfully created", filename);
+              }
+              helpers.endFormParse(response);
+            });
+          }
+        });
       }
     };
 
@@ -108,7 +124,7 @@ module.exports = {
     };
     schemaModel.fetchSchema(schemaName, sendErrorOrSchema);
   },
-  
+
   /**
    * Request the list of schema names.
    * @param {Object} request the http ClientRequest object
