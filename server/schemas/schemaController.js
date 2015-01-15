@@ -112,7 +112,7 @@ module.exports = {
    * @param {Object} request the http ClientRequest object
    * @param {Object} response the http ServerResponse object
    */
-  fetchTemplate: function(request, response) {
+  getTemplate: function(request, response) {
     var schemaName = request.params.schemaName;
     var sendErrorOrSchema = function(error, schema) {
       if (error) {
@@ -123,7 +123,7 @@ module.exports = {
         helpers.handleBadRequest(response, "No matching schema.");
       }
     };
-    schemaModel.fetchSchema(schemaName, sendErrorOrSchema);
+    schemaModel.getSchema(schemaName, sendErrorOrSchema);
   },
 
   /**

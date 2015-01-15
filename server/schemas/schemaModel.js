@@ -64,7 +64,7 @@ module.exports = {
       });
   },
 
-  fetchSchema: function(schemaName, callback) {
+  getSchema: function(schemaName, callback) {
     Model.findOne({name: schemaName}, callback);
   }
 };
