@@ -11,7 +11,7 @@ var Menu = React.createClass({
         isToggled = !isToggled;
       });
 
-      $(document).on('keydown', function(event) {
+      $(document).on("keydown", function(event) {
         if (event.keyCode === 27 && isToggled) {
           $("#dropdown").slideToggle(DROP_DOWN_SPEED);
           isToggled = !isToggled;
