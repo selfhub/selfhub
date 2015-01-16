@@ -37,7 +37,7 @@ var AppStore = assign({}, EventEmitter.prototype, {
       beforeSend: function(request) {
         request.setRequestHeader("x-jwt", token);
       },
-      url: "/api/schema/" + schemaName + "/" + token,
+      url: "/api/schema/" + schemaName + "/userID/" + token,
       data: formData,
       processData: false,
       contentType: false,
