@@ -136,7 +136,7 @@ var Table = React.createClass({
     */
     var getSchema = function(schemaName, callback) {
       $.ajax({
-        url: "/api/schema/" + schemaName,
+        url: "/api/schema/" + schemaName + "/entriesMetadata",
         type: "GET",
         beforeSend: function(request) {
           request.setRequestHeader("x-jwt", localStorage.getItem("token"));
@@ -153,7 +153,7 @@ var Table = React.createClass({
 
     getSchema(schemaName, function(schemaData) {
       $.ajax({
-        url: "/api/schema/" + schemaName + "/" + schemaData[0].userID,
+        url: "/api/schema/" + schemaName + "/userID/" + schemaData[0].userID,
         type: "GET",
         beforeSend: function(request) {
           request.setRequestHeader("x-jwt", localStorage.getItem("token"));
