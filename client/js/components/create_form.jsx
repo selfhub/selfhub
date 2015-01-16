@@ -26,7 +26,7 @@ var CreateForm = React.createClass ({
     var schemaName = AppStore.formTitle.split(" ").join("_");
     var URL = "/api/schema/" + schemaName;
     var DATA = {};
-    DATA.name = "schemaName";
+    DATA.name = schemaName;
     DATA.metaData = {randomInfo: "no metaData here"};
     DATA.data = {};
     AppStore.questionsInEdit.map(function(elem) {
@@ -37,6 +37,9 @@ var CreateForm = React.createClass ({
       url: URL,
       type:"PUT",
       data: DATA,
+      beforeSend: function(request) {
+        request.setRequestHeader("x-jwt", localStorage.getItem("token"));
+      },
       success: function(data) {
         console.log("Successful PUT request");
       },

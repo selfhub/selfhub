@@ -11,43 +11,51 @@ var Model = mongoose.model("schema", schemaSchema);
 
 bluebird.promisifyAll(Model);
 
+/**
+ * schemaModel Operations
+ * @module server/schemas/schemaModel
+ * @type {{model: Object, createTemplate: Function, findSchema: Function, getSchema: Function}}
+ */
 module.exports = {
   model: Model,
 
+/**
+ * createTemplate create a new schema
+ * @param  {Object} request the http ClientRequest object
+ * @param  {Object} response the http ServerResponse object
+ * @param  {Function} next to be called
+ */
   createTemplate: function(request, response, next) {
     var error;
-    var newSchema = request.body.schema;
-    if (!newSchema.name) {
-      error = {message: "Invalid schema name!"};
-      next(error, false);
-      return;
-    }
+    var newSchema = {
+      name: request.body.name,
+      metaData: request.body.metaData,
+      data: request.body.data
+    };
+
     Model.findOneAsync({name: newSchema.name})
       .then(function(schema) {
-        //enable the following log statement for troubleshooting purposes
-        //console.debug("findOneAsync args:", arguments);
-        if (schema) {
-          error = {message: "Schema already exists"};
-          next(error, false);
-        } else {
-          return Model.createAsync({
-            name: newSchema.name,
-            metaData: newSchema.metaData,
-            data: newSchema.data
-          })
+        if (!schema) {
+          return Model.createAsync(newSchema)
           .then(function(schema) {
             next(false, schema);
           });
         }
+        next({message: "Schema with that name already exists"}, false);
       })
       .catch(function(error) {
         next(error, false);
       });
   },
 
-  //findSchema accepts a query object, a stream, and a storage object.
-  //It then attempts to find a matching schema using the query,
-  //stores the template on the storage (if found), and emits the proper event on the stream.
+  /**
+   * findSchema accepts a query object, a stream, and a storage object. It then attempts
+   *  to find a matching schema using the query,
+   * stores the template on the storage (if found), and emits the proper event on the stream.
+   * @param  {Object} query object from which it constructs a mongoose query.
+   * @param  {Object} stream object which is parsing csv headers.
+   * @param  {Object} storage object which is passed the schema on success.
+   */
   findSchema: function(query, stream, storage) {
     var error;
     Model.findOneAsync(query)
@@ -64,6 +72,11 @@ module.exports = {
       });
   },
 
+  /**
+   * getSchema returns the schema template.
+   * @param  {String} Schema name to inject
+   * @param  {Function} Callback to call later
+   */
   getSchema: function(schemaName, callback) {
     Model.findOne({name: schemaName}, callback);
   }
