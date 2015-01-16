@@ -112,7 +112,7 @@ var Table = React.createClass({
 
   statics: {
     getToolset: function(chartType, headerlessCSV, headerIndex) {
-      
+
       var columnArray = headerlessCSV.map(function(row) {
         return parseInt(row[headerIndex], 10);
       });
@@ -169,7 +169,7 @@ var Table = React.createClass({
         }
       });
     });
-  
+
     //TODO: Make an array of chart names, and map over it to apply events (185)
     var chartEvents = [
       ["#to-time-series", "timeSeries"],
@@ -180,9 +180,9 @@ var Table = React.createClass({
     chartEvents.forEach(function(chartEvent){
       var chartID = chartEvent[0];
       var chartType = chartEvent[1];
-      
+
       $(document).on("click", chartID, function() {
-        that.setState({chartType: chartType});  
+        that.setState({chartType: chartType});
       });
     });
 

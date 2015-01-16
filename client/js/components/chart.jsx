@@ -104,12 +104,12 @@ var Chart = React.createClass({
       //Remove the header of the scatter plot
       tplot[0].shift();
       tplot[1].shift();
-      
+
       var graphPoints = _.zip(tplot[0], tplot[1]);
       var xs = {};
 
       var regressionDataLabel = "regression";
-      xs[schemaName] = schemaName + "_x"; 
+      xs[schemaName] = schemaName + "_x";
       xs[regressionDataLabel] = regressionDataLabel + "_x";
 
       var scatterPlotArray = transformCSVtoScatterPlot(csvData, schemaName, xIndex, yIndex);
@@ -118,11 +118,11 @@ var Chart = React.createClass({
       var max = Math.max.apply(null, tplot[0]);
       /* jshint ignore:start */
       var regressionEquation = stats.linear_regression().data(graphPoints).line();
-      
+
       var minRegressionY = regressionEquation(min);
       var maxRegressionY = regressionEquation(max);
-      
-      scatterPlotArray.push([regressionDataLabel, minRegressionY, maxRegressionY], 
+
+      scatterPlotArray.push([regressionDataLabel, minRegressionY, maxRegressionY],
                             [regressionDataLabel + "_x", min, max]);
       /* jshint ignore:end */
       var types = {};
@@ -159,7 +159,7 @@ var Chart = React.createClass({
         Chart.renderTimeSeriesChart(csvData, activeHeader);
       } else if (chartType === "scatterPlot") {
         Chart.renderScatterplotChart(csvData, schemaName, activeHeader, 3);
-      }  
+      }
     }
   },
   componentWillReceiveProps: function(newProps) {
