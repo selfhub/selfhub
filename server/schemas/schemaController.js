@@ -108,7 +108,7 @@ module.exports = {
     };
     schemaModel.getSchema(schemaName, sendErrorOrSchema);
   },
-  
+
   /**
    * Request the list of schema names.
    * @param {Object} request the http ClientRequest object
