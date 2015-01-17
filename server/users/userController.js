@@ -51,8 +51,6 @@ module.exports = {
     }
     User.model.findOneAsync({username: newUser})
       .then(function(user) {
-        //enable the following log statement for troubleshooting purposes
-        //console.debug("findOneAsync args:", arguments);
         if (user) {
           error = {message: "User already exists"};
           helpers.errorHandler(error, request, response, next);

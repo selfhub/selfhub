@@ -26,6 +26,11 @@ module.exports = function(grunt) {
     jscs: {
       src: jsFiles
     },
+    jsdoc: {
+      dist: {
+        src: jsFiles
+      }
+    },
     jshint: {
       options: {
         jshintrc: true
@@ -46,5 +51,7 @@ module.exports = function(grunt) {
   require("load-grunt-tasks")(grunt);
   grunt.registerTask("default", ["jshint", "jscs", "mochaTest", "browserify"]);
   grunt.registerTask("build", ["browserify"]);
+  grunt.registerTask("doc", ["jsdoc"]);
+  grunt.registerTask("style", ["jshint", "jscs"]);
   grunt.registerTask("test", ["jshint", "jscs", "mochaTest"]);
 };

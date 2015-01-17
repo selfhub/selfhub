@@ -23,7 +23,6 @@
     "beforeOpeningRoundBrace": true
   },
   "disallowTrailingComma": true,
-  "disallowTrailingWhitespace": true,
   "maximumLineLength": 100,
   "requireCapitalizedConstructors": true,
   "requireCommaBeforeLineBreak": true,

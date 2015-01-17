@@ -2,6 +2,7 @@
 client/build.js
 
 ### JSDoc ###
+doc
 out
 
 ### Node ###

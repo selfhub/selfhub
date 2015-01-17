@@ -24,7 +24,7 @@ module.exports = {
   createHash: function(password, cb) {
     bcrypt.genSalt(function(error, salt) {
       if (error) {
-        console.log(error);
+        console.error(error);
       } else {
         console.log("hit genSalt, no error");
         //cb takes err and hash arguments.

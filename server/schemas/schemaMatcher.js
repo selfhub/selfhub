@@ -48,7 +48,6 @@ var handle = function(buffer, callback) {
   //Once a template is found, the parser 'templated' event fires.
   //Then we execute the callback, indicating there is no error and we have found a schema template.
   parser.once("templated", function() {
-    console.log("matching template found:", storage.template);
     callback(null, true);
   });
 

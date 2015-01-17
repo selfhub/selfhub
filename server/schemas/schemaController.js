@@ -38,8 +38,6 @@ var handleUpload = function(request, response, appendData) {
           s3Cache[uploadFunction](schemaName, userID, data, function(error) {
             if (error) {
               console.error("error uploading entry:", error);
-            } else {
-              console.log("successfully created", filename);
             }
             helpers.endFormParse(response);
           });
@@ -60,8 +58,9 @@ var handleUpload = function(request, response, appendData) {
 /**
  * Schema controller methods
  * @module server/schemas/schemaController
- * @type {{createSchema: Function, createEntry: Function, getTemplate: Function, getSchemaNames: Function, getData:
- *   Function, getEntriesMetadataForSchema: Function, appendEntry: Function}}
+ * @type {{createSchema: Function, createEntry: Function, getTemplate: Function,
+ * getSchemaNames: Function, getData: Function,
+ * getEntriesMetadataForSchema: Function, appendEntry: Function}}
  */
 module.exports = {
   /* CREATE requests */
@@ -77,7 +76,6 @@ module.exports = {
       if (error) {
         helpers.errorHandler(error, request, response);
       } else {
-        console.log("created schema:", schema);
         s3Cache.createSchema(schema.name, helpers.getAWSCallbackHandler(request, response, 201));
       }
     };

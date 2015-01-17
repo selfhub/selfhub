@@ -28,22 +28,39 @@ SelfHub is a central platform for sharing and analyzing quantified self data.
 ## Usage
 
 1. Create an account
-2. Find or create schemas to contribute to
-3. Start tracking and upload your data
+1. Find or create schemas to contribute to
+1. Start tracking and upload your data
 
 ## Development
+From the root directory of the project:
 
-### Installing Dependencies
-Install server and client dependencies then run the app. From within the root directory:
+1. Install dependencies:
 
-```
-npm install
-npm start
-```
+    ```
+    $ npm install
+    ```
 
-### Roadmap
+1. Build the client:
 
-View the project roadmap [here][roadmap-url]
+    ```
+    $ grunt build
+    ```
+
+1. Generate documentation (optional):
+
+    ```
+    $ grunt doc
+    ```
+
+1. Launch the server:
+
+    ```
+    $ npm start
+    ```
+
+## Roadmap
+
+View the project roadmap [here][roadmap-url].
 
 ## Contributing
 
