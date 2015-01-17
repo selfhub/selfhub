@@ -57,6 +57,12 @@ var handleUpload = function(request, response, appendData) {
   request.pipe(busboy);
 };
 
+/**
+ * Schema controller methods
+ * @module server/schemas/schemaController
+ * @type {{createSchema: Function, createEntry: Function, getTemplate: Function, getSchemaNames: Function, getData:
+ *   Function, getEntriesMetadataForSchema: Function, appendEntry: Function}}
+ */
 module.exports = {
   /* CREATE requests */
 
