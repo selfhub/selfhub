@@ -37,9 +37,9 @@ module.exports = {
       .then(function(schema) {
         if (!schema) {
           return Model.createAsync(newSchema)
-          .then(function(schema) {
-            next(false, schema);
-          });
+            .then(function(schema) {
+              next(false, schema);
+            });
         }
         next({message: "Schema with that name already exists"}, false);
       })
@@ -73,9 +73,9 @@ module.exports = {
   },
 
   /**
-   * getSchema returns the schema template.
-   * @param  {String} Schema name to inject
-   * @param  {Function} Callback to call later
+   * Get the template for the named schema.
+   * @param  {String} schemaName the name of the schema
+   * @param  {Function} callback the callback
    */
   getSchema: function(schemaName, callback) {
     Model.findOne({name: schemaName}, callback);

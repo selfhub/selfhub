@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "grunt test",
-    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/**/*.js"
+    "test-travis": "grunt style; istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "grunt-browserify": "^3.2.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-jscs": "^1.0.0",
+    "grunt-jsdoc": "^0.5.7",
     "grunt-jsxhint": "^0.4.0",
     "grunt-mocha-test": "^0.12.4",
     "jquery": "^2.1.3",
