@@ -1,6 +1,6 @@
 {
   "name": "selfhub",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "A centralized platform for quantified-self data and studies",
   "main": "index.js",
   "scripts": {
