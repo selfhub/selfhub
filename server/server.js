@@ -5,8 +5,6 @@ var app = express();
 
 var mongoURI = process.env.MONGO_URI;
 
-console.log(mongoURI);
-
 // fail fast with clear message if MONGO_URI not found
 if (!mongoURI) {
   throw new Error("MONGO_URI not found");
