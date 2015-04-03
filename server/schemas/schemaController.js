@@ -119,6 +119,7 @@ module.exports = {
    * @param {Object} response the http ServerResponse object
    */
   getSchemaNames: function(request, response) {
+    console.log(request, response);
     s3Cache.getSchemaNames(helpers.getAWSCallbackHandler(request, response));
   },
 

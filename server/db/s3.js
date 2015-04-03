@@ -94,6 +94,7 @@ module.exports = {
    */
   getSchemaNames: function(callback) {
     s3.listBuckets(function(error, data) {
+      console.log(error, data);
       if (error) {
         callback(error);
       } else {
